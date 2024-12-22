@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Payload Demo",
+    "description": "Built with Payload CMS and Next.js"
+  },
+  "articles": {
+    "title": "Articles",
+    "publishedAt": "Published on {date}",
+    "author": "Written by {name}",
+    "noArticles": "No articles found",
+    "backToArticles": "Back to articles"
+  },
+  "blocks": {
+    "linkList": {
+      "title": "Links"
+    },
+    "contactPeople": {
+      "title": "Contact People",
+      "email": "Email",
+      "noContacts": "No contacts found"
+    },
+    "videoEmbed": {
+      "watchVideo": "Watch video"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading content",
+    "notFound": "Page not found",
+    "readMore": "Read more"
+  },
+  "navigation": {
+    "home": "Home",
+    "articles": "Articles"
+  }
+}

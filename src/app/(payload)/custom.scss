@@ -1,0 +1,76 @@
+// Admin UI custom styles
+label.field-label,
+input,
+textarea,
+.collection-list {
+  font-size: 14px;
+}
+label.field-label {
+  font-weight: 500;
+}
+.nav-group,
+.dashboard__group {
+  margin-bottom: 40px;
+}
+.card__title {
+  font-size: 14px;
+}
+.nav__link,
+.nav-group__label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 2;
+}
+.nav__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.nav__link.active {
+  font-weight: 700;
+}
+.nav {
+  background-color: whitesmoke;
+}
+tr td:nth-child(2) {
+  font-weight: 500;
+}
+.nav-group__label {
+  color: var(--theme-elevation-600);
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.upload-field-card--size-medium .thumbnail {
+  width: 80px;
+  height: 80px;
+}
+.field-description {
+  color: var(--theme-elevation-600);
+}
+.lexical-block {
+  margin: 18px 0;
+}
+.nav-group__content {
+  padding-left: 20px;
+}
+.nav__link-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--theme-elevation-600);
+  display: inline-block;
+  margin-right: 8px;
+}
+.react-select .rs__group-heading {
+  font-weight: 700;
+}
+.nav-group__indicator svg .stroke {
+  stroke: var(--theme-elevation-400);
+}
+.nav-group__toggle:hover svg .stroke {
+  stroke: var(--theme-elevation-800);
+}
+.nav-group__toggle {
+  align-items: center;
+}

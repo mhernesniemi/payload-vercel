@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Payload Demo",
+    "description": "Rakennettu Payload CMS:llä ja Next.js:llä"
+  },
+  "articles": {
+    "title": "Artikkelit",
+    "publishedAt": "Julkaistu {date}",
+    "author": "Kirjoittanut {name}",
+    "noArticles": "Ei artikkeleita",
+    "backToArticles": "Takaisin artikkeleihin"
+  },
+  "blocks": {
+    "linkList": {
+      "title": "Linkit"
+    },
+    "contactPeople": {
+      "title": "Yhteyshenkilöt",
+      "email": "Sähköposti",
+      "noContacts": "Ei yhteyshenkilöitä"
+    },
+    "videoEmbed": {
+      "watchVideo": "Katso video"
+    }
+  },
+  "common": {
+    "loading": "Ladataan...",
+    "error": "Virhe ladattaessa sisältöä",
+    "notFound": "Sivua ei löytynyt",
+    "readMore": "Lue lisää"
+  },
+  "navigation": {
+    "home": "Koti",
+    "articles": "Artikkelit"
+  }
+}

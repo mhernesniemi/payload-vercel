@@ -1,0 +1,56 @@
+{
+  "name": "payload-sqlite",
+  "version": "1.0.0",
+  "description": "A blank template to get started with Payload 3.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "7.17.0",
+    "@headlessui/react": "^2.2.0",
+    "@payloadcms/next": "latest",
+    "@payloadcms/payload-cloud": "latest",
+    "@payloadcms/richtext-lexical": "latest",
+    "@searchkit/api": "^4.13.0",
+    "@searchkit/instantsearch-client": "^4.14.1",
+    "@types/react-instantsearch-dom": "^6.12.8",
+    "cross-env": "^7.0.3",
+    "graphql": "^16.8.1",
+    "next": "15.1.0",
+    "next-intl": "^3.25.3",
+    "payload": "latest",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sharp": "0.32.6",
+    "@payloadcms/db-sqlite": "latest",
+    "react-instantsearch-dom": "^6.40.4",
+    "react-instantsearch-nextjs": "^0.3.18",
+    "searchkit": "^4.13.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@types/node": "^22.5.4",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "15.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "5.7.2",
+    "postcss": "^8.4.49",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.15",
+    "autoprefixer": "^10.4.20"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}
