@@ -82,6 +82,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   role: 'admin' | 'editor' | 'user';
+  googleId?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -343,6 +344,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   role?: T;
+  googleId?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
