@@ -1,7 +1,18 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import payload from "payload";
+import { getPayload } from "payload";
+import config from "../../../../payload.config";
+
+// Initialize Payload
+const initializePayload = async () => {
+  try {
+    return await getPayload({ config });
+  } catch (error) {
+    console.error("Error initializing Payload:", error);
+    throw error;
+  }
+};
 
 const handler = NextAuth({
   providers: [
@@ -19,6 +30,7 @@ const handler = NextAuth({
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
+          const payload = await initializePayload();
           const { user } = await payload.login({
             collection: "users",
             data: {
@@ -45,7 +57,12 @@ const handler = NextAuth({
     async signIn({ user, account }) {
       if (account?.provider === "google") {
         try {
-          if (!user.email) return false;
+          if (!user.email) {
+            console.error("No email provided by Google");
+            return false;
+          }
+
+          const payload = await initializePayload();
 
           // Check if user already exists
           const existingUser = await payload.find({
@@ -63,11 +80,20 @@ const handler = NextAuth({
                 email: user.email,
                 googleId: user.id,
                 role: "user",
+                password: Math.random().toString(36).slice(-8),
               },
             });
           }
+          return true;
         } catch (error) {
           console.error("Error handling Google sign in:", error);
+          if (error instanceof Error) {
+            console.error("Error details:", {
+              message: error.message,
+              stack: error.stack,
+              name: error.name,
+            });
+          }
           return false;
         }
       }
