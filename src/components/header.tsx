@@ -6,7 +6,7 @@ export default function Header() {
   const t = useTranslations();
 
   return (
-    <header className="border-b border-gray-200 bg-white">
+    <header>
       <div className="container mx-auto flex items-center justify-between px-4 py-4 xl:px-0">
         <Link href="/" className="text-xl font-bold">
           {t("meta.title")}

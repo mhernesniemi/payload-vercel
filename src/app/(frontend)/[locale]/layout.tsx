@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-stone-900 text-white`}>
         <NextIntlClientProvider messages={messages}>
           <Header />
           {children}

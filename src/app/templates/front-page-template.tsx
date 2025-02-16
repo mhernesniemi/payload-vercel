@@ -3,7 +3,6 @@
 import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
 import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
-import { useParams } from "next/navigation";
 
 const searchClient = createClient({
   url: "/api/search",
@@ -15,8 +14,6 @@ interface Hit {
 }
 
 function Hit({ hit }: { hit: Hit }) {
-  const { locale } = useParams();
-  console.log(hit);
   return (
     <Link href={`/articles/${hit.slug}`}>
       <div className="mb-4 rounded-lg border p-4">
