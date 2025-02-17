@@ -2,16 +2,18 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 const intlMiddleware = createMiddleware(routing);
 
-const checkAuth = (req: NextRequest) => {
+const checkAuth = async (req: NextRequest) => {
   const protectedPaths = ["/dashboard", "/admin", "/profile"];
   const isProtectedPath = protectedPaths.some((path) => req.nextUrl.pathname.includes(path));
 
   if (!isProtectedPath) return null;
 
-  const token = req.cookies.get("next-auth.session-token");
+  // Check the validity of the token
+  const token = await getToken({ req });
 
   if (!token) {
     const from = req.nextUrl.pathname + req.nextUrl.search;
@@ -22,7 +24,7 @@ const checkAuth = (req: NextRequest) => {
 };
 
 export async function middleware(req: NextRequest) {
-  const authResult = checkAuth(req);
+  const authResult = await checkAuth(req);
   if (authResult) return authResult;
 
   return intlMiddleware(req);
