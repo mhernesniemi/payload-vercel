@@ -32,5 +32,17 @@
   "navigation": {
     "home": "Home",
     "articles": "Articles"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "loading": "Signing in...",
+    "continueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "errors": {
+      "invalidCredentials": "Invalid credentials",
+      "loginError": "An error occurred during login"
+    }
   }
 }

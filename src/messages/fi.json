@@ -32,5 +32,17 @@
   "navigation": {
     "home": "Koti",
     "articles": "Artikkelit"
+  },
+  "auth": {
+    "signIn": "Kirjaudu sisään",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "loading": "Kirjaudutaan...",
+    "continueWith": "Tai jatka",
+    "continueWithGoogle": "Jatka Google-tilillä",
+    "errors": {
+      "invalidCredentials": "Virheelliset kirjautumistiedot",
+      "loginError": "Kirjautumisessa tapahtui virhe"
+    }
   }
 }
