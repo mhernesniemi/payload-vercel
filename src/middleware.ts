@@ -7,7 +7,7 @@ import { getToken } from "next-auth/jwt";
 const intlMiddleware = createMiddleware(routing);
 
 const checkAuth = async (req: NextRequest) => {
-  const protectedPaths = ["/dashboard", "/admin", "/profile"];
+  const protectedPaths = ["/dashboard", "/profile"];
   const isProtectedPath = protectedPaths.some((path) => req.nextUrl.pathname.includes(path));
 
   if (!isProtectedPath) return null;
@@ -37,7 +37,6 @@ export const config = {
     "/(fi|en)/:path*",
     // Protected routes
     "/dashboard/:path*",
-    "/admin/:path*",
     "/profile/:path*",
     "/login",
   ],

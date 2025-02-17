@@ -1,7 +1,6 @@
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import FrontPageTemplate from "@/app/templates/front-page-template";
-import Providers from "@/components/auth/Providers";
 import AuthProvider from "@/components/auth/AuthProvider";
 type Params = Promise<{ locale: "fi" | "en" }>;
 

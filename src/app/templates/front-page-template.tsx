@@ -1,6 +1,6 @@
 "use client";
 
-import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, Hits } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
 import { useSession, signIn, signOut } from "next-auth/react";
