@@ -21,7 +21,6 @@ const checkAuth = (req: NextRequest) => {
   return null;
 };
 
-// Combined middleware
 export async function middleware(req: NextRequest) {
   const authResult = checkAuth(req);
   if (authResult) return authResult;
