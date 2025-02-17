@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { getPayload } from "payload";
 import config from "../../../../payload.config";
 
-// Initialize Payload
 const initializePayload = async () => {
   try {
     return await getPayload({ config });
