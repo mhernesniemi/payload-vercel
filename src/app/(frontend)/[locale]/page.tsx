@@ -1,7 +1,7 @@
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import FrontPageTemplate from "@/app/templates/front-page-template";
-
+import Providers from "@/components/Providers";
 type Params = Promise<{ locale: "fi" | "en" }>;
 
 export default async function Home({ params }: { params: Params }) {
@@ -17,5 +17,9 @@ export default async function Home({ params }: { params: Params }) {
     locale: locale,
   });
 
-  return <FrontPageTemplate />;
+  return (
+    <Providers>
+      <FrontPageTemplate />
+    </Providers>
+  );
 }

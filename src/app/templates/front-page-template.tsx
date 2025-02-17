@@ -3,6 +3,7 @@
 import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
 import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const searchClient = createClient({
   url: "/api/search",
@@ -24,7 +25,11 @@ function Hit({ hit }: { hit: Hit }) {
   );
 }
 
-export default function Search() {
+export default function FrontPageTemplate() {
+  const { data: session, status } = useSession();
+  console.log("data", session);
+  console.log("status", status);
+
   return (
     <div className="mx-auto max-w-screen-md py-16">
       <InstantSearch searchClient={searchClient} indexName="articles">
@@ -33,6 +38,17 @@ export default function Search() {
           <Hits hitComponent={Hit} />
         </div>
       </InstantSearch>
+      {session && (
+        <>
+          Signed in as {session.user.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      )}
+      {!session && (
+        <>
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
     </div>
   );
 }
