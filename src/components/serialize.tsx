@@ -1,7 +1,6 @@
-import { Link } from "@/i18n/routing";
+// import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
-import { useTranslations } from "next-intl";
 import type {
   ContactPeopleBlock,
   CTABlock,
@@ -94,39 +93,39 @@ export const serializeBlocks = ({ nodes }: Props) => {
             </div>
           );
 
-        case "contactPeople":
-          return (
-            <div key={block.id} className="my-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {block.contacts?.map((contact: any) => (
-                <div key={contact.id} className="rounded-lg border p-6">
-                  <h3 className="mb-2 font-bold">{contact.name}</h3>
-                  {contact.title && <p className="mb-4 text-sm text-gray-500">{contact.title}</p>}
-                  <p className="text-gray-600">{contact.email}</p>
-                </div>
-              ))}
-            </div>
-          );
+        // case "contactPeople":
+        //   return (
+        //     <div key={block.id} className="my-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        //       {block.contacts?.map((contact) => (
+        //         <div key={contact.id} className="rounded-lg border p-6">
+        //           <h3 className="mb-2 font-bold">{contact.name}</h3>
+        //           {contact.title && <p className="mb-4 text-sm text-gray-500">{contact.title}</p>}
+        //           <p className="text-gray-600">{contact.email}</p>
+        //         </div>
+        //       ))}
+        //     </div>
+        //   );
 
-        case "linkList":
-          return (
-            <div key={block.id} className="my-8">
-              <h3 className="mb-4 text-xl font-bold">{block.blockName}</h3>
-              <ul className="space-y-2">
-                {block.links?.map((link: any) => (
-                  <li key={link.id}>
-                    <Link
-                      href={
-                        link.isExternal ? link.externalUrl : `/articles/${link.internalUrl.slug}`
-                      }
-                      className="text-blue-600 hover:underline"
-                    >
-                      {link.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
+        // case "linkList":
+        //   return (
+        //     <div key={block.id} className="my-8">
+        //       <h3 className="mb-4 text-xl font-bold">{block.blockName}</h3>
+        //       <ul className="space-y-2">
+        //         {block.links?.map((link) => (
+        //           <li key={link.id}>
+        //             <Link
+        //               href={
+        //                 link.isExternal ? link.externalUrl : `/articles/${link.internalUrl.slug}`
+        //               }
+        //               className="text-blue-600 hover:underline"
+        //             >
+        //               {link.title}
+        //             </Link>
+        //           </li>
+        //         ))}
+        //       </ul>
+        //     </div>
+        //   );
 
         default:
           return null;

@@ -1,6 +1,16 @@
 import { Link } from "@/i18n/routing";
 
-export default function SearchHit({ hit }: any) {
+interface SearchHitType {
+  slug: string;
+  title: string;
+  _snippetResult?: {
+    content?: {
+      value: string;
+    };
+  };
+}
+
+export default function SearchHit({ hit }: { hit: SearchHitType }) {
   return (
     <Link href={`/${hit.slug}`} className="block rounded-lg p-3 hover:bg-gray-50">
       <h3 className="font-medium text-gray-900">{hit.title}</h3>
