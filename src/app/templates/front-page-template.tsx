@@ -17,9 +17,9 @@ interface Hit {
 function Hit({ hit }: { hit: Hit }) {
   return (
     <Link href={`/articles/${hit.slug}`}>
-      <div className="mb-4 rounded-lg border p-4">
+      <div className="mb-4 rounded-lg bg-stone-800 p-4">
         <h2 className="text-xl font-bold">{hit.title}</h2>
-        <div className="mt-4 text-sm text-gray-500">Slug: {hit.slug} </div>
+        <div className="mt-4 text-sm">Slug: {hit.slug} </div>
       </div>
     </Link>
   );
@@ -27,8 +27,6 @@ function Hit({ hit }: { hit: Hit }) {
 
 export default function FrontPageTemplate() {
   const { data: session, status } = useSession();
-  console.log("data", session);
-  console.log("status", status);
 
   return (
     <div className="mx-auto max-w-screen-md py-16">
@@ -38,17 +36,18 @@ export default function FrontPageTemplate() {
           <Hits hitComponent={Hit} />
         </div>
       </InstantSearch>
-      {session && (
+      {status === "authenticated" && session && (
         <>
           Signed in as {session.user.email} <br />
           <button onClick={() => signOut()}>Sign out</button>
         </>
       )}
-      {!session && (
+      {status === "unauthenticated" && (
         <>
           <button onClick={() => signIn()}>Sign in</button>
         </>
       )}
+      {status === "loading" && <div>Loading...</div>}
     </div>
   );
 }

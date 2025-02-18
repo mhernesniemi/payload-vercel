@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header>
       <div className="container mx-auto flex items-center justify-between px-4 py-4 xl:px-0">
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/" className="text-xl font-bold text-amber-500">
           {t("meta.title")}
         </Link>
         <div className="flex items-center gap-8">

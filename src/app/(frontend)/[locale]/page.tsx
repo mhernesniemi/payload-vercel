@@ -20,6 +20,9 @@ export default async function Home({ params }: { params: Params }) {
   return (
     <AuthProvider>
       <FrontPageTemplate />
+      {articles.map((article) => (
+        <div key={article.id}>{article.title}</div>
+      ))}
     </AuthProvider>
   );
 }
