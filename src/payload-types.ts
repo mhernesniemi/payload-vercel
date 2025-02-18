@@ -13,52 +13,52 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | "Pacific/Midway"
+  | "Pacific/Niue"
+  | "Pacific/Honolulu"
+  | "Pacific/Rarotonga"
+  | "America/Anchorage"
+  | "Pacific/Gambier"
+  | "America/Los_Angeles"
+  | "America/Tijuana"
+  | "America/Denver"
+  | "America/Phoenix"
+  | "America/Chicago"
+  | "America/Guatemala"
+  | "America/New_York"
+  | "America/Bogota"
+  | "America/Caracas"
+  | "America/Santiago"
+  | "America/Buenos_Aires"
+  | "America/Sao_Paulo"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/Azores"
+  | "Atlantic/Cape_Verde"
+  | "Europe/London"
+  | "Europe/Berlin"
+  | "Africa/Lagos"
+  | "Europe/Athens"
+  | "Africa/Cairo"
+  | "Europe/Moscow"
+  | "Asia/Riyadh"
+  | "Asia/Dubai"
+  | "Asia/Baku"
+  | "Asia/Karachi"
+  | "Asia/Tashkent"
+  | "Asia/Calcutta"
+  | "Asia/Dhaka"
+  | "Asia/Almaty"
+  | "Asia/Jakarta"
+  | "Asia/Bangkok"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Tokyo"
+  | "Asia/Seoul"
+  | "Australia/Sydney"
+  | "Pacific/Guam"
+  | "Pacific/Noumea"
+  | "Pacific/Auckland"
+  | "Pacific/Fiji";
 
 export interface Config {
   auth: {
@@ -68,43 +68,45 @@ export interface Config {
     users: User;
     media: Media;
     articles: Article;
-    'collection-pages': CollectionPage;
+    "collection-pages": CollectionPage;
     news: News;
     references: Reference;
     categories: Category;
     contacts: Contact;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "payload-locked-documents": PayloadLockedDocument;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
-    'collection-pages': CollectionPagesSelect<false> | CollectionPagesSelect<true>;
+    "collection-pages": CollectionPagesSelect<false> | CollectionPagesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     references: ReferencesSelect<false> | ReferencesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    "payload-locked-documents":
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
+    "payload-preferences": PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    "payload-migrations": PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
   };
   globals: {
-    'front-page': FrontPage;
-    'main-menu': MainMenu;
+    "front-page": FrontPage;
+    "main-menu": MainMenu;
   };
   globalsSelect: {
-    'front-page': FrontPageSelect<false> | FrontPageSelect<true>;
-    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
+    "front-page": FrontPageSelect<false> | FrontPageSelect<true>;
+    "main-menu": MainMenuSelect<false> | MainMenuSelect<true>;
   };
-  locale: 'fi' | 'en';
+  locale: "fi" | "en";
   user: User & {
-    collection: 'users';
+    collection: "users";
   };
   jobs: {
     tasks: unknown;
@@ -135,7 +137,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  role: 'admin' | 'editor' | 'user';
+  role: "admin" | "editor" | "user";
   googleId?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -155,7 +157,7 @@ export interface User {
 export interface Media {
   id: number;
   alt: string;
-  'alt en'?: string | null;
+  "alt en"?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -185,8 +187,8 @@ export interface Article {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
@@ -197,7 +199,7 @@ export interface Article {
   publishedDate: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+  _status?: ("draft" | "published") | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -216,8 +218,8 @@ export interface CollectionPage {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
@@ -244,8 +246,8 @@ export interface News {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
@@ -272,8 +274,8 @@ export interface Reference {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
@@ -319,40 +321,40 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
+        relationTo: "users";
         value: number | User;
       } | null)
     | ({
-        relationTo: 'media';
+        relationTo: "media";
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'articles';
+        relationTo: "articles";
         value: number | Article;
       } | null)
     | ({
-        relationTo: 'collection-pages';
+        relationTo: "collection-pages";
         value: number | CollectionPage;
       } | null)
     | ({
-        relationTo: 'news';
+        relationTo: "news";
         value: number | News;
       } | null)
     | ({
-        relationTo: 'references';
+        relationTo: "references";
         value: number | Reference;
       } | null)
     | ({
-        relationTo: 'categories';
+        relationTo: "categories";
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'contacts';
+        relationTo: "contacts";
         value: number | Contact;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
   updatedAt: string;
@@ -365,7 +367,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
   key?: string | null;
@@ -415,7 +417,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  'alt en'?: T;
+  "alt en"?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -549,8 +551,8 @@ export interface FrontPage {
   id: number;
   content: (
     | CTABlock
-    | LargeFeaturePostBlock
-    | SmallFeaturePostsWrapperBlock
+    | LargeFeaturedPostBlock
+    | SmallFeaturedPostsWrapperBlock
     | LinkListBlock
     | ContactPeopleBlock
     | VideoEmbedBlock
@@ -570,31 +572,31 @@ export interface CTABlock {
   isExternal?: boolean | null;
   internalUrl?:
     | ({
-        relationTo: 'articles';
+        relationTo: "articles";
         value: number | Article;
       } | null)
     | ({
-        relationTo: 'collection-pages';
+        relationTo: "collection-pages";
         value: number | CollectionPage;
       } | null)
     | ({
-        relationTo: 'news';
+        relationTo: "news";
         value: number | News;
       } | null)
     | ({
-        relationTo: 'references';
+        relationTo: "references";
         value: number | Reference;
       } | null);
   externalUrl?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'cta';
+  blockType: "cta";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LargeFeaturePostBlock".
+ * via the `definition` "LargeFeaturedPostBlock".
  */
-export interface LargeFeaturePostBlock {
+export interface LargeFeaturedPostBlock {
   title: string;
   text?: string | null;
   link?: string | null;
@@ -606,13 +608,13 @@ export interface LargeFeaturePostBlock {
   video?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'largeFeaturePost';
+  blockType: "largeFeaturedPost";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SmallFeaturePostsWrapperBlock".
+ * via the `definition` "SmallFeaturedPostsWrapperBlock".
  */
-export interface SmallFeaturePostsWrapperBlock {
+export interface SmallFeaturedPostsWrapperBlock {
   posts: {
     title: string;
     text?: string | null;
@@ -620,11 +622,11 @@ export interface SmallFeaturePostsWrapperBlock {
     image: number | Media;
     id?: string | null;
     blockName?: string | null;
-    blockType: 'smallFeaturePost';
+    blockType: "smallFeaturedPost";
   }[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'smallFeaturePostsWrapper';
+  blockType: "smallFeaturedPostsWrapper";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -636,19 +638,19 @@ export interface LinkListBlock {
         isExternal?: boolean | null;
         internalUrl?:
           | ({
-              relationTo: 'articles';
+              relationTo: "articles";
               value: number | Article;
             } | null)
           | ({
-              relationTo: 'collection-pages';
+              relationTo: "collection-pages";
               value: number | CollectionPage;
             } | null)
           | ({
-              relationTo: 'news';
+              relationTo: "news";
               value: number | News;
             } | null)
           | ({
-              relationTo: 'references';
+              relationTo: "references";
               value: number | Reference;
             } | null);
         externalUrl?: string | null;
@@ -657,7 +659,7 @@ export interface LinkListBlock {
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'linkList';
+  blockType: "linkList";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -667,7 +669,7 @@ export interface ContactPeopleBlock {
   contacts: (number | User)[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'contactPeople';
+  blockType: "contactPeople";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -679,7 +681,7 @@ export interface VideoEmbedBlock {
   youtubeId: string;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'videoEmbed';
+  blockType: "videoEmbed";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -690,7 +692,7 @@ export interface MediaBlock {
   caption?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'media';
+  blockType: "media";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,7 +711,7 @@ export interface QuoteBlock {
   image?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'quote';
+  blockType: "quote";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -724,19 +726,19 @@ export interface MainMenu {
       isExternal?: boolean | null;
       internalUrl?:
         | ({
-            relationTo: 'articles';
+            relationTo: "articles";
             value: number | Article;
           } | null)
         | ({
-            relationTo: 'collection-pages';
+            relationTo: "collection-pages";
             value: number | CollectionPage;
           } | null)
         | ({
-            relationTo: 'news';
+            relationTo: "news";
             value: number | News;
           } | null)
         | ({
-            relationTo: 'references';
+            relationTo: "references";
             value: number | Reference;
           } | null);
       externalUrl?: string | null;
@@ -748,19 +750,19 @@ export interface MainMenu {
             isExternal?: boolean | null;
             internalUrl?:
               | ({
-                  relationTo: 'articles';
+                  relationTo: "articles";
                   value: number | Article;
                 } | null)
               | ({
-                  relationTo: 'collection-pages';
+                  relationTo: "collection-pages";
                   value: number | CollectionPage;
                 } | null)
               | ({
-                  relationTo: 'news';
+                  relationTo: "news";
                   value: number | News;
                 } | null)
               | ({
-                  relationTo: 'references';
+                  relationTo: "references";
                   value: number | Reference;
                 } | null);
             externalUrl?: string | null;
@@ -782,8 +784,8 @@ export interface FrontPageSelect<T extends boolean = true> {
     | T
     | {
         cta?: T | CTABlockSelect<T>;
-        largeFeaturePost?: T | LargeFeaturePostBlockSelect<T>;
-        smallFeaturePostsWrapper?: T | SmallFeaturePostsWrapperBlockSelect<T>;
+        largeFeaturedPost?: T | LargeFeaturedPostBlockSelect<T>;
+        smallFeaturedPostsWrapper?: T | SmallFeaturedPostsWrapperBlockSelect<T>;
         linkList?: T | LinkListBlockSelect<T>;
         contactPeople?: T | ContactPeopleBlockSelect<T>;
         videoEmbed?: T | VideoEmbedBlockSelect<T>;
@@ -809,9 +811,9 @@ export interface CTABlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LargeFeaturePostBlock_select".
+ * via the `definition` "LargeFeaturedPostBlock_select".
  */
-export interface LargeFeaturePostBlockSelect<T extends boolean = true> {
+export interface LargeFeaturedPostBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
   link?: T;
@@ -823,13 +825,13 @@ export interface LargeFeaturePostBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SmallFeaturePostsWrapperBlock_select".
+ * via the `definition` "SmallFeaturedPostsWrapperBlock_select".
  */
-export interface SmallFeaturePostsWrapperBlockSelect<T extends boolean = true> {
+export interface SmallFeaturedPostsWrapperBlockSelect<T extends boolean = true> {
   posts?:
     | T
     | {
-        smallFeaturePost?:
+        smallFeaturedPost?:
           | T
           | {
               title?: T;
@@ -945,7 +947,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }

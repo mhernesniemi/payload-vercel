@@ -32,9 +32,12 @@ export const blockRenderer = ({ nodes }: Props) => {
       switch (blockType) {
         case "cta":
           return (
-            <div key={block.id} className="my-8 rounded-lg bg-gray-50 p-8 text-center">
+            <div
+              key={block.id}
+              className="my-8 max-w-screen-md flex-1 rounded-lg bg-stone-800 p-8 text-center"
+            >
               <h2 className="mb-4 text-2xl font-bold">{block.title}</h2>
-              {block.text && <p className="mb-6 text-gray-600">{block.text}</p>}
+              {block.text && <p>{block.text}</p>}
             </div>
           );
 

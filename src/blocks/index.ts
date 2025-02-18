@@ -1,8 +1,8 @@
-export { mediaBlock } from "./media"
+export { mediaBlock } from "./media";
 export {
-  largeFeaturePostBlock,
-  smallFeaturePostBlock,
-  smallFeaturePostsWrapperBlock,
+  largeFeaturedPostBlock,
+  smallFeaturedPostBlock,
+  smallFeaturedPostsWrapperBlock,
 } from "./featured-posts";
 export { ctaBlock } from "./cta";
 export { linkListBlock } from "./link-list";

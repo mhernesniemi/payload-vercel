@@ -1,4 +1,6 @@
+import { Link } from "@/i18n/routing";
 import configPromise from "@payload-config";
+
 import { getPayload } from "payload";
 type Params = Promise<{ locale: "fi" | "en" }>;
 
@@ -22,8 +24,7 @@ export default async function ArticlesPage({ params }: { params: Params }) {
 
       {articles.map((article) => (
         <div key={article.id}>
-          <div>{article.title}</div>
-          {/* <div>{article.}</div> */}
+          <Link href={`/articles/${article.slug}`}>{article.title}</Link>
         </div>
       ))}
     </main>

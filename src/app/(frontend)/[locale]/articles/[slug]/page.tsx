@@ -42,27 +42,29 @@ export default async function ArticlePage({ params }: { params: Params }) {
     notFound();
   }
 
+  const heroImage = article.heroImage as { url: string; alt: string };
+
   return (
     <main className="container mx-auto px-4 py-8">
       <article>
-        {typeof article.heroImage === "object" && (
+        {heroImage?.url && (
           <Image
-            src={article.heroImage?.url ?? ""}
-            alt={article.heroImage?.alt ?? ""}
+            src={heroImage.url}
+            alt={heroImage.alt || ""}
             width={1920}
             height={1080}
             className="mb-8 h-[400px] w-full rounded-lg object-cover"
           />
         )}
         <h1 className="mb-4 text-4xl font-bold">{article.title}</h1>
-        <div className="mb-8 flex gap-4 text-gray-600">
+        <div className="mb-8 flex gap-4 text-stone-400">
           <time dateTime={article.publishedDate}>
             {new Date(article.publishedDate).toLocaleDateString("fi-FI")}
           </time>
           <span>•</span>
           <span>{typeof article.author === "object" && article.author.email}</span>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex justify-center">
           {blockRenderer({
             nodes: article.content?.root?.children as NodeTypes[],
           })}

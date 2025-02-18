@@ -1,7 +1,7 @@
 import { Block } from "payload";
 
-export const largeFeaturePostBlock: Block = {
-  slug: "largeFeaturePost",
+export const largeFeaturedPostBlock: Block = {
+  slug: "largeFeaturedPost",
   fields: [
     {
       name: "title",
@@ -34,11 +34,11 @@ export const largeFeaturePostBlock: Block = {
       },
     },
   ],
-  interfaceName: "LargeFeaturePostBlock",
+  interfaceName: "LargeFeaturedPostBlock",
 };
 
-export const smallFeaturePostBlock: Block = {
-  slug: "smallFeaturePost",
+export const smallFeaturedPostBlock: Block = {
+  slug: "smallFeaturedPost",
   fields: [
     {
       name: "title",
@@ -62,8 +62,8 @@ export const smallFeaturePostBlock: Block = {
   ],
 };
 
-export const smallFeaturePostsWrapperBlock: Block = {
-  slug: "smallFeaturePostsWrapper",
+export const smallFeaturedPostsWrapperBlock: Block = {
+  slug: "smallFeaturedPostsWrapper",
   labels: {
     singular: "Small Featured Posts",
     plural: "Small Featured Posts",
@@ -72,9 +72,9 @@ export const smallFeaturePostsWrapperBlock: Block = {
     {
       name: "posts",
       type: "blocks",
-      blocks: [smallFeaturePostBlock],
+      blocks: [smallFeaturedPostBlock],
       required: true,
     },
   ],
-  interfaceName: "SmallFeaturePostsWrapperBlock",
+  interfaceName: "SmallFeaturedPostsWrapperBlock",
 };

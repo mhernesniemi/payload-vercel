@@ -1,6 +1,6 @@
 import {
-  largeFeaturePostBlock,
-  smallFeaturePostsWrapperBlock,
+  largeFeaturedPostBlock,
+  smallFeaturedPostsWrapperBlock,
   ctaBlock,
   mediaBlock,
   videoEmbedBlock,
@@ -25,8 +25,8 @@ export const FrontPage: GlobalConfig = {
       required: true,
       blocks: [
         ctaBlock,
-        largeFeaturePostBlock,
-        smallFeaturePostsWrapperBlock,
+        largeFeaturedPostBlock,
+        smallFeaturedPostsWrapperBlock,
         linkListBlock,
         contactPeopleBlock,
         videoEmbedBlock,
