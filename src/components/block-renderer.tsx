@@ -21,7 +21,7 @@ type Props = {
   nodes: NodeTypes[];
 };
 
-export const serializeBlocks = ({ nodes }: Props) => {
+export const blockRenderer = ({ nodes }: Props) => {
   if (!nodes) return null;
 
   return nodes.map((node) => {
