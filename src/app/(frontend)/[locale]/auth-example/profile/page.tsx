@@ -22,10 +22,10 @@ export default async function ProfilePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Profile</h1>
+      <h1 className="mb-6 text-3xl font-bold">Profile</h1>
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold mb-2">User Information</h2>
+          <h2 className="mb-2 text-xl font-semibold">User Information</h2>
           <div>
             <span className="font-medium">Email:</span> {user?.email}
           </div>
