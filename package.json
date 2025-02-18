@@ -16,14 +16,14 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "7.17.0",
+    "@elastic/elasticsearch": "^7.17.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@libsql/client": "^0.14.0",
-    "@payloadcms/db-sqlite": "latest",
-    "@payloadcms/next": "latest",
-    "@payloadcms/payload-cloud": "latest",
-    "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/db-sqlite": "^3",
+    "@payloadcms/next": "^3",
+    "@payloadcms/payload-cloud": "^3",
+    "@payloadcms/richtext-lexical": "^3",
     "@searchkit/api": "^4.13.0",
     "@searchkit/instantsearch-client": "^4.14.1",
     "cross-env": "^7.0.3",
@@ -31,7 +31,7 @@
     "husky": "^9.1.7",
     "libsql": "0.5.0-pre.5",
     "lint-staged": "^15.4.3",
-    "next": "15.1.0",
+    "next": "^15",
     "next-auth": "^4.24.11",
     "next-intl": "^3.26.3",
     "payload": "^3",
@@ -39,21 +39,21 @@
     "react-dom": "^19",
     "react-instantsearch": "^7.7.0",
     "searchkit": "^4.13.2",
-    "sharp": "0.32.6"
+    "sharp": "^0.32.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@types/node": "^22.10.10",
-    "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.19.0",
-    "eslint-config-next": "15.1.0",
+    "eslint-config-next": "^15.1.0",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
-    "typescript": "5.7.2"
+    "typescript": "^5.7.2"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
