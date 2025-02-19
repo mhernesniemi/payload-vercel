@@ -8,7 +8,7 @@ type Props = {
 
 export function SmallFeaturedPostsWrapperBlock({ block }: Props) {
   return (
-    <div className="my-12">
+    <div className="my-12 w-full">
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {block.posts.map((post) => (
           <div key={post.id} className="overflow-hidden rounded-xl bg-stone-800 shadow-md">
