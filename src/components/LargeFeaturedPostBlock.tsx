@@ -8,7 +8,7 @@ type Props = {
 
 export function LargeFeaturedPostBlock({ block }: Props) {
   return (
-    <div className="my-12 w-full">
+    <div className="my-12 w-full text-center">
       <div className="overflow-hidden rounded-xl bg-stone-800">
         {block.image && typeof block.image === "object" && (
           <div className="relative h-[400px] w-full">
