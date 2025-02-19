@@ -1,5 +1,4 @@
 // import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
 import type {
   CTABlock,
@@ -7,11 +6,18 @@ import type {
   MediaBlock,
   QuoteBlock,
   VideoEmbedBlock,
-  LargeFeaturedPostBlock,
-  SmallFeaturedPostsWrapperBlock,
+  LargeFeaturedPostBlock as LargeFeaturedPostBlockType,
+  SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType,
   ContactsBlock,
 } from "@/payload-types";
-import { Link } from "@/i18n/routing";
+import { CTABlock as CTABlockComponent } from "./CTABlock";
+import { MediaBlock as MediaBlockComponent } from "./MediaBlock";
+import { QuoteBlock as QuoteBlockComponent } from "./QuoteBlock";
+import { VideoEmbedBlock as VideoEmbedBlockComponent } from "./VideoEmbedBlock";
+import { ContactsBlock as ContactsBlockComponent } from "./ContactsBlock";
+import { LinkListBlock as LinkListBlockComponent } from "./LinkListBlock";
+import { LargeFeaturedPostBlock as LargeFeaturedPostComponent } from "./LargeFeaturedPostBlock";
+import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperComponent } from "./SmallFeaturedPostsWrapperBlock";
 
 export type NodeTypes =
   | DefaultNodeTypes
@@ -21,8 +27,8 @@ export type NodeTypes =
       | QuoteBlock
       | VideoEmbedBlock
       | LinkListBlock
-      | LargeFeaturedPostBlock
-      | SmallFeaturedPostsWrapperBlock
+      | LargeFeaturedPostBlockType
+      | SmallFeaturedPostsWrapperBlockType
       | ContactsBlock
     >;
 
@@ -40,123 +46,21 @@ export const blockRenderer = ({ nodes }: Props) => {
 
       switch (blockType) {
         case "cta":
-          return (
-            <div
-              key={block.id}
-              className="my-8 w-full max-w-screen-md rounded-lg bg-stone-800 p-8 text-center"
-            >
-              <h2 className="mb-4 text-2xl font-bold">{block.title}</h2>
-              {block.text && <p>{block.text}</p>}
-            </div>
-          );
-
+          return <CTABlockComponent key={block.id} block={block} />;
         case "media":
-          return (
-            <figure key={block.id} className="my-8">
-              {block.media && typeof block.media === "object" && (
-                <Image
-                  src={block.media.url || ""}
-                  alt={block.media.alt || ""}
-                  width={800}
-                  height={600}
-                  className="rounded-lg"
-                />
-              )}
-              {block.caption && (
-                <figcaption className="mt-2 text-center text-sm text-gray-500">
-                  {block.caption}
-                </figcaption>
-              )}
-            </figure>
-          );
-
+          return <MediaBlockComponent key={block.id} block={block} />;
         case "quote":
-          return (
-            <blockquote key={block.id} className="my-8 border-l-4 border-blue-500 bg-gray-50 p-8">
-              <p className="mb-4 text-xl italic">{block.quote}</p>
-              {block.author && (
-                <footer className="text-gray-600">
-                  <cite>
-                    {block.author}
-                    {block.title && <span className="ml-2 text-gray-400">— {block.title}</span>}
-                  </cite>
-                </footer>
-              )}
-            </blockquote>
-          );
-
+          return <QuoteBlockComponent key={block.id} block={block} />;
         case "videoEmbed":
-          return (
-            <div key={block.id} className="my-8">
-              <h3 className="mb-4 text-xl font-bold">{block.title}</h3>
-              <div className="relative aspect-video">
-                <iframe
-                  src={`https://www.youtube.com/embed/${block.youtubeId}`}
-                  className="absolute inset-0 h-full w-full rounded-lg"
-                  allowFullScreen
-                />
-              </div>
-              {block.description && <p className="mt-4 text-gray-600">{block.description}</p>}
-            </div>
-          );
-
+          return <VideoEmbedBlockComponent key={block.id} block={block} />;
         case "contacts":
-          return (
-            <div key={block.id} className="my-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {block.contacts?.map(
-                (contact) =>
-                  typeof contact === "object" && (
-                    <div key={contact.id} className="rounded-lg border p-6">
-                      <h3 className="mb-2 font-bold">{contact.id}</h3>
-                      <p className="text-gray-600">{contact.email}</p>
-                    </div>
-                  ),
-              )}
-            </div>
-          );
-
+          return <ContactsBlockComponent key={block.id} block={block} />;
         case "linkList":
-          return (
-            <div key={block.id} className="my-8">
-              <h3 className="mb-4 text-xl font-bold">{block.blockName}</h3>
-              <ul className="space-y-2">
-                {block.links?.map((link) => (
-                  <li key={link.id}>
-                    <Link
-                      href={
-                        link.isExternal && link.externalUrl
-                          ? link.externalUrl
-                          : link.internalUrl?.value &&
-                              typeof link.internalUrl.value === "object" &&
-                              "slug" in link.internalUrl.value
-                            ? `/articles/${link.internalUrl.value.slug}`
-                            : "/"
-                      }
-                      className="text-blue-600 hover:underline"
-                    >
-                      {link.id || "Untitled"}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-
+          return <LinkListBlockComponent key={block.id} block={block} />;
         case "largeFeaturedPost":
-          return (
-            <div key={block.id} className="my-8">
-              <h3 className="mb-4 text-xl font-bold">{block.title}</h3>
-              <p>{block.text}</p>
-            </div>
-          );
-
+          return <LargeFeaturedPostComponent key={block.id} block={block} />;
         case "smallFeaturedPostsWrapper":
-          return (
-            <div key={block.id} className="my-8">
-              <p>{block.posts.map((post) => post.title)}</p>
-            </div>
-          );
-
+          return <SmallFeaturedPostsWrapperComponent key={block.id} block={block} />;
         default:
           return null;
       }

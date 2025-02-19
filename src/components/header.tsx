@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import LanguageSwitcher from "./language-switcher";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header() {
   const t = useTranslations();
