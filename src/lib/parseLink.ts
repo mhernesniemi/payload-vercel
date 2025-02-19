@@ -2,11 +2,6 @@ import { LinkListBlock } from "../payload-types";
 
 type Link = NonNullable<LinkListBlock["links"]>[number];
 
-const COLLECTION_PATHS: Record<string, string> = {
-  articles: "articles",
-  // pages: "pages", // Example for "pages" path
-};
-
 interface LinkData {
   url: string;
   isExternal: boolean;
@@ -24,8 +19,7 @@ const parseLink = (link: Link): LinkData => {
     const internalValue = link.internalUrl?.value;
     if (internalValue && typeof internalValue === "object" && "slug" in internalValue) {
       const relationTo = link.internalUrl?.relationTo;
-      const basePath = COLLECTION_PATHS[relationTo || ""] || "";
-      url = basePath ? `/${basePath}/${internalValue.slug}` : `/${internalValue.slug}`;
+      url = relationTo ? `/${relationTo}/${internalValue.slug}` : `/${internalValue.slug}`;
 
       // Get title from relation if available
       if ("title" in internalValue) {

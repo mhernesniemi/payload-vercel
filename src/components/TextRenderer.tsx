@@ -14,6 +14,8 @@ import type {
   SerializedLexicalNode,
 } from "@payloadcms/richtext-lexical/lexical";
 import Heading from "./Heading";
+import { Link } from "@/i18n/routing";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 type HeadingNode = SerializedElementNode & {
   tag: "h1" | "h2" | "h3" | "h4";
@@ -29,19 +31,26 @@ type ListItemNode = SerializedElementNode & {
   value?: number;
 };
 
+type LinkNode = SerializedElementNode & {
+  fields: {
+    doc?: {
+      relationTo: string;
+      value: {
+        id: number;
+        title: string;
+        slug: string;
+      };
+    };
+    url?: string;
+    newTab?: boolean;
+    linkType?: "custom" | "internal";
+  };
+};
+
 type NodeRendererProps = {
   node: SerializedElementNode | SerializedTextNode;
   index: number;
 };
-
-// interface LinkNode extends SerializedLexicalNode {
-//   fields: {
-//     newTab?: boolean;
-//     doc?: unknown;
-//     linkType?: "internal" | "custom";
-//     url?: string;
-//   };
-// }
 
 export function TextRenderer({ node, index }: NodeRendererProps) {
   if (!node) return null;
@@ -91,7 +100,7 @@ export function TextRenderer({ node, index }: NodeRendererProps) {
       // If there are no children, return null to avoid rendering an empty paragraph
       if (!children || (Array.isArray(children) && children.every((child) => !child))) return null;
       return (
-        <p className="mb-4" key={index}>
+        <p className="mx-auto mb-4 max-w-prose" key={index}>
           {children}
         </p>
       );
@@ -144,18 +153,19 @@ export function TextRenderer({ node, index }: NodeRendererProps) {
         </blockquote>
       );
     case "link": {
-      // const linkNode = node as LinkNode;
+      const linkNode = node as LinkNode;
+      const { doc, url, newTab, linkType } = linkNode.fields;
+
+      const href =
+        linkType === "custom" ? url || "/" : doc ? `/${doc.relationTo}/${doc.value.slug}` : "/";
+      const target = newTab ? "_blank" : undefined;
+      const rel = newTab ? "noopener noreferrer" : undefined;
+
       return (
-        // <CMSLink
-        //   key={index}
-        //   newTab={Boolean(linkNode.fields?.newTab)}
-        //   reference={linkNode.fields.doc}
-        //   type={linkNode.fields.linkType === "internal" ? "reference" : "custom"}
-        //   url={linkNode.fields.url}
-        // >
-        //   {renderChildren(node)}
-        // </CMSLink>
-        <>moi</>
+        <Link href={href} key={index} className="underline" target={target} rel={rel}>
+          {renderChildren(node)}
+          {url && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
+        </Link>
       );
     }
     case "linebreak":
