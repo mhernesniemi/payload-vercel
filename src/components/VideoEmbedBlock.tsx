@@ -4,7 +4,7 @@ type Props = {
   block: VideoEmbedBlockType;
 };
 
-export const VideoEmbedBlock: React.FC<Props> = ({ block }) => {
+export function VideoEmbedBlock({ block }: Props) {
   return (
     <div className="my-12">
       {block.title && <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.title}</h3>}
@@ -22,4 +22,4 @@ export const VideoEmbedBlock: React.FC<Props> = ({ block }) => {
       )}
     </div>
   );
-};
+}

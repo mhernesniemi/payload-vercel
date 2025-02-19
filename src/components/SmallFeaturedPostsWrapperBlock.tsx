@@ -6,7 +6,7 @@ type Props = {
   block: SmallFeaturedPostsWrapperBlockType;
 };
 
-export const SmallFeaturedPostsWrapperBlock: React.FC<Props> = ({ block }) => {
+export function SmallFeaturedPostsWrapperBlock({ block }: Props) {
   return (
     <div className="my-12">
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -39,4 +39,4 @@ export const SmallFeaturedPostsWrapperBlock: React.FC<Props> = ({ block }) => {
       </div>
     </div>
   );
-};
+}

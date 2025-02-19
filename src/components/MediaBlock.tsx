@@ -5,7 +5,7 @@ type Props = {
   block: MediaBlockType;
 };
 
-export const MediaBlock: React.FC<Props> = ({ block }) => {
+export function MediaBlock({ block }: Props) {
   return (
     <figure className="my-12">
       {block.media && typeof block.media === "object" && (
@@ -27,4 +27,4 @@ export const MediaBlock: React.FC<Props> = ({ block }) => {
       )}
     </figure>
   );
-};
+}

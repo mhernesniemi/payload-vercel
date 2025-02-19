@@ -6,7 +6,7 @@ type Props = {
   block: LargeFeaturedPostBlockType;
 };
 
-export const LargeFeaturedPostBlock: React.FC<Props> = ({ block }) => {
+export function LargeFeaturedPostBlock({ block }: Props) {
   return (
     <div className="my-12 w-full">
       <div className="overflow-hidden rounded-xl bg-stone-900 shadow-xl ring-1 ring-stone-800">
@@ -36,4 +36,4 @@ export const LargeFeaturedPostBlock: React.FC<Props> = ({ block }) => {
       </div>
     </div>
   );
-};
+}

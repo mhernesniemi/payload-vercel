@@ -4,7 +4,7 @@ type Props = {
   block: ContactsBlockType;
 };
 
-export const ContactsBlock: React.FC<Props> = ({ block }) => {
+export function ContactsBlock({ block }: Props) {
   return (
     <div className="my-12">
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -23,4 +23,4 @@ export const ContactsBlock: React.FC<Props> = ({ block }) => {
       </div>
     </div>
   );
-};
+}

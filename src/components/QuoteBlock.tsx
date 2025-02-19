@@ -4,7 +4,7 @@ type Props = {
   block: QuoteBlockType;
 };
 
-export const QuoteBlock: React.FC<Props> = ({ block }) => {
+export function QuoteBlock({ block }: Props) {
   return (
     <blockquote className="my-12 rounded-xl border-l-4 border-stone-700 bg-stone-900 p-8 shadow-xl ring-1 ring-stone-800">
       <p className="mb-6 font-serif text-2xl italic text-stone-100">{block.quote}</p>
@@ -23,4 +23,4 @@ export const QuoteBlock: React.FC<Props> = ({ block }) => {
       )}
     </blockquote>
   );
-};
+}
