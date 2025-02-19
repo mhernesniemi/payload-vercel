@@ -13,9 +13,10 @@ import type {
   SerializedElementNode,
   SerializedLexicalNode,
 } from "@payloadcms/richtext-lexical/lexical";
+import Heading from "./Heading";
 
 type HeadingNode = SerializedElementNode & {
-  tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  tag: "h1" | "h2" | "h3" | "h4";
 };
 
 type ListNode = SerializedElementNode & {
@@ -86,19 +87,23 @@ export function TextRenderer({ node, index }: NodeRendererProps) {
       }
     }
     case "paragraph":
-      console.log("paragraph", node);
+      const children = renderChildren(node);
+      // If there are no children, return null to avoid rendering an empty paragraph
+      if (!children || (Array.isArray(children) && children.every((child) => !child))) return null;
       return (
-        <p className="col-start-2" key={index}>
-          {renderChildren(node)}
+        <p className="mb-4" key={index}>
+          {children}
         </p>
       );
     case "heading": {
       const headingNode = node as HeadingNode;
-      const Tag = headingNode.tag;
+      const headingText = node.children
+        ?.map((child) => (child as SerializedTextNode).text)
+        .join("");
       return (
-        <Tag className="col-start-2" key={index}>
-          {renderChildren(node)}
-        </Tag>
+        <Heading level={headingNode.tag} size="lg">
+          {headingText}
+        </Heading>
       );
     }
     case "list": {

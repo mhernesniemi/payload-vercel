@@ -64,7 +64,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <span>•</span>
           <span>{typeof article.author === "object" && article.author.email}</span>
         </div>
-        <div className="mx-auto mt-4 flex max-w-screen-lg flex-col items-center gap-4">
+        <div className="mx-auto mt-4 flex max-w-screen-lg flex-col items-center">
           <BlockRenderer nodes={article.content?.root?.children as NodeTypes[]} />
         </div>
       </article>
