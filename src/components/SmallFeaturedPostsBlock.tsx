@@ -6,7 +6,7 @@ type Props = {
   block: SmallFeaturedPostsWrapperBlockType;
 };
 
-export function SmallFeaturedPostsWrapperBlock({ block }: Props) {
+export default function SmallFeaturedPostsBlock({ block }: Props) {
   return (
     <div className="my-12 w-full">
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

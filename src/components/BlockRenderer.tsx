@@ -17,7 +17,7 @@ import { VideoEmbedBlock } from "./VideoEmbedBlock";
 import { ContactsBlock } from "./ContactsBlock";
 import { LinkListBlock } from "./LinkListBlock";
 import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
-import { SmallFeaturedPostsWrapperBlock } from "./SmallFeaturedPostsWrapperBlock";
+import SmallFeaturedPostsBlock from "./SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
 
 export type NodeTypes =
@@ -72,7 +72,7 @@ export const BlockRenderer = ({ nodes }: Props) => {
           case "largeFeaturedPost":
             return <LargeFeaturedPostBlock key={block.id} block={block} />;
           case "smallFeaturedPostsWrapper":
-            return <SmallFeaturedPostsWrapperBlock key={block.id} block={block} />;
+            return <SmallFeaturedPostsBlock key={block.id} block={block} />;
           default:
             return null;
         }
