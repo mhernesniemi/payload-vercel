@@ -44,6 +44,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
   const heroImage = article.heroImage as { url: string; alt: string };
 
+  console.log(article.content?.root?.children);
+
   return (
     <main className="container mx-auto px-4 py-8">
       <article>
