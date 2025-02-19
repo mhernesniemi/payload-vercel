@@ -1,34 +1,34 @@
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
 import type {
-  CTABlock,
-  LinkListBlock,
-  MediaBlock,
-  QuoteBlock,
-  VideoEmbedBlock,
+  CTABlock as CTABlockType,
+  LinkListBlock as LinkListBlockType,
+  MediaBlock as MediaBlockType,
+  QuoteBlock as QuoteBlockType,
+  VideoEmbedBlock as VideoEmbedBlockType,
   LargeFeaturedPostBlock as LargeFeaturedPostBlockType,
   SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType,
-  ContactsBlock,
+  ContactsBlock as ContactsBlockType,
 } from "@/payload-types";
-import { CTABlock as CTABlockComponent } from "./CTABlock";
-import { MediaBlock as MediaBlockComponent } from "./MediaBlock";
-import { QuoteBlock as QuoteBlockComponent } from "./QuoteBlock";
-import { VideoEmbedBlock as VideoEmbedBlockComponent } from "./VideoEmbedBlock";
-import { ContactsBlock as ContactsBlockComponent } from "./ContactsBlock";
-import { LinkListBlock as LinkListBlockComponent } from "./LinkListBlock";
-import { LargeFeaturedPostBlock as LargeFeaturedPostComponent } from "./LargeFeaturedPostBlock";
-import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperComponent } from "./SmallFeaturedPostsWrapperBlock";
+import { CTABlock } from "./CTABlock";
+import { MediaBlock } from "./MediaBlock";
+import { QuoteBlock } from "./QuoteBlock";
+import { VideoEmbedBlock } from "./VideoEmbedBlock";
+import { ContactsBlock } from "./ContactsBlock";
+import { LinkListBlock } from "./LinkListBlock";
+import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
+import { SmallFeaturedPostsWrapperBlock } from "./SmallFeaturedPostsWrapperBlock";
 
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      | CTABlock
-      | MediaBlock
-      | QuoteBlock
-      | VideoEmbedBlock
-      | LinkListBlock
+      | CTABlockType
+      | MediaBlockType
+      | QuoteBlockType
+      | VideoEmbedBlockType
+      | LinkListBlockType
       | LargeFeaturedPostBlockType
       | SmallFeaturedPostsWrapperBlockType
-      | ContactsBlock
+      | ContactsBlockType
     >;
 
 type Props = {
@@ -45,21 +45,21 @@ export const BlockRenderer = ({ nodes }: Props) => {
 
       switch (blockType) {
         case "cta":
-          return <CTABlockComponent key={block.id} block={block} />;
+          return <CTABlock key={block.id} block={block} />;
         case "media":
-          return <MediaBlockComponent key={block.id} block={block} />;
+          return <MediaBlock key={block.id} block={block} />;
         case "quote":
-          return <QuoteBlockComponent key={block.id} block={block} />;
+          return <QuoteBlock key={block.id} block={block} />;
         case "videoEmbed":
-          return <VideoEmbedBlockComponent key={block.id} block={block} />;
+          return <VideoEmbedBlock key={block.id} block={block} />;
         case "contacts":
-          return <ContactsBlockComponent key={block.id} block={block} />;
+          return <ContactsBlock key={block.id} block={block} />;
         case "linkList":
-          return <LinkListBlockComponent key={block.id} block={block} />;
+          return <LinkListBlock key={block.id} block={block} />;
         case "largeFeaturedPost":
-          return <LargeFeaturedPostComponent key={block.id} block={block} />;
+          return <LargeFeaturedPostBlock key={block.id} block={block} />;
         case "smallFeaturedPostsWrapper":
-          return <SmallFeaturedPostsWrapperComponent key={block.id} block={block} />;
+          return <SmallFeaturedPostsWrapperBlock key={block.id} block={block} />;
         default:
           return null;
       }
