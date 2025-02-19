@@ -7,7 +7,7 @@ import {
   smallFeaturedPostsWrapperBlock,
   ctaBlock,
   linkListBlock,
-  contactPeopleBlock,
+  contactsBlock,
   videoEmbedBlock,
   quoteBlock,
 } from "@/blocks";
@@ -47,7 +47,7 @@ export const defaultContentFields: Field[] = [
               smallFeaturedPostsWrapperBlock,
               ctaBlock,
               linkListBlock,
-              contactPeopleBlock,
+              contactsBlock,
               videoEmbedBlock,
               quoteBlock,
             ],

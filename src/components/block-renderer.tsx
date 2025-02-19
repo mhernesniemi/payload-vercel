@@ -2,19 +2,28 @@
 import Image from "next/image";
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
 import type {
-  ContactPeopleBlock,
   CTABlock,
   LinkListBlock,
   MediaBlock,
   QuoteBlock,
   VideoEmbedBlock,
+  LargeFeaturedPostBlock,
+  SmallFeaturedPostsWrapperBlock,
+  ContactsBlock,
 } from "@/payload-types";
 import { Link } from "@/i18n/routing";
 
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      CTABlock | MediaBlock | QuoteBlock | VideoEmbedBlock | LinkListBlock | ContactPeopleBlock
+      | CTABlock
+      | MediaBlock
+      | QuoteBlock
+      | VideoEmbedBlock
+      | LinkListBlock
+      | LargeFeaturedPostBlock
+      | SmallFeaturedPostsWrapperBlock
+      | ContactsBlock
     >;
 
 type Props = {
@@ -34,7 +43,7 @@ export const blockRenderer = ({ nodes }: Props) => {
           return (
             <div
               key={block.id}
-              className="my-8 max-w-screen-md flex-1 rounded-lg bg-stone-800 p-8 text-center"
+              className="my-8 w-full max-w-screen-md rounded-lg bg-stone-800 p-8 text-center"
             >
               <h2 className="mb-4 text-2xl font-bold">{block.title}</h2>
               {block.text && <p>{block.text}</p>}
@@ -91,7 +100,7 @@ export const blockRenderer = ({ nodes }: Props) => {
             </div>
           );
 
-        case "contactPeople":
+        case "contacts":
           return (
             <div key={block.id} className="my-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {block.contacts?.map(
@@ -130,6 +139,21 @@ export const blockRenderer = ({ nodes }: Props) => {
                   </li>
                 ))}
               </ul>
+            </div>
+          );
+
+        case "largeFeaturedPost":
+          return (
+            <div key={block.id} className="my-8">
+              <h3 className="mb-4 text-xl font-bold">{block.title}</h3>
+              <p>{block.text}</p>
+            </div>
+          );
+
+        case "smallFeaturedPostsWrapper":
+          return (
+            <div key={block.id} className="my-8">
+              <p>{block.posts.map((post) => post.title)}</p>
             </div>
           );
 

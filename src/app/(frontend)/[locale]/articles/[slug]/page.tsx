@@ -64,7 +64,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <span>•</span>
           <span>{typeof article.author === "object" && article.author.email}</span>
         </div>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex w-full flex-col items-center gap-4 text-center">
           {blockRenderer({
             nodes: article.content?.root?.children as NodeTypes[],
           })}

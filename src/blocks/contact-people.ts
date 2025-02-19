@@ -1,7 +1,7 @@
 import { Block } from "payload";
 
-export const contactPeopleBlock: Block = {
-  slug: "contactPeople",
+export const contactsBlock: Block = {
+  slug: "contacts",
   fields: [
     {
       name: "contacts",
@@ -11,5 +11,5 @@ export const contactPeopleBlock: Block = {
       required: true,
     },
   ],
-  interfaceName: "ContactPeopleBlock",
+  interfaceName: "ContactsBlock",
 };

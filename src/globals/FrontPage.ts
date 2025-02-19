@@ -5,7 +5,7 @@ import {
   mediaBlock,
   videoEmbedBlock,
   linkListBlock,
-  contactPeopleBlock,
+  contactsBlock,
   quoteBlock,
 } from "@/blocks";
 import { GlobalConfig } from "payload";
@@ -28,7 +28,7 @@ export const FrontPage: GlobalConfig = {
         largeFeaturedPostBlock,
         smallFeaturedPostsWrapperBlock,
         linkListBlock,
-        contactPeopleBlock,
+        contactsBlock,
         videoEmbedBlock,
         mediaBlock,
         quoteBlock,

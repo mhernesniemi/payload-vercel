@@ -552,7 +552,7 @@ export interface FrontPage {
     | LargeFeaturedPostBlock
     | SmallFeaturedPostsWrapperBlock
     | LinkListBlock
-    | ContactPeopleBlock
+    | ContactsBlock
     | VideoEmbedBlock
     | MediaBlock
     | QuoteBlock
@@ -661,13 +661,13 @@ export interface LinkListBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactPeopleBlock".
+ * via the `definition` "ContactsBlock".
  */
-export interface ContactPeopleBlock {
+export interface ContactsBlock {
   contacts: (number | User)[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'contactPeople';
+  blockType: 'contacts';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -785,7 +785,7 @@ export interface FrontPageSelect<T extends boolean = true> {
         largeFeaturedPost?: T | LargeFeaturedPostBlockSelect<T>;
         smallFeaturedPostsWrapper?: T | SmallFeaturedPostsWrapperBlockSelect<T>;
         linkList?: T | LinkListBlockSelect<T>;
-        contactPeople?: T | ContactPeopleBlockSelect<T>;
+        contacts?: T | ContactsBlockSelect<T>;
         videoEmbed?: T | VideoEmbedBlockSelect<T>;
         media?: T | MediaBlockSelect<T>;
         quote?: T | QuoteBlockSelect<T>;
@@ -861,9 +861,9 @@ export interface LinkListBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactPeopleBlock_select".
+ * via the `definition` "ContactsBlock_select".
  */
-export interface ContactPeopleBlockSelect<T extends boolean = true> {
+export interface ContactsBlockSelect<T extends boolean = true> {
   contacts?: T;
   id?: T;
   blockName?: T;
