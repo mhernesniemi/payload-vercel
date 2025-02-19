@@ -1,5 +1,7 @@
 import { LinkListBlock as LinkListBlockType } from "@/payload-types";
-import { CMSLink } from "@/components/CMSLink";
+import { Link } from "@/i18n/routing";
+import parseLink from "@/lib/parseLink";
+import { ChevronRightIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 type Props = {
   block: LinkListBlockType;
@@ -7,14 +9,26 @@ type Props = {
 
 export function LinkListBlock({ block }: Props) {
   return (
-    <div className="my-12 rounded-xl bg-stone-900 p-8 shadow-xl ring-1 ring-stone-800">
+    <div className="my-12">
       <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h3>
       <ul className="space-y-3">
-        {block.links?.map((link) => (
-          <li key={link.id}>
-            <CMSLink link={link} />
-          </li>
-        ))}
+        {block.links?.map((link) => {
+          const { url, isExternal, title } = parseLink(link);
+          return (
+            <li key={link.id} className="flex items-center gap-2">
+              <Link
+                href={url}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="group flex items-center gap-2"
+              >
+                <ChevronRightIcon className="h-4 w-4 text-stone-100 transition-transform duration-200 group-hover:translate-x-[2px]" />
+                <span>{title}</span>
+                {isExternal && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
