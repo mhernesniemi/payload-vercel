@@ -8,7 +8,7 @@ type Props = {
 
 export const LargeFeaturedPostBlock: React.FC<Props> = ({ block }) => {
   return (
-    <div className="my-12">
+    <div className="my-12 w-full">
       <div className="overflow-hidden rounded-xl bg-stone-900 shadow-xl ring-1 ring-stone-800">
         {block.image && typeof block.image === "object" && (
           <div className="relative h-[400px] w-full">

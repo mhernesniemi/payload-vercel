@@ -1,4 +1,3 @@
-// import { Link } from "@/i18n/routing";
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
 import type {
   CTABlock,
@@ -36,7 +35,7 @@ type Props = {
   nodes: NodeTypes[];
 };
 
-export const blockRenderer = ({ nodes }: Props) => {
+export const BlockRenderer = ({ nodes }: Props) => {
   if (!nodes) return null;
 
   return nodes.map((node) => {

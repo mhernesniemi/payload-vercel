@@ -3,7 +3,7 @@ import { getPayload } from "payload";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
-import { NodeTypes, blockRenderer } from "@/components/block-renderer";
+import { NodeTypes, BlockRenderer } from "@/components/BlockRenderer";
 
 type Params = Promise<{ locale: "fi" | "en"; slug: string }>;
 
@@ -65,7 +65,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
           <span>{typeof article.author === "object" && article.author.email}</span>
         </div>
         <div className="mt-4 flex w-full flex-col items-center gap-4 text-center">
-          {blockRenderer({
+          {BlockRenderer({
             nodes: article.content?.root?.children as NodeTypes[],
           })}
         </div>
