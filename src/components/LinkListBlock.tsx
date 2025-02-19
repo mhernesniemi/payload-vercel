@@ -9,7 +9,7 @@ type Props = {
 
 export function LinkListBlock({ block }: Props) {
   return (
-    <div className="my-12">
+    <div className="my-24">
       <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h3>
       <ul className="space-y-3">
         {block.links?.map((link) => {
