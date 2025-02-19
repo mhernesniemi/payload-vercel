@@ -22,7 +22,7 @@ export function LinkListBlock({ block }: Props) {
                 rel={isExternal ? "noopener noreferrer" : undefined}
                 className="group flex items-center gap-2"
               >
-                <ChevronRightIcon className="h-4 w-4 text-stone-100 transition-transform duration-200 group-hover:translate-x-[2px]" />
+                <ChevronRightIcon className="h-4 w-4 text-amber-500 transition-transform duration-200 group-hover:translate-x-[2px]" />
                 <span>{title}</span>
                 {isExternal && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
               </Link>

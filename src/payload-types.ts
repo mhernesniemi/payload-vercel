@@ -664,7 +664,7 @@ export interface LinkListBlock {
  * via the `definition` "ContactsBlock".
  */
 export interface ContactsBlock {
-  contacts: (number | User)[];
+  contacts: (number | Contact)[];
   id?: string | null;
   blockName?: string | null;
   blockType: 'contacts';

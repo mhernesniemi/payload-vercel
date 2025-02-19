@@ -12,7 +12,7 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
       <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h3>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {block.posts.map((post) => (
-          <div key={post.id} className="overflow-hidden rounded-xl bg-stone-800 shadow-md">
+          <div key={post.id} className="overflow-hidden rounded-xl bg-stone-800">
             {post.image && typeof post.image === "object" && (
               <div className="relative h-48 w-full">
                 <Image

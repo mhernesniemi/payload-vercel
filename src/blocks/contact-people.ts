@@ -6,7 +6,7 @@ export const contactsBlock: Block = {
     {
       name: "contacts",
       type: "relationship",
-      relationTo: "users",
+      relationTo: "contacts",
       hasMany: true,
       required: true,
     },
