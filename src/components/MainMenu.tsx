@@ -39,7 +39,9 @@ export function MainMenu({ items }: MainMenuProps) {
       return (
         <Popover key={item.id} className="relative">
           <PopoverButton className="main-nav-item group flex items-center font-medium focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
-            <span>{item.label}</span>
+            <span className="transition-colors duration-200 group-data-[open]:text-amber-500">
+              {item.label}
+            </span>
             <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
           </PopoverButton>
           <Transition
@@ -54,7 +56,7 @@ export function MainMenu({ items }: MainMenuProps) {
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
               <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                 <div
-                  className={`relative grid gap-6 bg-stone-800 px-6 py-3`}
+                  className="grid gap-x-4 gap-y-10 bg-stone-800 p-10 *:relative"
                   // Calculate the number of columns
                   style={{
                     gridTemplateColumns: `repeat(${Math.min(
@@ -62,7 +64,7 @@ export function MainMenu({ items }: MainMenuProps) {
                       item.children?.filter(
                         (child) => child.grandchildren && child.grandchildren.length > 0,
                       ).length || 1,
-                    )}, 150px)`,
+                    )}, 200px)`,
                   }}
                 >
                   {/* Child components with grandchildren */}
@@ -70,18 +72,15 @@ export function MainMenu({ items }: MainMenuProps) {
                     ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
                     .map((child) => (
                       <div key={child.id}>
-                        <Link
-                          href={parseLink(child).url}
-                          className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
-                        >
+                        <span className="mb-3 flex items-center rounded-lg text-sm font-medium tracking-wide text-stone-400">
                           {child.label}
-                        </Link>
-                        <div className="mt-2">
+                        </span>
+                        <div className="flex flex-col gap-3">
                           {child.grandchildren?.map((grandchild) => (
                             <Link
                               key={grandchild.id}
                               href={parseLink(grandchild).url}
-                              className="block text-sm text-stone-300 transition duration-150 ease-in-out hover:text-amber-500"
+                              className="block leading-tight transition duration-150 ease-in-out hover:text-amber-500"
                             >
                               {grandchild.label}
                             </Link>
@@ -92,14 +91,14 @@ export function MainMenu({ items }: MainMenuProps) {
 
                   {/* Child components without grandchildren */}
                   {item.children?.some((child) => !child.grandchildren?.length) && (
-                    <div>
+                    <div className="flex flex-col gap-2">
                       {item.children
                         .filter((child) => !child.grandchildren?.length)
                         .map((child) => (
                           <Link
                             key={child.id}
                             href={parseLink(child).url}
-                            className="flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
+                            className="leading-snug transition duration-150 ease-in-out hover:text-amber-500"
                           >
                             {child.label}
                           </Link>

@@ -5,5 +5,5 @@ interface ContainerProps {
 }
 
 export default function Container({ children }: ContainerProps) {
-  return <main className="container mx-auto px-4">{children}</main>;
+  return <div className="container mx-auto px-4">{children}</div>;
 }
