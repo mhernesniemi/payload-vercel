@@ -36,8 +36,8 @@ export default function MainMenu({ items }: MainMenuProps) {
 
     if (hasChildren) {
       return (
-        <Popover key={item.id} className="group relative">
-          <PopoverButton className="main-nav-item flex items-center focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
+        <Popover key={item.id} className="relative">
+          <PopoverButton className="main-nav-item group flex items-center focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
             <span>{item.label}</span>
             <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
           </PopoverButton>
@@ -51,7 +51,7 @@ export default function MainMenu({ items }: MainMenuProps) {
             leaveTo="opacity-0 translate-y-1"
           >
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2">
-              <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 bg-stone-800 p-6">
                   {(item.children || []).map((child) => (
                     <Link

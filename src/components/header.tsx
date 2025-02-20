@@ -22,8 +22,8 @@ export default async function Header() {
         <Link href="/" className="text-xl font-bold">
           {t("meta.title")}
         </Link>
+        <MainMenu items={mainMenu.items as MenuItem[]} />
         <div className="flex items-center gap-8">
-          <MainMenu items={mainMenu.items as MenuItem[]} />
           <LanguageSwitcher />
         </div>
       </div>
