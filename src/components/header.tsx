@@ -1,9 +1,20 @@
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+import MainMenu, { MenuItem } from "./MainMenu";
+export default async function Header() {
+  const t = await getTranslations();
+  const payload = await getPayload({
+    config: configPromise,
+  });
 
-export default function Header() {
-  const t = useTranslations();
+  const mainMenu = await payload.findGlobal({
+    slug: "main-menu",
+  });
+
+  console.log("Päävalikon kohteet:", mainMenu.items);
 
   return (
     <header>
@@ -12,20 +23,7 @@ export default function Header() {
           {t("meta.title")}
         </Link>
         <div className="flex items-center gap-8">
-          <nav>
-            <ul className="flex gap-6">
-              <li>
-                <Link href="/" className="hover:text-gray-600">
-                  {t("navigation.home")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/articles" className="hover:text-gray-600">
-                  {t("navigation.articles")}
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <MainMenu items={mainMenu.items as MenuItem[]} />
           <LanguageSwitcher />
         </div>
       </div>
