@@ -3,7 +3,7 @@
 import { ChevronRightIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import SidePanel from "../side-panel/side-panel";
+import SidePanel from "./SidePanel";
 import Link from "next/link";
 
 interface MenuItem {
@@ -18,9 +18,9 @@ interface SidePanelMenuProps {
 
 export default function SidePanelMenu({ items }: SidePanelMenuProps) {
   const [currentItems, setCurrentItems] = useState<MenuItem[]>(items);
-  const [navigationStack, setNavigationStack] = useState<
-    { items: MenuItem[]; title: string }[]
-  >([]);
+  const [navigationStack, setNavigationStack] = useState<{ items: MenuItem[]; title: string }[]>(
+    [],
+  );
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -51,9 +51,7 @@ export default function SidePanelMenu({ items }: SidePanelMenuProps) {
   };
 
   const title =
-    navigationStack.length > 0
-      ? navigationStack[navigationStack.length - 1].title
-      : undefined;
+    navigationStack.length > 0 ? navigationStack[navigationStack.length - 1].title : undefined;
 
   return (
     <SidePanel
@@ -71,11 +69,7 @@ export default function SidePanelMenu({ items }: SidePanelMenuProps) {
       <AnimatePresence mode="popLayout">
         <motion.div
           key={navigationStack.length}
-          initial={
-            isFirstRender
-              ? false
-              : { opacity: 0, x: direction === "forward" ? 300 : -300 }
-          }
+          initial={isFirstRender ? false : { opacity: 0, x: direction === "forward" ? 300 : -300 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{
             duration: 0.2,
@@ -113,9 +107,7 @@ export default function SidePanelMenu({ items }: SidePanelMenuProps) {
                     </Link>
                   ) : (
                     <button
-                      onClick={() =>
-                        handleSubmenuClick(item.sublinks!, item.title)
-                      }
+                      onClick={() => handleSubmenuClick(item.sublinks!, item.title)}
                       className="flex w-full items-center justify-between p-3 text-lg text-slate-700 transition-all duration-200 hover:bg-slate-100"
                     >
                       {item.title}
