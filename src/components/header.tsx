@@ -18,12 +18,12 @@ export default async function Header() {
 
   return (
     <header>
-      <div className="container mx-auto flex items-center justify-between px-4 py-4 xl:px-0">
+      <div className="container mx-auto grid grid-cols-3 items-center justify-between px-4 py-4 xl:px-0">
         <Link href="/" className="text-xl font-bold">
           {t("meta.title")}
         </Link>
         <MainMenu items={mainMenu.items as MenuItem[]} />
-        <div className="flex items-center gap-8">
+        <div className="col-span-1 flex items-center justify-end">
           <LanguageSwitcher />
         </div>
       </div>

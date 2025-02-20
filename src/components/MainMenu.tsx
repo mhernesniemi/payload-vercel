@@ -37,7 +37,7 @@ export default function MainMenu({ items }: MainMenuProps) {
     if (hasChildren) {
       return (
         <Popover key={item.id} className="relative">
-          <PopoverButton className="main-nav-item group flex items-center focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
+          <PopoverButton className="main-nav-item group flex items-center font-medium focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
             <span>{item.label}</span>
             <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
           </PopoverButton>
@@ -83,5 +83,7 @@ export default function MainMenu({ items }: MainMenuProps) {
     );
   };
 
-  return <nav className="flex items-center space-x-4">{items.map(renderMenuItem)}</nav>;
+  return (
+    <nav className="flex items-center justify-center space-x-4">{items.map(renderMenuItem)}</nav>
+  );
 }
