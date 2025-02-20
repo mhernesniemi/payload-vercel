@@ -1,11 +1,11 @@
 "use client";
 
 import { Popover, PopoverPanel, PopoverButton, Transition } from "@headlessui/react";
-
 import { Fragment } from "react";
 import Link from "next/link";
 import parseLink from "../lib/parseLink";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import SidePanelMenu from "./SidePanelMenu";
 
 export type MenuItem = {
   label: string;
@@ -30,7 +30,7 @@ interface MainMenuProps {
   items: MenuItem[];
 }
 
-export default function MainMenu({ items }: MainMenuProps) {
+export function MainMenu({ items }: MainMenuProps) {
   const renderMenuItem = (item: MenuItem) => {
     const hasChildren = item.children && item.children.length > 0;
 
@@ -84,6 +84,27 @@ export default function MainMenu({ items }: MainMenuProps) {
   };
 
   return (
-    <nav className="flex items-center justify-center space-x-4">{items.map(renderMenuItem)}</nav>
+    <nav className="hidden items-center justify-center space-x-4 md:flex">
+      {items.map(renderMenuItem)}
+    </nav>
+  );
+}
+
+export function MobileMenu({ items }: MainMenuProps) {
+  const convertToSidePanelItems = (
+    menuItems: MenuItem[],
+  ): { title: string; url: string; sublinks?: { title: string; url: string }[] }[] => {
+    return menuItems.map((item) => ({
+      title: item.label,
+      url: parseLink(item).url,
+      sublinks: item.children ? convertToSidePanelItems(item.children) : undefined,
+    }));
+  };
+
+  const sidePanelItems = convertToSidePanelItems(items);
+  return (
+    <div className="md:hidden">
+      <SidePanelMenu items={sidePanelItems} />
+    </div>
   );
 }

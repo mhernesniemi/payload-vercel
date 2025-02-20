@@ -5,6 +5,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import SidePanel from "./SidePanel";
 import Link from "next/link";
+import parseLink from "../lib/parseLink";
+import { MenuItem as MainMenuItem } from "./MainMenu";
 
 interface MenuItem {
   title: string;
@@ -13,11 +15,25 @@ interface MenuItem {
 }
 
 interface SidePanelMenuProps {
-  items: MenuItem[];
+  items: MenuItem[] | MainMenuItem[];
+  isMainMenuItems?: boolean;
 }
 
-export default function SidePanelMenu({ items }: SidePanelMenuProps) {
-  const [currentItems, setCurrentItems] = useState<MenuItem[]>(items);
+// Helper function to convert MainMenuItem type to MenuItem type
+const convertMainMenuItems = (menuItems: MainMenuItem[]): MenuItem[] => {
+  return menuItems.map((item) => ({
+    title: item.label,
+    url: parseLink(item).url,
+    sublinks: item.children ? convertMainMenuItems(item.children) : undefined,
+  }));
+};
+
+export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePanelMenuProps) {
+  const processedItems: MenuItem[] = isMainMenuItems
+    ? convertMainMenuItems(items as MainMenuItem[])
+    : (items as MenuItem[]);
+
+  const [currentItems, setCurrentItems] = useState<MenuItem[]>(processedItems);
   const [navigationStack, setNavigationStack] = useState<{ items: MenuItem[]; title: string }[]>(
     [],
   );
@@ -26,7 +42,7 @@ export default function SidePanelMenu({ items }: SidePanelMenuProps) {
 
   const handleClose = () => {
     setTimeout(() => {
-      setCurrentItems(items);
+      setCurrentItems(processedItems);
       setNavigationStack([]);
       setDirection("forward");
       setIsFirstRender(true);

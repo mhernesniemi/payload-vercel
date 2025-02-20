@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
-import MainMenu, { MenuItem } from "./MainMenu";
+import { MainMenu, MenuItem, MobileMenu } from "./MainMenu";
+
 export default async function Header() {
   const t = await getTranslations();
   const payload = await getPayload({
@@ -19,6 +20,7 @@ export default async function Header() {
   return (
     <header>
       <div className="container mx-auto grid grid-cols-3 items-center justify-between px-4 py-4 xl:px-0">
+        <MobileMenu items={mainMenu.items as MenuItem[]} />
         <Link href="/" className="text-xl font-bold">
           {t("meta.title")}
         </Link>
