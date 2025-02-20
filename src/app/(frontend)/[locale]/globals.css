@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::selection {
+  @apply bg-black text-amber-400;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply rounded-sm outline-none ring-2 ring-yellow-400 ring-offset-2 ring-offset-black transition-shadow duration-200;
+}
