@@ -13,9 +13,14 @@ export function QuoteBlock({ block }: Props) {
       {block.author && (
         <footer className="text-stone-300">
           <cite className="flex items-center gap-4 not-italic">
-            {block.image && typeof block.image !== "number" && block.image.url && (
+            {block.image && typeof block.image !== "number" && (
               <div className="relative h-12 w-12 overflow-hidden rounded-full">
-                <Image src={block.image.url} alt={block.author} fill className="object-cover" />
+                <Image
+                  src={block.image.url || "/placeholder-img.png"}
+                  alt={block.author}
+                  fill
+                  className="object-cover"
+                />
               </div>
             )}
             <div>

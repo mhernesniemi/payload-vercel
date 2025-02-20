@@ -16,7 +16,7 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
             {post.image && typeof post.image === "object" && (
               <div className="relative h-48 w-full">
                 <Image
-                  src={post.image.url || ""}
+                  src={post.image.url || "/placeholder-img.png"}
                   alt={post.image.alt || post.title || ""}
                   fill
                   className="object-cover"

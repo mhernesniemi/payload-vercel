@@ -11,7 +11,7 @@ export function MediaBlock({ block }: Props) {
       {block.media && typeof block.media === "object" && (
         <div className="relative overflow-hidden rounded-xl shadow-xl ring-1 ring-stone-800">
           <Image
-            src={block.media.url || ""}
+            src={block.media.url || "/placeholder-img.png"}
             alt={block.media.alt || ""}
             width={1200}
             height={800}

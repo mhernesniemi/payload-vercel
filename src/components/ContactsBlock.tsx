@@ -18,7 +18,7 @@ export function ContactsBlock({ block }: Props) {
                 {typeof contact.image === "object" && contact.image && (
                   <div className="mb-4 overflow-hidden rounded-lg">
                     <Image
-                      src={contact.image.url || ""}
+                      src={contact.image.url || "/placeholder-img.png"}
                       alt={contact.image.alt || ""}
                       width={contact.image.width || 400}
                       height={contact.image.height || 400}

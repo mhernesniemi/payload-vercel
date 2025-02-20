@@ -13,7 +13,7 @@ export function LargeFeaturedPostBlock({ block }: Props) {
         {block.image && typeof block.image === "object" && (
           <div className="relative h-[400px] w-full">
             <Image
-              src={block.image.url || ""}
+              src={block.image.url || "/placeholder-img.png"}
               alt={block.image.alt || block.title || ""}
               fill
               className="object-cover"
