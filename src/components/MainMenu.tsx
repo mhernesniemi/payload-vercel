@@ -53,7 +53,18 @@ export function MainMenu({ items }: MainMenuProps) {
           >
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
               <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative flex gap-6 bg-stone-800 p-6">
+                <div
+                  className={`relative grid gap-6 bg-stone-800 px-6 py-3`}
+                  // Calculate the number of columns
+                  style={{
+                    gridTemplateColumns: `repeat(${Math.min(
+                      3,
+                      item.children?.filter(
+                        (child) => child.grandchildren && child.grandchildren.length > 0,
+                      ).length || 1,
+                    )}, 150px)`,
+                  }}
+                >
                   {/* Child components with grandchildren */}
                   {item.children
                     ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
@@ -63,11 +74,9 @@ export function MainMenu({ items }: MainMenuProps) {
                           href={parseLink(child).url}
                           className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
                         >
-                          <div>
-                            <p className="text-base font-medium">{child.label}</p>
-                          </div>
+                          {child.label}
                         </Link>
-                        <div className="mt-2 space-y-2">
+                        <div className="mt-2">
                           {child.grandchildren?.map((grandchild) => (
                             <Link
                               key={grandchild.id}
@@ -83,18 +92,16 @@ export function MainMenu({ items }: MainMenuProps) {
 
                   {/* Child components without grandchildren */}
                   {item.children?.some((child) => !child.grandchildren?.length) && (
-                    <div className="flex flex-1 flex-col space-y-2">
+                    <div>
                       {item.children
                         .filter((child) => !child.grandchildren?.length)
                         .map((child) => (
                           <Link
                             key={child.id}
                             href={parseLink(child).url}
-                            className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
+                            className="flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
                           >
-                            <div>
-                              <p className="text-base font-medium">{child.label}</p>
-                            </div>
+                            {child.label}
                           </Link>
                         ))}
                     </div>
