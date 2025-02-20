@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-800"
               >
                 <div className="w-4">{locale === "fi" && <CheckIcon className="h-4 w-4" />}</div>
-                <span>{t("finnish")}</span>
+                <span>Suomi</span>
               </button>
             </MenuItem>
             <MenuItem>
@@ -52,7 +52,7 @@ export default function LanguageSwitcher() {
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-800"
               >
                 <div className="w-4">{locale === "en" && <CheckIcon className="h-4 w-4" />}</div>
-                <span>{t("english")}</span>
+                <span>English</span>
               </button>
             </MenuItem>
           </div>

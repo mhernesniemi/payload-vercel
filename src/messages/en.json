@@ -34,9 +34,7 @@
     "articles": "Articles"
   },
   "languageSwitcher": {
-    "switchLanguage": "Switch language",
-    "finnish": "Finnish",
-    "english": "English"
+    "switchLanguage": "Switch language"
   },
   "auth": {
     "signIn": "Sign in",
