@@ -54,15 +54,15 @@ export default function MainMenu({ items }: MainMenuProps) {
           >
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2">
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 bg-white p-6">
+                <div className="relative grid gap-6 bg-stone-800 p-6">
                   {(item.children || []).map((child) => (
                     <Link
                       key={child.id}
                       href={parseLink(child).url}
-                      className="-m-3 flex items-center rounded-lg p-3 transition duration-150 ease-in-out hover:bg-gray-50"
+                      className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:bg-stone-700"
                     >
                       <div>
-                        <p className="text-base font-medium text-gray-900">{child.label}</p>
+                        <p className="text-base font-medium">{child.label}</p>
                       </div>
                     </Link>
                   ))}
@@ -75,7 +75,11 @@ export default function MainMenu({ items }: MainMenuProps) {
     }
 
     return (
-      <Link key={item.id} href={parseLink(item).url} className="px-3 py-2 text-base font-medium">
+      <Link
+        key={item.id}
+        href={parseLink(item).url}
+        className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
+      >
         {item.label}
       </Link>
     );
