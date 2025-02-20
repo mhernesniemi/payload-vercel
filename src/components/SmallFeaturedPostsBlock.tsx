@@ -13,10 +13,10 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {block.posts.map((post) => (
           <div key={post.id} className="overflow-hidden rounded-xl bg-stone-800">
-            {post.image && typeof post.image === "object" && (
+            {typeof post.image === "object" && post.image.url && (
               <div className="relative h-48 w-full">
                 <Image
-                  src={post.image.url || "/placeholder-img.png"}
+                  src={post.image.url}
                   alt={post.image.alt || post.title || ""}
                   fill
                   className="object-cover"

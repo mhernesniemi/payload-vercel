@@ -10,10 +10,10 @@ export function LargeFeaturedPostBlock({ block }: Props) {
   return (
     <div className="my-24 w-full text-center">
       <div className="overflow-hidden rounded-xl bg-stone-800">
-        {block.image && typeof block.image === "object" && (
+        {typeof block.image === "object" && block.image.url && (
           <div className="relative h-[400px] w-full">
             <Image
-              src={block.image.url || "/placeholder-img.png"}
+              src={block.image.url}
               alt={block.image.alt || block.title || ""}
               fill
               className="object-cover"

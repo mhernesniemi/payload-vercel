@@ -8,7 +8,7 @@ type Props = {
 export function MediaBlock({ block }: Props) {
   return (
     <figure className="my-24">
-      {block.media && typeof block.media === "object" && (
+      {typeof block.media === "object" && block.media.url && (
         <div className="relative overflow-hidden rounded-xl shadow-xl ring-1 ring-stone-800">
           <Image
             src={block.media.url || "/placeholder-img.png"}

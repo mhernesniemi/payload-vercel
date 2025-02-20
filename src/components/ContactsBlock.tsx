@@ -15,10 +15,10 @@ export function ContactsBlock({ block }: Props) {
           (contact) =>
             typeof contact === "object" && (
               <div key={contact.id} className="relative rounded-xl bg-stone-800 p-6">
-                {typeof contact.image === "object" && contact.image && (
+                {typeof contact.image === "object" && contact.image?.url && (
                   <div className="mb-4 overflow-hidden rounded-lg">
                     <Image
-                      src={contact.image.url || "/placeholder-img.png"}
+                      src={contact.image.url}
                       alt={contact.image.alt || ""}
                       width={contact.image.width || 400}
                       height={contact.image.height || 400}
