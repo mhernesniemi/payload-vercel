@@ -2,9 +2,10 @@ import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import Image from "next/image";
-import { NodeTypes, BlockRenderer } from "@/components/BlockRenderer";
 import { SITE_NAME } from "@/lib/constants";
+import Container from "@/components/Container";
+import ArticleTemplate from "@/app/templates/ArticleTemplate";
+import Header from "@/components/Header";
 type Params = Promise<{ locale: "fi" | "en"; slug: string }>;
 
 async function getArticleBySlug(slug: string, locale: "fi" | "en") {
@@ -42,32 +43,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
     notFound();
   }
 
-  const heroImage = article.heroImage as { url: string; alt: string };
-
   return (
-    <main className="container mx-auto px-4 py-8">
-      <article>
-        {heroImage?.url && (
-          <Image
-            src={heroImage.url}
-            alt={heroImage.alt || ""}
-            width={1920}
-            height={1080}
-            className="mb-8 h-[400px] w-full rounded-lg object-cover"
-          />
-        )}
-        <h1 className="mb-4 text-4xl font-bold">{article.title}</h1>
-        <div className="mb-8 flex gap-4 text-stone-400">
-          <time dateTime={article.publishedDate}>
-            {new Date(article.publishedDate).toLocaleDateString("fi-FI")}
-          </time>
-          <span>•</span>
-          <span>{typeof article.author === "object" && article.author.email}</span>
-        </div>
-        <div className="mx-auto mt-12 max-w-screen-lg">
-          <BlockRenderer nodes={article.content?.root?.children as NodeTypes[]} />
-        </div>
-      </article>
-    </main>
+    <Container>
+      <Header />
+      <ArticleTemplate article={article} />
+    </Container>
   );
 }

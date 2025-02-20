@@ -6,8 +6,8 @@
   @apply bg-black text-amber-400;
 }
 
+button:not(.main-nav-item):focus-visible,
 a:focus-visible,
-button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
