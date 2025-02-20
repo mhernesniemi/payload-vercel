@@ -38,7 +38,7 @@ export function MainMenu({ items }: MainMenuProps) {
 
     if (hasChildren) {
       return (
-        <Popover key={item.id} className="relative">
+        <Popover key={item.id} className="relative px-3 py-2">
           <PopoverButton className="main-nav-item group flex items-center font-medium focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
             <span className="transition-colors duration-200 group-data-[open]:text-amber-500">
               {item.label}
@@ -57,12 +57,13 @@ export function MainMenu({ items }: MainMenuProps) {
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
               <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                 <div
+                  // If the item has grandchildren, use a grid layout
                   className={clsx(
                     "bg-stone-800 *:relative",
                     item.children?.some(
                       (child) => child.grandchildren && child.grandchildren.length > 0,
                     )
-                      ? "grid gap-x-4 gap-y-10 p-10"
+                      ? "grid gap-x-4 gap-y-10 px-10 pb-10 pt-6"
                       : "min-w-[200px] p-6",
                   )}
                   // Calculate the number of columns
@@ -86,10 +87,10 @@ export function MainMenu({ items }: MainMenuProps) {
                     ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
                     .map((child) => (
                       <div key={child.id}>
-                        <span className="mb-3 flex items-center rounded-lg text-sm font-medium tracking-wide text-stone-400">
+                        <span className="mb-4 flex items-center rounded-lg text-sm font-medium tracking-wide text-stone-400">
                           {child.label}
                         </span>
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-4">
                           {child.grandchildren?.map((grandchild) => (
                             <Link
                               key={grandchild.id}
@@ -105,7 +106,7 @@ export function MainMenu({ items }: MainMenuProps) {
 
                   {/* Child components without grandchildren */}
                   {item.children?.some((child) => !child.grandchildren?.length) && (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-4">
                       {item.children
                         .filter((child) => !child.grandchildren?.length)
                         .map((child) => (
@@ -138,11 +139,7 @@ export function MainMenu({ items }: MainMenuProps) {
     );
   };
 
-  return (
-    <nav className="hidden items-center justify-center space-x-4 lg:flex">
-      {items.map(renderMenuItem)}
-    </nav>
-  );
+  return <nav className="flex items-center justify-center gap-4">{items.map(renderMenuItem)}</nav>;
 }
 
 type SidePanelLink = {
@@ -180,7 +177,7 @@ export function MobileMenu({ items }: { items: MenuItem[] }) {
 
   const sidePanelItems = convertToSidePanelItems(items);
   return (
-    <div className="flex items-center lg:hidden">
+    <div className="flex items-center">
       <SidePanelMenu items={sidePanelItems} />
     </div>
   );

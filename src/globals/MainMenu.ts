@@ -23,16 +23,24 @@ export const MainMenu: GlobalConfig = {
           localized: true,
         },
         {
+          name: "addLinks",
+          type: "checkbox",
+          label: "This is a parent menu item",
+        },
+        {
           name: "link",
           type: "group",
           fields: linkField,
           admin: {
-            condition: (_, siblingData) => !siblingData.onlyLabel,
+            condition: (_, siblingData) => !siblingData.addLinks,
           },
         },
         {
           name: "children",
           type: "array",
+          admin: {
+            condition: (_, siblingData) => siblingData.addLinks,
+          },
           fields: [
             {
               name: "label",

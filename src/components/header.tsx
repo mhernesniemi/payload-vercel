@@ -17,15 +17,19 @@ export default async function Header() {
 
   return (
     <header>
-      <div className="container mx-auto grid grid-cols-3 items-center justify-between px-4 py-4 xl:px-0">
-        <MobileMenu items={mainMenu.items as MenuItem[]} />
-        <div>
+      <div className="container mx-auto flex items-center justify-between px-4 py-4 xl:px-0">
+        <div className="lg:hidden">
+          <MobileMenu items={mainMenu.items as MenuItem[]} />
+        </div>
+        <div className="lg:w-[200px]">
           <Link href="/" className="text-xl font-bold">
             {t("meta.title")}
           </Link>
         </div>
-        <MainMenu items={mainMenu.items as MenuItem[]} />
-        <div className="col-span-1 flex items-center justify-end">
+        <div className="hidden lg:block lg:flex-1">
+          <MainMenu items={mainMenu.items as MenuItem[]} />
+        </div>
+        <div className="flex justify-end lg:w-[200px]">
           <LanguageSwitcher />
         </div>
       </div>

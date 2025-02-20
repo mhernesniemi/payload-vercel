@@ -719,6 +719,7 @@ export interface MainMenu {
   id: number;
   items: {
     label: string;
+    addLinks?: boolean | null;
     link?: {
       isExternal?: boolean | null;
       internalUrl?:
@@ -936,6 +937,7 @@ export interface MainMenuSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        addLinks?: T;
         link?:
           | T
           | {
