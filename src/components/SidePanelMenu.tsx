@@ -74,7 +74,7 @@ export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePa
       openLabel={
         <div className="flex items-center gap-2">
           <Bars3Icon className="h-6 w-6 stroke-2" />
-          <span className="hidden md:inline-block">Menu</span>
+          <span className="sr-only">Menu</span>
         </div>
       }
       position="left"

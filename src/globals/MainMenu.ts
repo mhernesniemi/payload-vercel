@@ -23,11 +23,6 @@ export const MainMenu: GlobalConfig = {
           localized: true,
         },
         {
-          name: "onlyLabel",
-          type: "checkbox",
-          label: "Only show label",
-        },
-        {
           name: "link",
           type: "group",
           fields: linkField,
@@ -49,6 +44,23 @@ export const MainMenu: GlobalConfig = {
               name: "link",
               type: "group",
               fields: linkField,
+            },
+            {
+              name: "grandchildren",
+              type: "array",
+              fields: [
+                {
+                  name: "label",
+                  type: "text",
+                  required: true,
+                  localized: true,
+                },
+                {
+                  name: "link",
+                  type: "group",
+                  fields: linkField,
+                },
+              ],
             },
           ],
         },

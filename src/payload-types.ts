@@ -719,7 +719,6 @@ export interface MainMenu {
   id: number;
   items: {
     label: string;
-    onlyLabel?: boolean | null;
     link?: {
       isExternal?: boolean | null;
       internalUrl?:
@@ -765,6 +764,33 @@ export interface MainMenu {
                 } | null);
             externalUrl?: string | null;
           };
+          grandchildren?:
+            | {
+                label: string;
+                link?: {
+                  isExternal?: boolean | null;
+                  internalUrl?:
+                    | ({
+                        relationTo: 'articles';
+                        value: number | Article;
+                      } | null)
+                    | ({
+                        relationTo: 'collection-pages';
+                        value: number | CollectionPage;
+                      } | null)
+                    | ({
+                        relationTo: 'news';
+                        value: number | News;
+                      } | null)
+                    | ({
+                        relationTo: 'references';
+                        value: number | Reference;
+                      } | null);
+                  externalUrl?: string | null;
+                };
+                id?: string | null;
+              }[]
+            | null;
           id?: string | null;
         }[]
       | null;
@@ -910,7 +936,6 @@ export interface MainMenuSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
-        onlyLabel?: T;
         link?:
           | T
           | {
@@ -928,6 +953,19 @@ export interface MainMenuSelect<T extends boolean = true> {
                     isExternal?: T;
                     internalUrl?: T;
                     externalUrl?: T;
+                  };
+              grandchildren?:
+                | T
+                | {
+                    label?: T;
+                    link?:
+                      | T
+                      | {
+                          isExternal?: T;
+                          internalUrl?: T;
+                          externalUrl?: T;
+                        };
+                    id?: T;
                   };
               id?: T;
             };

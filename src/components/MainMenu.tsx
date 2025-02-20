@@ -23,6 +23,7 @@ export type MenuItem = {
     externalUrl?: string;
   };
   children?: MenuItem[];
+  grandchildren?: MenuItem[];
   id: string;
 };
 
@@ -54,15 +55,29 @@ export function MainMenu({ items }: MainMenuProps) {
               <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 bg-stone-800 p-6">
                   {(item.children || []).map((child) => (
-                    <Link
-                      key={child.id}
-                      href={parseLink(child).url}
-                      className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
-                    >
-                      <div>
-                        <p className="text-base font-medium">{child.label}</p>
-                      </div>
-                    </Link>
+                    <div key={child.id}>
+                      <Link
+                        href={parseLink(child).url}
+                        className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
+                      >
+                        <div>
+                          <p className="text-base font-medium">{child.label}</p>
+                        </div>
+                      </Link>
+                      {child.grandchildren && child.grandchildren.length > 0 && (
+                        <div className="ml-4 mt-2 space-y-2">
+                          {child.grandchildren.map((grandchild) => (
+                            <Link
+                              key={grandchild.id}
+                              href={parseLink(grandchild).url}
+                              className="block text-sm text-stone-300 transition duration-150 ease-in-out hover:text-amber-500"
+                            >
+                              {grandchild.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -84,26 +99,48 @@ export function MainMenu({ items }: MainMenuProps) {
   };
 
   return (
-    <nav className="hidden items-center justify-center space-x-4 md:flex">
+    <nav className="hidden items-center justify-center space-x-4 lg:flex">
       {items.map(renderMenuItem)}
     </nav>
   );
 }
 
-export function MobileMenu({ items }: MainMenuProps) {
-  const convertToSidePanelItems = (
-    menuItems: MenuItem[],
-  ): { title: string; url: string; sublinks?: { title: string; url: string }[] }[] => {
+type SidePanelLink = {
+  title: string;
+  url: string;
+};
+
+type SidePanelSubLink = SidePanelLink & {
+  sublinks?: SidePanelLink[];
+};
+
+type SidePanelItem = SidePanelLink & {
+  sublinks?: SidePanelSubLink[];
+};
+
+export function MobileMenu({ items }: { items: MenuItem[] }) {
+  const convertGrandchildToSidePanelLink = (grandchild: MenuItem): SidePanelLink => ({
+    title: grandchild.label,
+    url: parseLink(grandchild).url,
+  });
+
+  const convertChildToSidePanelSubLink = (child: MenuItem): SidePanelSubLink => ({
+    title: child.label,
+    url: parseLink(child).url,
+    sublinks: child.grandchildren?.map(convertGrandchildToSidePanelLink),
+  });
+
+  const convertToSidePanelItems = (menuItems: MenuItem[]): SidePanelItem[] => {
     return menuItems.map((item) => ({
       title: item.label,
       url: parseLink(item).url,
-      sublinks: item.children ? convertToSidePanelItems(item.children) : undefined,
+      sublinks: item.children?.map(convertChildToSidePanelSubLink),
     }));
   };
 
   const sidePanelItems = convertToSidePanelItems(items);
   return (
-    <div className="md:hidden">
+    <div className="flex items-center lg:hidden">
       <SidePanelMenu items={sidePanelItems} />
     </div>
   );
