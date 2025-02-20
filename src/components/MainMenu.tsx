@@ -1,10 +1,11 @@
 "use client";
 
 import { Popover, PopoverPanel, PopoverButton, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
 import { Fragment } from "react";
 import Link from "next/link";
 import parseLink from "../lib/parseLink";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export type MenuItem = {
   label: string;
@@ -35,13 +36,10 @@ export default function MainMenu({ items }: MainMenuProps) {
 
     if (hasChildren) {
       return (
-        <Popover key={item.id} className="relative">
+        <Popover key={item.id} className="group relative">
           <PopoverButton className="main-nav-item flex items-center focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
             <span>{item.label}</span>
-            <ChevronDownIcon
-              className="ml-2 h-5 w-5 transition-transform duration-200 data-[open]:rotate-180"
-              aria-hidden="true"
-            />
+            <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
           </PopoverButton>
           <Transition
             as={Fragment}
@@ -59,7 +57,7 @@ export default function MainMenu({ items }: MainMenuProps) {
                     <Link
                       key={child.id}
                       href={parseLink(child).url}
-                      className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:bg-stone-700"
+                      className="-m-3 flex items-center rounded-lg p-3 text-stone-100 transition duration-150 ease-in-out hover:text-amber-500"
                     >
                       <div>
                         <p className="text-base font-medium">{child.label}</p>
