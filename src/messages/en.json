@@ -33,6 +33,11 @@
     "home": "Home",
     "articles": "Articles"
   },
+  "languageSwitcher": {
+    "switchLanguage": "Switch language",
+    "finnish": "Finnish",
+    "english": "English"
+  },
   "auth": {
     "signIn": "Sign in",
     "email": "Email",

@@ -33,6 +33,11 @@
     "home": "Koti",
     "articles": "Artikkelit"
   },
+  "languageSwitcher": {
+    "switchLanguage": "Vaihda kieltä",
+    "finnish": "Suomi",
+    "english": "Englanti"
+  },
   "auth": {
     "signIn": "Kirjaudu sisään",
     "email": "Sähköposti",

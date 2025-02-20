@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, MenuButton, Transition, MenuItems, MenuItem } from "@headlessui/react";
 import { LanguageIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
@@ -10,6 +10,7 @@ export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("languageSwitcher");
 
   const handleLocaleChange = (newLocale: string) => {
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
@@ -19,10 +20,11 @@ export default function LanguageSwitcher() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <MenuButton
-        className="inline-flex items-center justify-center p-2"
-        aria-label="Vaihda kieltä"
+        className="inline-flex items-center justify-center gap-2 p-2"
+        aria-label={t("switchLanguage")}
       >
         <LanguageIcon className="h-5 w-5" aria-hidden="true" />
+        <span className="text-sm font-medium">{locale.toUpperCase()}</span>
       </MenuButton>
       <Transition
         as={Fragment}
@@ -41,7 +43,7 @@ export default function LanguageSwitcher() {
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-800"
               >
                 <div className="w-4">{locale === "fi" && <CheckIcon className="h-4 w-4" />}</div>
-                <span>Suomi</span>
+                <span>{t("finnish")}</span>
               </button>
             </MenuItem>
             <MenuItem>
@@ -50,7 +52,7 @@ export default function LanguageSwitcher() {
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-800"
               >
                 <div className="w-4">{locale === "en" && <CheckIcon className="h-4 w-4" />}</div>
-                <span>English</span>
+                <span>{t("english")}</span>
               </button>
             </MenuItem>
           </div>
