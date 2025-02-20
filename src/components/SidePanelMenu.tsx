@@ -93,23 +93,7 @@ export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePa
           }}
         >
           <div className="flex w-full flex-col">
-            {title && (
-              <>
-                <h2 className="my-6 text-2xl font-bold">{title}</h2>
-                {navigationStack.length > 0 && (
-                  <Link
-                    href={
-                      navigationStack[navigationStack.length - 1].items.find(
-                        (item) => item.title === title,
-                      )?.url || "#"
-                    }
-                    className="block border-t border-stone-700 p-3 text-lg text-stone-100 transition-all duration-200 hover:bg-stone-700"
-                  >
-                    All
-                  </Link>
-                )}
-              </>
-            )}
+            {title && <h2 className="my-6 text-2xl font-bold">{title}</h2>}
 
             <ul className="w-full divide-y divide-stone-700 overflow-scroll break-words border-y border-stone-700 text-lg text-stone-100">
               {currentItems?.map((item, index) => (

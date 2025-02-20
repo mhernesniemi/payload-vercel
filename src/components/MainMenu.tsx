@@ -6,6 +6,7 @@ import Link from "next/link";
 import parseLink from "../lib/parseLink";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";
+import clsx from "clsx";
 
 export type MenuItem = {
   label: string;
@@ -56,16 +57,29 @@ export function MainMenu({ items }: MainMenuProps) {
             <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
               <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                 <div
-                  className="grid gap-x-4 gap-y-10 bg-stone-800 p-10 *:relative"
+                  className={clsx(
+                    "bg-stone-800 *:relative",
+                    item.children?.some(
+                      (child) => child.grandchildren && child.grandchildren.length > 0,
+                    )
+                      ? "grid gap-x-4 gap-y-10 p-10"
+                      : "min-w-[200px] p-6",
+                  )}
                   // Calculate the number of columns
-                  style={{
-                    gridTemplateColumns: `repeat(${Math.min(
-                      3,
-                      item.children?.filter(
-                        (child) => child.grandchildren && child.grandchildren.length > 0,
-                      ).length || 1,
-                    )}, 200px)`,
-                  }}
+                  style={
+                    item.children?.some(
+                      (child) => child.grandchildren && child.grandchildren.length > 0,
+                    )
+                      ? {
+                          gridTemplateColumns: `repeat(${Math.min(
+                            3,
+                            item.children?.filter(
+                              (child) => child.grandchildren && child.grandchildren.length > 0,
+                            ).length || 1,
+                          )}, 200px)`,
+                        }
+                      : undefined
+                  }
                 >
                   {/* Child components with grandchildren */}
                   {item.children
