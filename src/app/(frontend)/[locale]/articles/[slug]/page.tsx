@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import { NodeTypes, BlockRenderer } from "@/components/BlockRenderer";
-
+import { SITE_NAME } from "@/lib/constants";
 type Params = Promise<{ locale: "fi" | "en"; slug: string }>;
 
 async function getArticleBySlug(slug: string, locale: "fi" | "en") {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!article) return {};
 
   return {
-    title: article.title,
+    title: `${article.title} | ${SITE_NAME}`,
   };
 }
 

@@ -6,7 +6,7 @@ import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
-
+import { SITE_NAME } from "@/lib/constants";
 const inter = Inter({ subsets: ["latin"] });
 
 type Locale = "en" | "fi";
@@ -19,8 +19,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: "Payload Demo",
-  description: "Built with Payload CMS and Next.js",
+  title: SITE_NAME,
 };
 
 export default async function RootLayout({ children, params }: Props) {
