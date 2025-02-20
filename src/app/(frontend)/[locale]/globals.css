@@ -11,5 +11,5 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  @apply rounded-sm outline-none ring-2 ring-yellow-400 ring-offset-2 ring-offset-black transition-shadow duration-200;
+  @apply rounded-sm outline-none ring-2 ring-amber-500 ring-offset-2 ring-offset-black transition-shadow duration-200;
 }

@@ -162,7 +162,13 @@ export function TextRenderer({ node, index }: NodeRendererProps) {
       const rel = newTab ? "noopener noreferrer" : undefined;
 
       return (
-        <Link href={href} key={index} className="underline" target={target} rel={rel}>
+        <Link
+          href={href}
+          key={index}
+          className="underline decoration-amber-500 underline-offset-2 hover:text-amber-500"
+          target={target}
+          rel={rel}
+        >
           {renderChildren(node)}
           {url && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
         </Link>
