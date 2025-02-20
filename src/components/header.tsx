@@ -15,8 +15,6 @@ export default async function Header() {
     slug: "main-menu",
   });
 
-  console.log("Päävalikon kohteet:", mainMenu.items);
-
   return (
     <header>
       <div className="container mx-auto grid grid-cols-3 items-center justify-between px-4 py-4 xl:px-0">

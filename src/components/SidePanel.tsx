@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogPanel,
-  Transition,
-  TransitionChild,
-} from "@headlessui/react";
+import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Fragment, useState } from "react";
@@ -45,8 +40,7 @@ export default function SidePanel({
   };
 
   // Check if openLabel is a button element
-  const isButtonLabel =
-    React.isValidElement(openLabel) && openLabel.type === "button";
+  const isButtonLabel = React.isValidElement(openLabel) && openLabel.type === "button";
 
   const Trigger = isButtonLabel ? "div" : "button";
 
@@ -85,43 +79,33 @@ export default function SidePanel({
                 <TransitionChild
                   as={Fragment}
                   enter="transform transition ease-out duration-200"
-                  enterFrom={
-                    position === "left"
-                      ? "-translate-x-full"
-                      : "translate-x-full"
-                  }
+                  enterFrom={position === "left" ? "-translate-x-full" : "translate-x-full"}
                   enterTo="translate-x-0"
                   leave="transform transition ease-in duration-200"
                   leaveFrom="translate-x-0"
-                  leaveTo={
-                    position === "left"
-                      ? "-translate-x-full"
-                      : "translate-x-full"
-                  }
+                  leaveTo={position === "left" ? "-translate-x-full" : "translate-x-full"}
                 >
                   <div className="pointer-events-auto w-screen max-w-[500px] p-2">
-                    <DialogPanel className="relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-white p-5 shadow-lg">
+                    <DialogPanel className="relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-stone-800 p-5 shadow-lg">
                       <div className="flex h-full max-w-[500px] flex-col">
                         <div className="mb-4 flex items-end justify-between">
                           {showBackButton ? (
                             <button
-                              className="flex items-center gap-2 text-lg text-gray-900"
+                              className="flex items-center gap-2 text-lg text-stone-100"
                               onClick={onBack}
                             >
                               <ChevronRightIcon className="h-6 w-6 rotate-180 stroke-2" />
                               Back
                             </button>
                           ) : title ? (
-                            <h2 className="text-2xl font-bold text-gray-900">
-                              {title}
-                            </h2>
+                            <h2 className="text-2xl font-bold text-stone-100">{title}</h2>
                           ) : (
                             <div />
                           )}
 
                           <button onClick={handleClose}>
                             <span className="sr-only">Close</span>
-                            <XMarkIcon className="h-10 w-10 rounded-full bg-gray-100 p-2 hover:bg-gray-200 active:bg-gray-300" />
+                            <XMarkIcon className="h-10 w-10 rounded-full bg-stone-700 p-2 hover:bg-stone-600 active:bg-stone-500" />
                           </button>
                         </div>
                         <div className="flex-1 overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
