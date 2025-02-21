@@ -1,5 +1,7 @@
 import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
 import { elasticClient } from "@/lib/elastic-client";
+import { getPayload } from "payload";
+import config from "@payload-config";
 
 const createIndexIfNotExists = async (indexName: string) => {
   try {
@@ -14,7 +16,12 @@ const createIndexIfNotExists = async (indexName: string) => {
               content: { type: "text" },
               slug: { type: "keyword" },
               publishedDate: { type: "date" },
-              categories: { type: "keyword" },
+              categories: {
+                type: "keyword",
+                fields: {
+                  keyword: { type: "keyword" },
+                },
+              },
             },
           },
         },
@@ -39,6 +46,19 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
       const indexCreated = await createIndexIfNotExists(INDEX_NAME);
       if (!indexCreated) return doc;
 
+      const payload = await getPayload({ config });
+
+      // Fetch category labels
+      const categoryLabels = await Promise.all(
+        doc.categories?.map(async (categoryId: number) => {
+          const category = await payload.findByID({
+            collection: "categories",
+            id: categoryId,
+          });
+          return category?.label;
+        }) || [],
+      );
+
       await elasticClient.index({
         index: INDEX_NAME,
         id: doc.id,
@@ -48,7 +68,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
           content: doc.content,
           slug: doc.slug,
           publishedDate: doc.publishedDate,
-          categories: doc.categories,
+          categories: categoryLabels,
         },
         refresh: true,
       });
