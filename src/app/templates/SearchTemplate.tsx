@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import SearchHit from "@/components/SearchHit";
+import { ELASTIC_INDEX_NAME } from "@/lib/constants";
+
 interface SearchRequest {
   params?: {
     query?: string;
@@ -93,7 +95,7 @@ function SearchStats() {
 export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
-      <InstantSearch searchClient={searchClient} indexName="articles">
+      <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
         <div className="flex flex-col gap-10">
           <CustomSearchBox />
           <SearchStats />

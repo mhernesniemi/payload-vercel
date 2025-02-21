@@ -19,8 +19,16 @@ export const Articles: CollectionConfig = {
     {
       name: "author",
       type: "relationship",
-      relationTo: "users",
-      required: true,
+      relationTo: "contacts",
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "categories",
+      type: "relationship",
+      relationTo: "categories",
+      hasMany: true,
       admin: {
         position: "sidebar",
       },
@@ -28,7 +36,6 @@ export const Articles: CollectionConfig = {
     {
       name: "publishedDate",
       type: "date",
-      required: true,
       admin: {
         position: "sidebar",
         date: {

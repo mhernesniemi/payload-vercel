@@ -7,6 +7,7 @@ import SidePanel from "./SidePanel";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 
 const SearchContext = createContext<{
   query: string;
@@ -154,7 +155,7 @@ export default function SearchSidePanel() {
         footer={<AdvancedSearchLink />}
       >
         <div className="flex flex-col gap-10">
-          <InstantSearch searchClient={searchClient} indexName="articles">
+          <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
             <CustomSearchBox inSidePanel={true} />
             <Hits hitComponent={Hit} />
           </InstantSearch>

@@ -14,12 +14,13 @@ const createIndexIfNotExists = async (indexName: string) => {
               content: { type: "text" },
               slug: { type: "keyword" },
               publishedDate: { type: "date" },
+              categories: { type: "keyword" },
             },
           },
         },
       });
+      console.log(`Index ${indexName} created`);
     }
-    console.log(`Index ${indexName} created`);
   } catch (error) {
     console.error(`Error creating index ${indexName}:`, error);
     return false;
@@ -34,11 +35,12 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
 }) => {
   try {
     if (operation === "create" || operation === "update") {
-      const indexCreated = await createIndexIfNotExists(collection.slug);
+      const INDEX_NAME = "global";
+      const indexCreated = await createIndexIfNotExists(INDEX_NAME);
       if (!indexCreated) return doc;
 
       await elasticClient.index({
-        index: collection.slug,
+        index: INDEX_NAME,
         id: doc.id,
         body: {
           id: doc.id,
@@ -46,10 +48,11 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
           content: doc.content,
           slug: doc.slug,
           publishedDate: doc.publishedDate,
+          categories: doc.categories,
         },
         refresh: true,
       });
-      console.log(`Document ${doc.id} indexed in ${collection.slug}`);
+      console.log(`Document ${doc.id} indexed in ${INDEX_NAME}`);
     }
   } catch (error) {
     console.error(`Error in afterChangeHook for ${collection.slug}:`, error);

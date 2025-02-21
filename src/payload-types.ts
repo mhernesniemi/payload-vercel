@@ -193,11 +193,40 @@ export interface Article {
     [k: string]: unknown;
   };
   slug: string;
-  author: number | User;
-  publishedDate: string;
+  author?: (number | null) | Contact;
+  categories?: (number | Category)[] | null;
+  publishedDate?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contacts".
+ */
+export interface Contact {
+  id: number;
+  name: string;
+  title?: string | null;
+  email: string;
+  phone?: string | null;
+  image?: (number | null) | Media;
+  categories?: (number | Category)[] | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  label: string;
+  slug: string;
+  parent?: (number | null) | Category;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -280,34 +309,6 @@ export interface Reference {
     [k: string]: unknown;
   };
   slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  label: string;
-  slug: string;
-  parent?: (number | null) | Category;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contacts".
- */
-export interface Contact {
-  id: number;
-  name: string;
-  title?: string | null;
-  email: string;
-  phone?: string | null;
-  image?: (number | null) | Media;
-  categories?: (number | Category)[] | null;
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -439,6 +440,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   content?: T;
   slug?: T;
   author?: T;
+  categories?: T;
   publishedDate?: T;
   updatedAt?: T;
   createdAt?: T;
