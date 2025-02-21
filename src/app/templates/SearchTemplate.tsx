@@ -1,6 +1,6 @@
 "use client";
 
-import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
+import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -74,12 +74,29 @@ function CustomSearchBox() {
   );
 }
 
+function SearchStats() {
+  const { nbHits } = useStats();
+  const { query } = useSearchBox();
+  const t = useTranslations("search");
+
+  if (!query) {
+    return null;
+  }
+
+  return (
+    <div className="text-stone-400">
+      {nbHits} {nbHits === 1 ? t("result") : t("results")}
+    </div>
+  );
+}
+
 export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
       <InstantSearch searchClient={searchClient} indexName="articles">
         <div className="flex flex-col gap-10">
           <CustomSearchBox />
+          <SearchStats />
           <Hits hitComponent={SearchHit} />
         </div>
       </InstantSearch>

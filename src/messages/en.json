@@ -40,7 +40,9 @@
     "clearSearch": "Clear search",
     "advancedSearch": "Advanced Search",
     "searchPlaceholder": "Enter search query...",
-    "search": "Search"
+    "search": "Search",
+    "results": "results",
+    "result": "result"
   },
   "auth": {
     "signIn": "Sign in",

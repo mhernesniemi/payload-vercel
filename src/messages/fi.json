@@ -42,7 +42,9 @@
     "clearSearch": "Tyhjennä haku",
     "advancedSearch": "Edistynyt haku",
     "searchPlaceholder": "Kirjoita hakusana...",
-    "search": "Haku"
+    "search": "Haku",
+    "results": "osumaa",
+    "result": "osuma"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
