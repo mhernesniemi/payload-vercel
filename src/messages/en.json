@@ -36,6 +36,12 @@
   "languageSwitcher": {
     "switchLanguage": "Switch language"
   },
+  "search": {
+    "clearSearch": "Clear search",
+    "advancedSearch": "Advanced Search",
+    "searchPlaceholder": "Enter search query...",
+    "search": "Search"
+  },
   "auth": {
     "signIn": "Sign in",
     "email": "Email",

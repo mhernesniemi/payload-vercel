@@ -38,6 +38,12 @@
     "finnish": "Suomi",
     "english": "Englanti"
   },
+  "search": {
+    "clearSearch": "Tyhjennä haku",
+    "advancedSearch": "Edistynyt haku",
+    "searchPlaceholder": "Kirjoita hakusana...",
+    "search": "Haku"
+  },
   "auth": {
     "signIn": "Kirjaudu sisään",
     "email": "Sähköposti",

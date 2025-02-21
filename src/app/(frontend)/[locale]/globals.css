@@ -7,7 +7,7 @@
 }
 
 button:not(.main-nav-item):focus-visible,
-a:focus-visible,
+a:not(.search-panel-hit):focus-visible,
 input:not(.search-panel-input):focus-visible,
 select:focus-visible,
 textarea:focus-visible {

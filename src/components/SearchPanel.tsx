@@ -4,8 +4,9 @@ import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
 import SidePanel from "./SidePanel";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const SearchContext = createContext<{
   query: string;
@@ -62,7 +63,10 @@ interface Hit {
 
 function Hit({ hit }: { hit: Hit }) {
   return (
-    <Link href={`/articles/${hit.slug}`}>
+    <Link
+      href={`/articles/${hit.slug}`}
+      className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
+    >
       <div className="mb-4 rounded-lg bg-stone-800 p-4">
         <h2 className="text-xl font-bold">{hit.title}</h2>
         <div className="mt-4 text-sm">Slug: {hit.slug} </div>
@@ -75,6 +79,7 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement>(null);
   const { setSearchQuery } = useContext(SearchContext);
+  const t = useTranslations("search");
 
   useEffect(() => {
     if (inSidePanel && inputRef.current) {
@@ -94,15 +99,17 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
         type="text"
         value={query}
         onChange={(e) => refine(e.target.value)}
-        placeholder="Etsi artikkeleita..."
+        placeholder={t("searchPlaceholder")}
         className="search-panel-input w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-amber-500 focus:outline-none"
       />
       {query && (
         <button
           onClick={() => refine("")}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white"
+          aria-label={t("clearSearch")}
+          tabIndex={-1}
         >
-          ✕
+          <XMarkIcon className="h-5 w-5 stroke-2" />
         </button>
       )}
     </div>
@@ -111,30 +118,31 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
 
 function AdvancedSearchLink() {
   const { query } = useContext(SearchContext);
-
+  const t = useTranslations("search");
   return (
     <div className="p-10 text-center">
       <Link
         href={`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`}
         className="p-4 text-amber-500"
       >
-        Advanced Search
+        {t("advancedSearch")}
       </Link>
     </div>
   );
 }
 
 export default function SearchSidePanel() {
+  const t = useTranslations("search");
   return (
     <SearchContextProvider>
       <SidePanel
         openLabel={
           <button className="group flex items-center gap-2">
             <MagnifyingGlassIcon className="h-5 w-5 group-hover:text-amber-500" />
-            <span className="text-xs font-medium uppercase">Search</span>
+            <span className="text-xs font-medium uppercase">{t("search")}</span>
           </button>
         }
-        title="Haku"
+        title={t("search")}
         footer={<AdvancedSearchLink />}
       >
         <div className="flex flex-col gap-10">
