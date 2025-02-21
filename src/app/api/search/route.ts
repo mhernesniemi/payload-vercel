@@ -10,9 +10,12 @@ const apiConfig = {
     },
   },
   search_settings: {
-    search_attributes: [{ field: "title", weight: 3 }],
-    result_attributes: ["title", "content", "slug"],
-    highlight_attributes: ["title", "content"],
+    search_attributes: [
+      { field: "title", weight: 3 },
+      { field: "slug", weight: 2 },
+    ],
+    result_attributes: ["title", "slug"],
+    highlight_attributes: ["title"],
   },
 };
 

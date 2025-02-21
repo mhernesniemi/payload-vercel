@@ -13,6 +13,7 @@ export default async function Header() {
 
   const mainMenu = await payload.findGlobal({
     slug: "main-menu",
+    depth: 2,
   });
 
   return (
