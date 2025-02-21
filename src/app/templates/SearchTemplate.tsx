@@ -3,6 +3,8 @@
 import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface SearchRequest {
   params?: {
@@ -53,6 +55,14 @@ function Hit({ hit }: { hit: Hit }) {
 
 function CustomSearchBox() {
   const { query, refine } = useSearchBox();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const defaultQuery = searchParams.get("q");
+    if (defaultQuery && !query) {
+      refine(defaultQuery);
+    }
+  }, [searchParams, query, refine]);
 
   return (
     <div className="relative">
