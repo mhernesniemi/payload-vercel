@@ -2,7 +2,7 @@
 
 import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import SidePanel from "./SidePanel";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -80,6 +80,7 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setSearchQuery } = useContext(SearchContext);
   const t = useTranslations("search");
+  const router = useRouter();
 
   useEffect(() => {
     if (inSidePanel && inputRef.current) {
@@ -92,6 +93,12 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
     setSearchQuery(query);
   }, [query, setSearchQuery]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`);
+    }
+  };
+
   return (
     <div className="relative mt-10">
       <input
@@ -99,6 +106,7 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
         type="text"
         value={query}
         onChange={(e) => refine(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder={t("searchPlaceholder")}
         className="search-panel-input w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-amber-500 focus:outline-none"
       />
@@ -123,7 +131,7 @@ function AdvancedSearchLink() {
     <div className="p-10 text-center">
       <Link
         href={`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`}
-        className="p-4 text-amber-500"
+        className="p-4 text-amber-500 underline-offset-2 hover:underline"
       >
         {t("advancedSearch")}
       </Link>
