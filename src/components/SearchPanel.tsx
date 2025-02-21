@@ -5,7 +5,24 @@ import createClient from "@searchkit/instantsearch-client";
 import { Link } from "@/i18n/routing";
 import SidePanel from "./SidePanel";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+
+const SearchContext = createContext<{
+  query: string;
+  setSearchQuery: (query: string) => void;
+}>({
+  query: "",
+  setSearchQuery: () => {},
+});
+
+function SearchContextProvider({ children }: { children: React.ReactNode }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  return (
+    <SearchContext.Provider value={{ query: searchQuery, setSearchQuery }}>
+      {children}
+    </SearchContext.Provider>
+  );
+}
 
 interface SearchRequest {
   params?: {
@@ -57,14 +74,18 @@ function Hit({ hit }: { hit: Hit }) {
 function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { setSearchQuery } = useContext(SearchContext);
 
-  // Autofocus input when in side panel
   useEffect(() => {
     if (inSidePanel && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.click();
     }
   }, [inSidePanel]);
+
+  useEffect(() => {
+    setSearchQuery(query);
+  }, [query, setSearchQuery]);
 
   return (
     <div className="relative mt-10">
@@ -88,30 +109,41 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   );
 }
 
+function AdvancedSearchLink() {
+  const { query } = useContext(SearchContext);
+
+  return (
+    <div className="p-10 text-center">
+      <Link
+        href={`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`}
+        className="p-4 text-amber-500"
+      >
+        Advanced Search
+      </Link>
+    </div>
+  );
+}
+
 export default function SearchSidePanel() {
   return (
-    <SidePanel
-      openLabel={
-        <button className="group flex items-center gap-2">
-          <MagnifyingGlassIcon className="h-5 w-5 group-hover:text-amber-500" />
-          <span className="text-xs font-medium uppercase">Search</span>
-        </button>
-      }
-      title="Haku"
-      footer={
-        <div className="p-10 text-center">
-          <Link href="/search" className="p-4 text-amber-500">
-            Advanced Search
-          </Link>
-        </div>
-      }
-    >
-      <InstantSearch searchClient={searchClient} indexName="articles">
+    <SearchContextProvider>
+      <SidePanel
+        openLabel={
+          <button className="group flex items-center gap-2">
+            <MagnifyingGlassIcon className="h-5 w-5 group-hover:text-amber-500" />
+            <span className="text-xs font-medium uppercase">Search</span>
+          </button>
+        }
+        title="Haku"
+        footer={<AdvancedSearchLink />}
+      >
         <div className="flex flex-col gap-10">
-          <CustomSearchBox inSidePanel={true} />
-          <Hits hitComponent={Hit} />
+          <InstantSearch searchClient={searchClient} indexName="articles">
+            <CustomSearchBox inSidePanel={true} />
+            <Hits hitComponent={Hit} />
+          </InstantSearch>
         </div>
-      </InstantSearch>
-    </SidePanel>
+      </SidePanel>
+    </SearchContextProvider>
   );
 }
