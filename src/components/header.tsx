@@ -4,6 +4,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { MainMenu, MenuItem, MobileMenu } from "./MainMenu";
+import SearchSidePanel from "./SearchPanel";
 
 export default async function Header() {
   const t = await getTranslations();
@@ -30,7 +31,8 @@ export default async function Header() {
         <div className="hidden lg:block lg:flex-1">
           <MainMenu items={mainMenu.items as MenuItem[]} />
         </div>
-        <div className="flex justify-end lg:w-[200px]">
+        <div className="flex items-center justify-end gap-4 lg:w-[200px]">
+          <SearchSidePanel />
           <LanguageSwitcher />
         </div>
       </div>

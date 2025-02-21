@@ -48,7 +48,7 @@ export default function SidePanel({
     <>
       <Trigger
         onClick={() => setIsOpen(true)}
-        className={clsx(fullWidthButton && "w-full")}
+        className={clsx("flex items-center", fullWidthButton && "w-full")}
         id={buttonId}
       >
         {openLabel}
