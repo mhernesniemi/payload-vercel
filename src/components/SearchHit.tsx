@@ -1,22 +1,17 @@
 import { Link } from "@/i18n/routing";
 
-interface SearchHitType {
-  slug: string;
+interface Hit {
   title: string;
-  _snippetResult?: {
-    content?: {
-      value: string;
-    };
-  };
+  slug: string;
 }
 
-export default function SearchHit({ hit }: { hit: SearchHitType }) {
+export default function SearchHit({ hit }: { hit: Hit }) {
   return (
-    <Link href={`/${hit.slug}`} className="block rounded-lg p-3 hover:bg-gray-50">
-      <h3 className="font-medium text-gray-900">{hit.title}</h3>
-      {hit._snippetResult?.content?.value && (
-        <p className="mt-1 text-sm text-gray-600">{hit._snippetResult.content.value}...</p>
-      )}
+    <Link href={`/articles/${hit.slug}`}>
+      <div className="mb-4 block rounded-lg bg-stone-800 p-4">
+        <h2 className="text-xl font-bold">{hit.title}</h2>
+        <div className="mt-4 text-sm">Slug: {hit.slug}</div>
+      </div>
     </Link>
   );
 }
