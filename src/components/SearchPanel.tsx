@@ -54,26 +54,27 @@ function Hit({ hit }: { hit: Hit }) {
   );
 }
 
-function CustomSearchBox() {
+function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Autofocus input when in side panel
   useEffect(() => {
-    const timer = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+    if (inSidePanel && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
+  }, [inSidePanel]);
 
   return (
-    <div className="relative">
+    <div className="relative mt-10">
       <input
         ref={inputRef}
         type="text"
         value={query}
         onChange={(e) => refine(e.target.value)}
         placeholder="Etsi artikkeleita..."
-        className="w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        className="search-panel-input w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-amber-500 focus:outline-none"
       />
       {query && (
         <button
@@ -93,14 +94,21 @@ export default function SearchSidePanel() {
       openLabel={
         <button className="group flex items-center gap-2">
           <MagnifyingGlassIcon className="h-5 w-5 group-hover:text-amber-500" />
-          <span className="text-sm font-medium uppercase">Search</span>
+          <span className="text-xs font-medium uppercase">Search</span>
         </button>
       }
       title="Haku"
+      footer={
+        <div className="p-10 text-center">
+          <Link href="/search" className="p-4 text-amber-500">
+            Advanced Search
+          </Link>
+        </div>
+      }
     >
       <InstantSearch searchClient={searchClient} indexName="articles">
         <div className="flex flex-col gap-10">
-          <CustomSearchBox />
+          <CustomSearchBox inSidePanel={true} />
           <Hits hitComponent={Hit} />
         </div>
       </InstantSearch>

@@ -8,7 +8,7 @@
 
 button:not(.main-nav-item):focus-visible,
 a:focus-visible,
-input:focus-visible,
+input:not(.search-panel-input):focus-visible,
 select:focus-visible,
 textarea:focus-visible {
   @apply rounded-sm outline-none ring-2 ring-amber-500 ring-offset-2 ring-offset-black transition-shadow duration-200;
