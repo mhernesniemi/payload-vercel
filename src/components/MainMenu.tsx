@@ -64,7 +64,7 @@ export function MainMenu({ items }: MainMenuProps) {
                       (child) => child.grandchildren && child.grandchildren.length > 0,
                     )
                       ? "grid gap-x-4 gap-y-10 px-10 pb-10 pt-6"
-                      : "min-w-[200px] p-6",
+                      : "min-w-[200px] pb-8 pl-10 pr-6 pt-6",
                   )}
                   // Calculate the number of columns
                   style={
@@ -87,18 +87,19 @@ export function MainMenu({ items }: MainMenuProps) {
                     ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
                     .map((child) => (
                       <div key={child.id}>
-                        <span className="mb-4 flex items-center rounded-lg text-sm font-medium tracking-wide text-stone-400">
+                        <h3 className="mb-3 text-sm font-medium leading-snug tracking-wide text-stone-400">
                           {child.label}
-                        </span>
-                        <div className="flex flex-col gap-4">
+                        </h3>
+                        <div className="space-y-4">
                           {child.grandchildren?.map((grandchild) => (
-                            <Link
-                              key={grandchild.id}
-                              href={parseLink(grandchild).url}
-                              className="block leading-tight transition duration-150 ease-in-out hover:text-amber-500"
-                            >
-                              {grandchild.label}
-                            </Link>
+                            <div key={grandchild.id}>
+                              <Link
+                                href={parseLink(grandchild).url}
+                                className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                              >
+                                {grandchild.label}
+                              </Link>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -106,17 +107,18 @@ export function MainMenu({ items }: MainMenuProps) {
 
                   {/* Child components without grandchildren */}
                   {item.children?.some((child) => !child.grandchildren?.length) && (
-                    <div className="flex flex-col gap-4">
+                    <div className="space-y-4">
                       {item.children
                         .filter((child) => !child.grandchildren?.length)
                         .map((child) => (
-                          <Link
-                            key={child.id}
-                            href={parseLink(child).url}
-                            className="leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                          >
-                            {child.label}
-                          </Link>
+                          <div key={child.id}>
+                            <Link
+                              href={parseLink(child).url}
+                              className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                            >
+                              {child.label}
+                            </Link>
+                          </div>
                         ))}
                     </div>
                   )}
