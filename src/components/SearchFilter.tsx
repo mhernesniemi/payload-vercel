@@ -50,7 +50,7 @@ export default function CategoryFilter({
         multiple
       >
         <div className="relative mt-1">
-          <ListboxButton className="relative w-full cursor-pointer rounded-lg border border-stone-700 bg-stone-900 py-2 pl-3 pr-10 text-left text-white">
+          <ListboxButton className="relative w-full cursor-pointer rounded-lg border border-stone-700 bg-stone-900 py-3 pl-4 pr-10 text-left text-white">
             <span className="block truncate">
               {selectedItems.length === 0
                 ? placeholder || defaultPlaceholder
@@ -67,21 +67,25 @@ export default function CategoryFilter({
             leaveTo="opacity-0"
           >
             <ListboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border border-stone-700 bg-stone-900 py-1 text-base shadow-lg focus:outline-none">
-              {items.map((item) => (
-                <ListboxOption
-                  key={item.value}
-                  value={item}
-                  className="group relative cursor-pointer select-none py-2 pl-10 pr-4 font-normal group-data-[selected]:font-medium"
-                >
-                  <span className="block truncate font-normal capitalize group-hover:text-amber-500 group-data-[selected]:font-medium">
-                    {item.label}
-                  </span>
+              {items.length === 0 ? (
+                <div className="px-4 py-2 text-stone-400">{t("no_options")}</div>
+              ) : (
+                items.map((item) => (
+                  <ListboxOption
+                    key={item.value}
+                    value={item}
+                    className="group relative cursor-pointer select-none py-2 pl-10 pr-4 font-normal group-data-[selected]:font-medium"
+                  >
+                    <span className="block truncate font-normal capitalize group-hover:text-amber-500 group-data-[selected]:font-medium">
+                      {item.label}
+                    </span>
 
-                  <span className="invisible absolute inset-y-0 left-0 flex items-center pl-3 text-amber-500 group-data-[selected]:visible">
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </ListboxOption>
-              ))}
+                    <span className="invisible absolute inset-y-0 left-0 flex items-center pl-3 text-amber-500 group-data-[selected]:visible">
+                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  </ListboxOption>
+                ))
+              )}
             </ListboxOptions>
           </Transition>
         </div>

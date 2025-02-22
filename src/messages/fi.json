@@ -49,7 +49,11 @@
     "select": "Valitse",
     "categories": "Kategoriat",
     "collections": "Kokoelmat",
-    "collection": "Kokoelma"
+    "collection": "Kokoelma",
+    "no_options": "Ei valintoja saatavilla",
+    "pagination": "Sivutus",
+    "previousPage": "Edellinen sivu",
+    "nextPage": "Seuraava sivu"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",

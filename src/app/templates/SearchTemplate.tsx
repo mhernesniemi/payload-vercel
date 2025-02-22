@@ -1,29 +1,30 @@
 "use client";
 
 import {
-  Hits,
   InstantSearch,
   useSearchBox,
   useStats,
   useRefinementList,
   useCurrentRefinements,
+  Configure,
+  Hits,
 } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
-import SearchHit from "@/components/SearchHit";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import SearchFilter from "@/components/SearchFilter";
 import Heading from "@/components/Heading";
+import SearchHit from "@/components/SearchHit";
+import CustomPagination from "@/components/SearchPagination";
 
 const searchClient = createClient({
   url: "/api/search",
 });
 
-function CustomSearchBox() {
+function SearchBox() {
   const { query, refine } = useSearchBox();
   const searchParams = useSearchParams();
   const t = useTranslations("search");
@@ -70,7 +71,7 @@ function SearchStats() {
   );
 }
 
-function CustomCurrentRefinements() {
+function CurrentRefinements() {
   const { items, refine } = useCurrentRefinements();
   const t = useTranslations("search");
 
@@ -126,16 +127,19 @@ function SearchComponents() {
         {t("search")}
       </Heading>
       <div className="flex flex-col gap-10">
-        <CustomSearchBox />
+        <SearchBox />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <SearchFilter attribute="categories" title={t("categories")} operator="or" />
           <SearchFilter attribute="collection" title={t("collections")} operator="or" />
         </div>
-        <CustomCurrentRefinements />
+        <CurrentRefinements />
         {shouldShowResults && (
-          <div className="flex flex-col gap-4">
+          <div className="space-y-4">
             <SearchStats />
-            <Hits hitComponent={SearchHit} />
+            <div className="space-y-12">
+              <Hits hitComponent={SearchHit} />
+              <CustomPagination />
+            </div>
           </div>
         )}
       </div>
@@ -147,6 +151,7 @@ export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
       <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME} routing>
+        <Configure hitsPerPage={20} />
         <SearchComponents />
       </InstantSearch>
     </div>

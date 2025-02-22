@@ -47,7 +47,11 @@
     "select": "Select",
     "categories": "Categories",
     "collections": "Collections",
-    "collection": "Collection"
+    "collection": "Collection",
+    "no_options": "No options available",
+    "pagination": "Pagination",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   },
   "auth": {
     "signIn": "Sign in",

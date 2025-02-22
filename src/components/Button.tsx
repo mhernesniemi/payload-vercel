@@ -27,15 +27,14 @@ export default function Button({
   disabled = false,
 }: ButtonProps) {
   const baseStyles =
-    "rounded-lg px-8 py-4 text-center break-words flex justify-center font-bold max-w-[270px]";
-  const sizeStyles = size === "sm" ? "px-3 py-2 text-sm leading-tight" : "";
+    "rounded-lg px-8 py-4 text-center break-words flex justify-center font-medium max-w-[270px]";
+  const sizeStyles = size === "sm" ? "px-2 py-1 text-sm leading-tight" : "";
   const widthStyles = fullWidth ? "w-full max-w-full" : "";
 
   const styleVariants = {
-    primary:
-      "bg-purple-700 hover:bg-purple-600 active:bg-purple-700 text-white",
+    primary: "bg-stone-700 hover:bg-stone-600 active:bg-stone-700 text-white",
     secondary:
-      "text-purple-600 outline outline-2 outline-offset-[-2px] outline-purple-600 hover:bg-purple-600 hover:text-white active:bg-purple-800",
+      "text-stone-100 outline outline-2 outline-offset-[-2px] outline-stone-600 hover:bg-stone-800 active:bg-stone-900",
     text: "text-slate-300 hover:text-slate-200 active:text-slate-300",
     disabled: "cursor-not-allowed bg-gray-500 text-white",
   };
@@ -45,14 +44,7 @@ export default function Button({
   if (href && !disabled) {
     return (
       <Link href={href} id={id}>
-        <div
-          className={clsx(
-            baseStyles,
-            sizeStyles,
-            widthStyles,
-            styleVariants[buttonStyle],
-          )}
-        >
+        <div className={clsx(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}>
           {children}
         </div>
       </Link>
@@ -63,12 +55,7 @@ export default function Button({
     <button
       onClick={disabled ? undefined : onClick}
       type={type}
-      className={clsx(
-        baseStyles,
-        sizeStyles,
-        widthStyles,
-        styleVariants[buttonStyle],
-      )}
+      className={clsx(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}
       id={id}
       disabled={disabled}
     >
