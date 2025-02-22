@@ -50,7 +50,7 @@ export default function CategoryFilter({
         multiple
       >
         <div className="relative mt-1">
-          <ListboxButton className="relative w-full cursor-default rounded-lg border border-stone-700 bg-stone-900 py-2 pl-3 pr-10 text-left text-white">
+          <ListboxButton className="relative w-full cursor-pointer rounded-lg border border-stone-700 bg-stone-900 py-2 pl-3 pr-10 text-left text-white">
             <span className="block truncate">
               {selectedItems.length === 0
                 ? placeholder || defaultPlaceholder
@@ -71,9 +71,9 @@ export default function CategoryFilter({
                 <ListboxOption
                   key={item.value}
                   value={item}
-                  className="group relative cursor-default select-none py-2 pl-10 pr-4 font-normal group-data-[selected]:font-medium"
+                  className="group relative cursor-pointer select-none py-2 pl-10 pr-4 font-normal group-data-[selected]:font-medium"
                 >
-                  <span className="block truncate font-normal capitalize group-data-[selected]:font-medium">
+                  <span className="block truncate font-normal capitalize group-hover:text-amber-500 group-data-[selected]:font-medium">
                     {item.label}
                   </span>
 

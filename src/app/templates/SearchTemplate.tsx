@@ -87,7 +87,8 @@ function CustomCurrentRefinements() {
               className="flex items-center gap-2 rounded-full bg-stone-700 px-3 py-1 text-sm text-white hover:bg-stone-600"
             >
               <span>
-                {t(item.label.toLowerCase())}: {refinement.label}
+                {t(item.label.toLowerCase())}:{" "}
+                <span className="capitalize">{refinement.label}</span>
               </span>
               <XMarkIcon className="h-4 w-4" />
             </button>
