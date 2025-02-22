@@ -42,7 +42,9 @@ export default function LanguageSwitcher() {
                 onClick={() => handleLocaleChange("fi")}
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-700"
               >
-                <div className="w-4">{locale === "fi" && <CheckIcon className="h-4 w-4" />}</div>
+                <div className="w-4">
+                  {locale === "fi" && <CheckIcon className="h-4 w-4 text-amber-500" />}
+                </div>
                 <span>Suomi</span>
               </button>
             </MenuItem>
@@ -51,7 +53,9 @@ export default function LanguageSwitcher() {
                 onClick={() => handleLocaleChange("en")}
                 className="flex w-full items-center gap-2 px-4 py-2 text-sm data-[focus]:bg-stone-700"
               >
-                <div className="w-4">{locale === "en" && <CheckIcon className="h-4 w-4" />}</div>
+                <div className="w-4">
+                  {locale === "en" && <CheckIcon className="h-4 w-4 text-amber-500" />}
+                </div>
                 <span>English</span>
               </button>
             </MenuItem>

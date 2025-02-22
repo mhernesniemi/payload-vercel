@@ -20,13 +20,13 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
         />
       )}
       <h1 className="mb-4 text-4xl font-bold">{article.title}</h1>
-      <div className="mb-8 flex gap-4 text-stone-400">
+      {/* <div className="mb-8 flex gap-4 text-stone-400">
         <time dateTime={article.publishedDate}>
           {new Date(article.publishedDate).toLocaleDateString("fi-FI")}
         </time>
         <span>•</span>
         <span>{typeof article.author === "object" && article.author.email}</span>
-      </div>
+      </div> */}
       <div className="mx-auto mt-12 max-w-screen-lg">
         <BlockRenderer nodes={article.content?.root?.children as NodeTypes[]} />
       </div>

@@ -1,6 +1,12 @@
 "use client";
 
-import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
+import {
+  Hits,
+  InstantSearch,
+  useSearchBox,
+  useStats,
+  useRefinementList,
+} from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -11,36 +17,9 @@ import SearchHit from "@/components/SearchHit";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import SearchFilter from "@/components/SearchFilter";
 
-interface SearchRequest {
-  params?: {
-    query?: string;
-  };
-}
-
-const searchClient = {
-  ...createClient({
-    url: "/api/search",
-  }),
-  search(requests: SearchRequest[]) {
-    const shouldSearch = requests.some(
-      (request: SearchRequest) => request.params?.query && request.params.query.length > 0,
-    );
-
-    if (!shouldSearch) {
-      return Promise.resolve({
-        results: requests.map(() => ({
-          hits: [],
-          nbHits: 0,
-          nbPages: 0,
-          page: 0,
-          processingTimeMS: 0,
-        })),
-      });
-    }
-
-    return createClient({ url: "/api/search" }).search(requests);
-  },
-};
+const searchClient = createClient({
+  url: "/api/search",
+});
 
 function CustomSearchBox() {
   const { query, refine } = useSearchBox();
@@ -81,9 +60,15 @@ function CustomSearchBox() {
 function SearchStats() {
   const { nbHits } = useStats();
   const { query } = useSearchBox();
+  const { items } = useRefinementList({
+    attribute: "categories",
+    operator: "or",
+  });
   const t = useTranslations("search");
 
-  if (!query) {
+  const hasSelectedCategories = items.some((item) => item.isRefined);
+
+  if (!query && !hasSelectedCategories) {
     return null;
   }
 
@@ -94,16 +79,30 @@ function SearchStats() {
   );
 }
 
+function SearchComponents() {
+  const { query } = useSearchBox();
+  const { items } = useRefinementList({
+    attribute: "categories",
+    operator: "or",
+  });
+
+  const hasSelectedCategories = items.some((item) => item.isRefined);
+
+  return (
+    <div className="flex flex-col gap-10">
+      <CustomSearchBox />
+      <SearchFilter attribute="categories" operator="or" />
+      <SearchStats />
+      {(query || hasSelectedCategories) && <Hits hitComponent={SearchHit} />}
+    </div>
+  );
+}
+
 export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
       <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
-        <div className="flex flex-col gap-10">
-          <CustomSearchBox />
-          <SearchFilter attribute="categories" operator="or" />
-          <SearchStats />
-          <Hits hitComponent={SearchHit} />
-        </div>
+        <SearchComponents />
       </InstantSearch>
     </div>
   );
