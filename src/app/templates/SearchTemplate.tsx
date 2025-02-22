@@ -17,6 +17,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import SearchHit from "@/components/SearchHit";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import SearchFilter from "@/components/SearchFilter";
+import Heading from "@/components/Heading";
 
 const searchClient = createClient({
   url: "/api/search",
@@ -119,19 +120,24 @@ function SearchComponents() {
   const shouldShowResults = Boolean(query) || hasActiveRefinements;
 
   return (
-    <div className="flex flex-col gap-10">
-      <CustomSearchBox />
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <SearchFilter attribute="categories" title={t("categories")} operator="or" />
-        <SearchFilter attribute="collection" title={t("collections")} operator="or" />
-      </div>
-      <CustomCurrentRefinements />
-      {shouldShowResults && (
-        <div className="flex flex-col gap-4">
-          <SearchStats />
-          <Hits hitComponent={SearchHit} />
+    <div>
+      <Heading level="h1" size="xl" className="">
+        {t("search")}
+      </Heading>
+      <div className="flex flex-col gap-10">
+        <CustomSearchBox />
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <SearchFilter attribute="categories" title={t("categories")} operator="or" />
+          <SearchFilter attribute="collection" title={t("collections")} operator="or" />
         </div>
-      )}
+        <CustomCurrentRefinements />
+        {shouldShowResults && (
+          <div className="flex flex-col gap-4">
+            <SearchStats />
+            <Hits hitComponent={SearchHit} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -8,12 +8,7 @@ interface HeadingProps {
   className?: string;
 }
 
-export default function Heading({
-  level,
-  size,
-  children,
-  className,
-}: HeadingProps) {
+export default function Heading({ level, size, children, className }: HeadingProps) {
   const Tag = level;
 
   // Create id from the text
@@ -27,7 +22,7 @@ export default function Heading({
     <Tag
       className={twMerge(
         clsx(
-          size === "xl" && "mb-4 text-4xl font-bold",
+          size === "xl" && "mb-10 text-4xl font-bold",
           size === "lg" && "mb-8 text-3xl font-bold",
           size === "md" && "mb-6 text-xl font-semibold",
           size === "sm" && "mb-4 text-lg font-semibold",
