@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
 
-export default function CustomPagination() {
+export default function SearchPagination() {
   const { pages, currentRefinement, nbPages, isFirstPage, isLastPage, refine, createURL } =
     usePagination();
   const t = useTranslations("search");

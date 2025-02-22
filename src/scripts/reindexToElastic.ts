@@ -1,5 +1,5 @@
 import { getPayload } from "payload";
-import { elasticClient } from "@/lib/elastic-client";
+import { elasticClient } from "@/lib/elastic-utils";
 import config from "@payload-config";
 import { Article, CollectionPage, News, Reference } from "../payload-types";
 import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";

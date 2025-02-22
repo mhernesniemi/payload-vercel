@@ -18,7 +18,7 @@ import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import SearchFilter from "@/components/SearchFilter";
 import Heading from "@/components/Heading";
 import SearchHit from "@/components/SearchHit";
-import CustomPagination from "@/components/SearchPagination";
+import SearchPagination from "@/components/SearchPagination";
 
 const searchClient = createClient({
   url: "/api/search",
@@ -138,7 +138,7 @@ function SearchComponents() {
             <SearchStats />
             <div className="space-y-12">
               <Hits hitComponent={SearchHit} />
-              <CustomPagination />
+              <SearchPagination />
             </div>
           </div>
         )}

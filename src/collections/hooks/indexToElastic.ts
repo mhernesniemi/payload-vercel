@@ -1,5 +1,5 @@
 import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
-import { elasticClient } from "@/lib/elastic-client";
+import { elasticClient } from "@/lib/elastic-utils";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
