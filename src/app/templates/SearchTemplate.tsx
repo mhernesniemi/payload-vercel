@@ -1,6 +1,12 @@
 "use client";
 
-import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
+import {
+  Hits,
+  InstantSearch,
+  useSearchBox,
+  useStats,
+  useRefinementList,
+} from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -92,12 +98,43 @@ function SearchStats() {
   );
 }
 
+function CategoryFilter() {
+  const { items, refine } = useRefinementList({
+    attribute: "categories",
+    operator: "or",
+  });
+
+  console.log("categories_items", items);
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-lg font-semibold">Kategoriat</h2>
+      <div className="flex flex-wrap gap-2">
+        {items.map((item) => (
+          <button
+            key={item.value}
+            onClick={() => refine(item.value)}
+            className={`rounded-full px-3 py-1 text-sm transition-colors ${
+              item.isRefined
+                ? "bg-amber-500 text-black"
+                : "bg-stone-800 text-white hover:bg-stone-700"
+            }`}
+          >
+            {item.label} ({item.count})
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
       <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
         <div className="flex flex-col gap-10">
           <CustomSearchBox />
+          <CategoryFilter />
           <SearchStats />
           <Hits hitComponent={SearchHit} />
         </div>

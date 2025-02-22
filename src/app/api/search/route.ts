@@ -14,8 +14,21 @@ const apiConfig = {
       { field: "title", weight: 3 },
       { field: "slug", weight: 2 },
     ],
-    result_attributes: ["title", "slug"],
-    highlight_attributes: ["title"],
+    result_attributes: ["title", "slug", "categories"],
+    facet_attributes: [
+      {
+        attribute: "categories",
+        field: "categories.keyword",
+        type: "string" as "string" | "numeric" | "date",
+      },
+    ],
+    filter_attributes: [
+      {
+        attribute: "categories",
+        field: "categories.keyword",
+        type: "string" as "string" | "numeric" | "date",
+      },
+    ],
   },
 };
 
