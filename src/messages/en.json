@@ -46,7 +46,8 @@
     "selected": "selected",
     "select": "Select",
     "categories": "Categories",
-    "collections": "Collections"
+    "collections": "Collections",
+    "collection": "Collection"
   },
   "auth": {
     "signIn": "Sign in",

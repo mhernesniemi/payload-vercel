@@ -6,6 +6,7 @@ import {
   useSearchBox,
   useStats,
   useRefinementList,
+  useCurrentRefinements,
 } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { useEffect } from "react";
@@ -79,6 +80,34 @@ function SearchStats() {
   );
 }
 
+function CustomCurrentRefinements() {
+  const { items, refine } = useCurrentRefinements();
+  const t = useTranslations("search");
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {items.map((item) => (
+        <div key={item.label} className="flex flex-wrap gap-2">
+          {item.refinements.map((refinement) => (
+            <button
+              key={refinement.label}
+              onClick={() => refine(refinement)}
+              className="flex items-center gap-2 rounded-full bg-stone-700 px-3 py-1 text-sm text-white hover:bg-stone-600"
+            >
+              <span>
+                {t(item.label.toLowerCase())}: {refinement.label}
+              </span>
+              <XMarkIcon className="h-4 w-4" />
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function SearchComponents() {
   const t = useTranslations("search");
   const { query } = useSearchBox();
@@ -107,6 +136,7 @@ function SearchComponents() {
         <SearchFilter attribute="categories" title={t("categories")} operator="or" />
         <SearchFilter attribute="collection" title={t("collections")} operator="or" />
       </div>
+      <CustomCurrentRefinements />
       <SearchStats />
       {shouldShowResults && <Hits hitComponent={SearchHit} />}
     </div>

@@ -48,7 +48,8 @@
     "selected": "valittu",
     "select": "Valitse",
     "categories": "Kategoriat",
-    "collections": "Kokoelmat"
+    "collections": "Kokoelmat",
+    "collection": "Kokoelma"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
