@@ -2,40 +2,8 @@ import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
 import { elasticClient } from "@/lib/elastic-client";
 import { getPayload } from "payload";
 import config from "@payload-config";
-
-const createIndexIfNotExists = async (indexName: string) => {
-  try {
-    const exists = await elasticClient.indices.exists({ index: indexName });
-    if (!exists) {
-      await elasticClient.indices.create({
-        index: indexName,
-        body: {
-          mappings: {
-            properties: {
-              title: { type: "text" },
-              content: { type: "text" },
-              slug: { type: "keyword" },
-              publishedDate: { type: "date" },
-              categories: {
-                type: "keyword",
-                fields: {
-                  keyword: { type: "keyword" },
-                },
-              },
-              collection: { type: "keyword" },
-            },
-          },
-        },
-      });
-      console.log(`Index ${indexName} created`);
-    }
-  } catch (error) {
-    console.error(`Error creating index ${indexName}:`, error);
-    return false;
-  }
-  return true;
-};
-
+import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
+import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 export const afterChangeHook: CollectionAfterChangeHook = async ({
   doc,
   operation,
@@ -43,8 +11,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
 }) => {
   try {
     if (operation === "create" || operation === "update") {
-      const INDEX_NAME = "global";
-      const indexCreated = await createIndexIfNotExists(INDEX_NAME);
+      const indexCreated = await createIndexWithMappings();
       if (!indexCreated) return doc;
 
       const payload = await getPayload({ config });
@@ -61,12 +28,12 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
       );
 
       await elasticClient.index({
-        index: INDEX_NAME,
+        index: ELASTIC_INDEX_NAME,
         id: doc.id,
         body: {
           id: doc.id,
           title: doc.title,
-          content: doc.content,
+          content: doc.content ? richTextToPlainText(doc.content) : null,
           slug: doc.slug,
           publishedDate: doc.publishedDate,
           categories: categoryLabels,
@@ -74,7 +41,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
         },
         refresh: true,
       });
-      console.log(`Document ${doc.id} indexed in ${INDEX_NAME}`);
+      console.log(`Document ${doc.id} indexed in ${ELASTIC_INDEX_NAME}`);
     }
   } catch (error) {
     console.error(`Error in afterChangeHook for ${collection.slug}:`, error);

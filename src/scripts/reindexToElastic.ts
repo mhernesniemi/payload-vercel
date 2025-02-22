@@ -2,77 +2,25 @@ import { getPayload } from "payload";
 import { elasticClient } from "@/lib/elastic-client";
 import config from "@payload-config";
 import { Article, CollectionPage, News, Reference } from "../payload-types";
+import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
+import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 
 type IndexableDocument = Article | CollectionPage | News | Reference;
-
-interface RichTextChild {
-  text?: string;
-  [key: string]: unknown;
-}
-
-interface RichTextBlock {
-  children?: RichTextChild[];
-  [key: string]: unknown;
-}
-
-interface RichTextContent {
-  root: {
-    children: RichTextBlock[];
-  };
-}
-
-const INDEX_NAME = "global";
-
-// Funktio rich text -sisällön muuntamiseksi tekstiksi
-const richTextToPlainText = (content: RichTextContent): string => {
-  if (!content || !content.root || !content.root.children) {
-    return "";
-  }
-
-  return content.root.children
-    .map((block: RichTextBlock) => {
-      if (block.children) {
-        return block.children.map((child: RichTextChild) => child.text || "").join(" ");
-      }
-      return "";
-    })
-    .filter(Boolean)
-    .join("\n");
-};
 
 const reindexToElastic = async () => {
   try {
     const payload = await getPayload({ config });
 
     // Delete existing index if it exists
-    const indexExists = await elasticClient.indices.exists({ index: INDEX_NAME });
+    const indexExists = await elasticClient.indices.exists({ index: ELASTIC_INDEX_NAME });
     if (indexExists) {
-      console.log(`Deleting existing index ${INDEX_NAME}...`);
-      await elasticClient.indices.delete({ index: INDEX_NAME });
+      console.log(`Deleting existing index ${ELASTIC_INDEX_NAME}...`);
+      await elasticClient.indices.delete({ index: ELASTIC_INDEX_NAME });
     }
 
     // Create new index with mappings
-    await elasticClient.indices.create({
-      index: INDEX_NAME,
-      body: {
-        mappings: {
-          properties: {
-            title: { type: "text" },
-            content: { type: "text" },
-            slug: { type: "keyword" },
-            publishedDate: { type: "date" },
-            categories: {
-              type: "keyword",
-              fields: {
-                keyword: { type: "keyword" },
-              },
-            },
-            collection: { type: "keyword" },
-          },
-        },
-      },
-    });
-    console.log(`Created new index ${INDEX_NAME}`);
+    await createIndexWithMappings();
+    console.log(`Created new index ${ELASTIC_INDEX_NAME}`);
 
     // Get all collections that should be indexed
     const collections = ["articles", "collection-pages", "news", "references"] as const;
@@ -101,7 +49,7 @@ const reindexToElastic = async () => {
 
         // Index document
         await elasticClient.index({
-          index: INDEX_NAME,
+          index: ELASTIC_INDEX_NAME,
           id: doc.id.toString(),
           body: {
             id: doc.id,
