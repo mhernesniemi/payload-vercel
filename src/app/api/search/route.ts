@@ -21,11 +21,9 @@ const apiConfig = {
         field: "categories.keyword",
         type: "string" as "string" | "numeric" | "date",
       },
-    ],
-    filter_attributes: [
       {
-        attribute: "categories",
-        field: "categories.keyword",
+        attribute: "collection",
+        field: "collection.keyword",
         type: "string" as "string" | "numeric" | "date",
       },
     ],

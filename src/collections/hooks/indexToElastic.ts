@@ -22,6 +22,7 @@ const createIndexIfNotExists = async (indexName: string) => {
                   keyword: { type: "keyword" },
                 },
               },
+              collection: { type: "keyword" },
             },
           },
         },
@@ -69,6 +70,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
           slug: doc.slug,
           publishedDate: doc.publishedDate,
           categories: categoryLabels,
+          collection: collection.slug,
         },
         refresh: true,
       });

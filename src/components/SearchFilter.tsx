@@ -9,26 +9,33 @@ import {
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import { useRefinementList } from "react-instantsearch";
+import { useTranslations } from "next-intl";
 
 interface CategoryFilterProps {
   attribute: string;
   operator: "or" | "and";
+  placeholder?: string;
+  title: string;
 }
 
 export default function CategoryFilter({
   attribute = "categories",
   operator = "or",
+  placeholder,
+  title,
 }: CategoryFilterProps) {
   const { items, refine } = useRefinementList({
     attribute: attribute,
     operator: operator,
   });
+  const t = useTranslations("search");
+  const defaultPlaceholder = t("select");
 
   const selectedItems = items.filter((item) => item.isRefined);
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Kategoriat</h2>
+      <h2 className="text-lg font-semibold">{title}</h2>
       <Listbox
         value={selectedItems}
         onChange={(selected) => {
@@ -46,8 +53,8 @@ export default function CategoryFilter({
           <ListboxButton className="relative w-full cursor-default rounded-lg border border-stone-700 bg-stone-900 py-2 pl-3 pr-10 text-left text-white">
             <span className="block truncate">
               {selectedItems.length === 0
-                ? "Valitse kategoriat"
-                : `${selectedItems.length} kategoriaa valittu`}
+                ? placeholder || defaultPlaceholder
+                : `${selectedItems.length} ${t("selected")}`}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon className="h-5 w-5 text-stone-400" aria-hidden="true" />
@@ -64,26 +71,15 @@ export default function CategoryFilter({
                 <ListboxOption
                   key={item.value}
                   value={item}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-stone-800 text-white" : "text-stone-200"
-                    }`
-                  }
+                  className="group relative cursor-default select-none py-2 pl-10 pr-4 font-normal group-data-[selected]:font-medium"
                 >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${selected ? "font-medium" : "font-normal"}`}
-                      >
-                        {item.label}
-                      </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-500">
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
+                  <span className="block truncate font-normal capitalize group-data-[selected]:font-medium">
+                    {item.label}
+                  </span>
+
+                  <span className="invisible absolute inset-y-0 left-0 flex items-center pl-3 text-amber-500 group-data-[selected]:visible">
+                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                  </span>
                 </ListboxOption>
               ))}
             </ListboxOptions>

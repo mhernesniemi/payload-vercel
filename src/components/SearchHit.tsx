@@ -9,7 +9,13 @@ interface Hit {
 export default function SearchHit({ hit }: { hit: Hit }) {
   const { status } = useInstantSearch();
 
+  console.log("status", status);
+
   if (status === "loading") {
+    return;
+  }
+
+  if (status !== "idle") {
     return;
   }
 

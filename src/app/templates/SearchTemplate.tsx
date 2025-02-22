@@ -80,19 +80,33 @@ function SearchStats() {
 }
 
 function SearchComponents() {
+  const t = useTranslations("search");
   const { query } = useSearchBox();
-  const { items } = useRefinementList({
-    attribute: "categories",
-    operator: "or",
-  });
+  const refinementStates = {
+    categories: useRefinementList({
+      attribute: "categories",
+      operator: "or",
+    }),
+    collection: useRefinementList({
+      attribute: "collection",
+      operator: "or",
+    }),
+  };
 
-  const hasSelectedCategories = items.some((item) => item.isRefined);
-  const shouldShowResults = Boolean(query) || hasSelectedCategories;
+  // Check if there are any selections in the refinement lists
+  const hasActiveRefinements = Object.values(refinementStates).some(({ items }) =>
+    items.some((item) => item.isRefined),
+  );
+
+  const shouldShowResults = Boolean(query) || hasActiveRefinements;
 
   return (
     <div className="flex flex-col gap-10">
       <CustomSearchBox />
-      <SearchFilter attribute="categories" operator="or" />
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <SearchFilter attribute="categories" title={t("categories")} operator="or" />
+        <SearchFilter attribute="collection" title={t("collections")} operator="or" />
+      </div>
       <SearchStats />
       {shouldShowResults && <Hits hitComponent={SearchHit} />}
     </div>

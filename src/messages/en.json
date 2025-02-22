@@ -42,7 +42,11 @@
     "searchPlaceholder": "Enter search query...",
     "search": "Search",
     "results": "results",
-    "result": "result"
+    "result": "result",
+    "selected": "selected",
+    "select": "Select",
+    "categories": "Categories",
+    "collections": "Collections"
   },
   "auth": {
     "signIn": "Sign in",

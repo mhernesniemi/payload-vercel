@@ -44,7 +44,11 @@
     "searchPlaceholder": "Kirjoita hakusana...",
     "search": "Haku",
     "results": "osumaa",
-    "result": "osuma"
+    "result": "osuma",
+    "selected": "valittu",
+    "select": "Valitse",
+    "categories": "Kategoriat",
+    "collections": "Kokoelmat"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
