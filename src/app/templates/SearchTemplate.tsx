@@ -146,7 +146,7 @@ function SearchComponents() {
 export default function SearchTemplate() {
   return (
     <div className="mx-auto max-w-screen-md py-16">
-      <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
+      <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME} routing>
         <SearchComponents />
       </InstantSearch>
     </div>

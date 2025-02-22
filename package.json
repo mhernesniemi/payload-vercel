@@ -13,7 +13,8 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "prepare": "husky"
+    "prepare": "husky",
+    "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToElastic.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.0",
@@ -41,7 +42,8 @@
     "react-instantsearch": "^7.7.0",
     "searchkit": "^4.13.2",
     "sharp": "^0.32.6",
-    "sonner": "^2.0.1"
+    "sonner": "^2.0.1",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -50,6 +52,7 @@
     "@types/react-dom": "^19.0.1",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9.19.0",
     "eslint-config-next": "^15.1.0",
     "postcss": "^8.5.1",
