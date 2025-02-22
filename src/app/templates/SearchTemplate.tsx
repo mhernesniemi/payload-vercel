@@ -60,18 +60,7 @@ function CustomSearchBox() {
 
 function SearchStats() {
   const { nbHits } = useStats();
-  const { query } = useSearchBox();
-  const { items } = useRefinementList({
-    attribute: "categories",
-    operator: "or",
-  });
   const t = useTranslations("search");
-
-  const hasSelectedCategories = items.some((item) => item.isRefined);
-
-  if (!query && !hasSelectedCategories) {
-    return null;
-  }
 
   return (
     <div className="text-stone-400">
@@ -137,8 +126,12 @@ function SearchComponents() {
         <SearchFilter attribute="collection" title={t("collections")} operator="or" />
       </div>
       <CustomCurrentRefinements />
-      <SearchStats />
-      {shouldShowResults && <Hits hitComponent={SearchHit} />}
+      {shouldShowResults && (
+        <div className="flex flex-col gap-4">
+          <SearchStats />
+          <Hits hitComponent={SearchHit} />
+        </div>
+      )}
     </div>
   );
 }
