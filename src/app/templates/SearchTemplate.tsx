@@ -87,13 +87,14 @@ function SearchComponents() {
   });
 
   const hasSelectedCategories = items.some((item) => item.isRefined);
+  const shouldShowResults = Boolean(query) || hasSelectedCategories;
 
   return (
     <div className="flex flex-col gap-10">
       <CustomSearchBox />
       <SearchFilter attribute="categories" operator="or" />
       <SearchStats />
-      {(query || hasSelectedCategories) && <Hits hitComponent={SearchHit} />}
+      {shouldShowResults && <Hits hitComponent={SearchHit} />}
     </div>
   );
 }

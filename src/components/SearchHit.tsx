@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/routing";
+import { useInstantSearch } from "react-instantsearch";
 
 interface Hit {
   title: string;
@@ -6,6 +7,12 @@ interface Hit {
 }
 
 export default function SearchHit({ hit }: { hit: Hit }) {
+  const { status } = useInstantSearch();
+
+  if (status === "loading") {
+    return;
+  }
+
   return (
     <Link href={`/articles/${hit.slug}`} className="block">
       <div className="mb-4 rounded-lg bg-stone-800 p-4">
