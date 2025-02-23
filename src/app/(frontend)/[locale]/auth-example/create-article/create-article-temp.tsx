@@ -6,20 +6,21 @@ import { fetchUserArticles, createArticle, deleteArticle } from "./actions";
 import { SanitizedCollectionPermission } from "payload";
 import Button from "@/components/Button";
 import { toast } from "sonner";
+import { Link } from "@/i18n/routing";
 
 interface SessionProps {
   user: {
     id: number;
     role?: string;
   };
-  permissions: SanitizedCollectionPermission;
+  permissions?: SanitizedCollectionPermission;
 }
 
-export default function CreateArticle({ user }: SessionProps) {
+export default function CreateArticle({ user, permissions }: SessionProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [title, setTitle] = useState("");
 
-  console.log("user", user);
+  console.log("permissions client", permissions);
 
   // Fetch user articles when the component loads
   useEffect(() => {
@@ -45,8 +46,6 @@ export default function CreateArticle({ user }: SessionProps) {
   };
 
   const handleDelete = async (articleId: string) => {
-    if (!window.confirm("Are you sure you want to delete this article?")) return;
-
     try {
       await deleteArticle(articleId, user.id);
       toast.success("Article deleted successfully!");
@@ -61,29 +60,31 @@ export default function CreateArticle({ user }: SessionProps) {
   return (
     <div className="mx-auto my-16 max-w-6xl">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div>
-          <h1 className="mb-6 text-2xl font-bold text-stone-100">Add Article</h1>
+        {permissions?.create && (
+          <div>
+            <h1 className="mb-6 text-2xl font-bold text-stone-100">Create Article</h1>
 
-          <form onSubmit={handleSubmit} className="mb-8">
-            <div className="mb-4">
-              <label htmlFor="title" className="mb-2 block text-stone-300">
-                Title:
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-stone-600 bg-stone-700 p-2 text-stone-100"
-                required
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="mb-8">
+              <div className="mb-4">
+                <label htmlFor="title" className="mb-2 block text-stone-300">
+                  Title:
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full rounded-lg border border-stone-600 bg-stone-700 p-2 text-stone-100"
+                  required
+                />
+              </div>
 
-            <Button type="submit" style="secondary" size="sm">
-              Create Article
-            </Button>
-          </form>
-        </div>
+              <Button type="submit" style="secondary" size="sm">
+                Create Article
+              </Button>
+            </form>
+          </div>
+        )}
 
         <div>
           <h2 className="mb-6 text-2xl font-bold text-stone-100">My Articles</h2>
@@ -96,16 +97,20 @@ export default function CreateArticle({ user }: SessionProps) {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-stone-100">{article.title}</h3>
+                      <Link href={`/articles/${article.slug}`} className="font-bold text-stone-100">
+                        {article.title}
+                      </Link>
                       <p className="text-sm text-stone-400">Slug: {article.slug}</p>
                     </div>
-                    <Button
-                      onClick={() => handleDelete(String(article.id))}
-                      style="secondary"
-                      size="sm"
-                    >
-                      Delete
-                    </Button>
+                    {permissions?.delete && (
+                      <Button
+                        onClick={() => handleDelete(String(article.id))}
+                        style="secondary"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    )}
                   </div>
                 </div>
               ))}
