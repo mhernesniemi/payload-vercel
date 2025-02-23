@@ -193,6 +193,7 @@ export interface Article {
     [k: string]: unknown;
   } | null;
   slug: string;
+  createdBy?: (number | null) | User;
   author?: (number | null) | Contact;
   categories?: (number | Category)[] | null;
   publishedDate?: string | null;
@@ -253,6 +254,7 @@ export interface CollectionPage {
     [k: string]: unknown;
   } | null;
   slug: string;
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -281,6 +283,7 @@ export interface News {
     [k: string]: unknown;
   } | null;
   slug: string;
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -309,6 +312,7 @@ export interface Reference {
     [k: string]: unknown;
   } | null;
   slug: string;
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -439,6 +443,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   heroImage?: T;
   content?: T;
   slug?: T;
+  createdBy?: T;
   author?: T;
   categories?: T;
   publishedDate?: T;
@@ -456,6 +461,7 @@ export interface CollectionPagesSelect<T extends boolean = true> {
   heroImage?: T;
   content?: T;
   slug?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -469,6 +475,7 @@ export interface NewsSelect<T extends boolean = true> {
   heroImage?: T;
   content?: T;
   slug?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -482,6 +489,7 @@ export interface ReferencesSelect<T extends boolean = true> {
   heroImage?: T;
   content?: T;
   slug?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
