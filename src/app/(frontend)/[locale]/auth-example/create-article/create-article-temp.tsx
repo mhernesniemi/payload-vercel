@@ -7,11 +7,14 @@ import { SanitizedCollectionPermission } from "payload";
 import Button from "@/components/Button";
 import { toast } from "sonner";
 import { Link } from "@/i18n/routing";
+import LogoutButton from "@/components/auth/LogoutButton";
+import Heading from "@/components/Heading";
 
 interface SessionProps {
   user: {
     id: number;
     role?: string;
+    email: string;
   };
   permissions?: SanitizedCollectionPermission;
 }
@@ -59,10 +62,26 @@ export default function CreateArticle({ user, permissions }: SessionProps) {
 
   return (
     <div className="mx-auto my-16 max-w-6xl">
+      <Heading level="h1" size="lg">
+        Profile
+      </Heading>
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <p className="text-stone-300">
+            Logged in user: <span className="font-semibold text-stone-100">{user.email}</span>
+          </p>
+          <p className="text-stone-300">
+            Role: <span className="font-semibold text-stone-100">{user.role}</span>
+          </p>
+        </div>
+        <LogoutButton />
+      </div>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {permissions?.create && (
           <div>
-            <h1 className="mb-6 text-2xl font-bold text-stone-100">Create Article</h1>
+            <Heading level="h2" size="md">
+              Create Article
+            </Heading>
 
             <form onSubmit={handleSubmit} className="mb-8">
               <div className="mb-4">
@@ -87,7 +106,9 @@ export default function CreateArticle({ user, permissions }: SessionProps) {
         )}
 
         <div>
-          <h2 className="mb-6 text-2xl font-bold text-stone-100">My Articles</h2>
+          <Heading level="h2" size="md">
+            My Articles
+          </Heading>
           {articles.length > 0 ? (
             <div className="space-y-4">
               {articles.map((article) => (

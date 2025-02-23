@@ -2,6 +2,7 @@
 
 import { useRouter } from "@/i18n/routing";
 import { useState } from "react";
+import Button from "../Button";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -23,8 +24,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button onClick={handleLogout} disabled={isLoading}>
+    <Button onClick={handleLogout} size="sm" disabled={isLoading}>
       {isLoading ? "Logging out..." : "Logout"}
-    </button>
+    </Button>
   );
 }

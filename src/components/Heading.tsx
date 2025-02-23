@@ -22,9 +22,9 @@ export default function Heading({ level, size, children, className }: HeadingPro
     <Tag
       className={twMerge(
         clsx(
-          size === "xl" && "mb-10 text-4xl font-bold",
-          size === "lg" && "mb-8 text-3xl font-bold",
-          size === "md" && "mb-6 text-xl font-semibold",
+          size === "xl" && "mb-10 text-5xl font-bold",
+          size === "lg" && "mb-8 text-4xl font-bold",
+          size === "md" && "mb-6 text-2xl font-semibold",
           size === "sm" && "mb-4 text-lg font-semibold",
           size === "xs" && "mb-4 text-base font-medium",
         ),
