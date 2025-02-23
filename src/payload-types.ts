@@ -527,6 +527,7 @@ export interface FrontPage {
  * via the `definition` "HeroBlock".
  */
 export interface HeroBlock {
+  blockType: 'hero';
   title: string;
   description: string;
   image: number | Media;
@@ -536,7 +537,6 @@ export interface HeroBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -789,6 +789,7 @@ export interface FrontPageSelect<T extends boolean = true> {
  * via the `definition` "HeroBlock_select".
  */
 export interface HeroBlockSelect<T extends boolean = true> {
+  blockType?: T;
   title?: T;
   description?: T;
   image?: T;

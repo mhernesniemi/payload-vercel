@@ -21,26 +21,53 @@ import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
 import SmallFeaturedPostsBlock from "./SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
 import { Hero } from "./Hero";
-export type NodeTypes =
-  | DefaultNodeTypes
-  | SerializedBlockNode<
-      | CTABlockType
-      | MediaBlockType
-      | QuoteBlockType
-      | VideoEmbedBlockType
-      | LinkListBlockType
-      | LargeFeaturedPostBlockType
-      | SmallFeaturedPostsWrapperBlockType
-      | ContactsBlockType
-      | HeroBlockType
-    >;
+
+type BaseBlockTypes =
+  | CTABlockType
+  | MediaBlockType
+  | QuoteBlockType
+  | VideoEmbedBlockType
+  | LinkListBlockType
+  | LargeFeaturedPostBlockType
+  | SmallFeaturedPostsWrapperBlockType
+  | ContactsBlockType
+  | HeroBlockType;
+
+export type NodeTypes = DefaultNodeTypes | SerializedBlockNode<BaseBlockTypes>;
+type BlockTypes = BaseBlockTypes;
 
 type Props = {
-  nodes: NodeTypes[];
+  nodes?: NodeTypes[];
+  blocks?: BlockTypes[];
 };
 
-export const BlockRenderer = ({ nodes }: Props) => {
-  if (!nodes) return null;
+export const BlockRenderer = ({ nodes, blocks }: Props) => {
+  if (!nodes && !blocks) return null;
+
+  const renderBlock = (block: BaseBlockTypes) => {
+    switch (block.blockType) {
+      case "cta":
+        return <CTABlock key={block.id} block={block} />;
+      case "media":
+        return <MediaBlock key={block.id} block={block} />;
+      case "quote":
+        return <QuoteBlock key={block.id} block={block} />;
+      case "videoEmbed":
+        return <VideoEmbedBlock key={block.id} block={block} />;
+      case "contacts":
+        return <ContactsBlock key={block.id} block={block} />;
+      case "linkList":
+        return <LinkListBlock key={block.id} block={block} />;
+      case "largeFeaturedPost":
+        return <LargeFeaturedPostBlock key={block.id} block={block} />;
+      case "smallFeaturedPostsWrapper":
+        return <SmallFeaturedPostsBlock key={block.id} block={block} />;
+      case "hero":
+        return <Hero key={block.id} block={block} />;
+      default:
+        return null;
+    }
+  };
 
   const renderNodes = (nodesToRender: NodeTypes[]) => {
     return nodesToRender.map((node, index) => {
@@ -54,36 +81,20 @@ export const BlockRenderer = ({ nodes }: Props) => {
         return <TextRenderer key={index} node={node} index={index} />;
       }
 
-      if (node.type === "block") {
-        const block = node.fields;
-        const blockType = block?.blockType;
-
-        switch (blockType) {
-          case "cta":
-            return <CTABlock key={block.id} block={block} />;
-          case "media":
-            return <MediaBlock key={block.id} block={block} />;
-          case "quote":
-            return <QuoteBlock key={block.id} block={block} />;
-          case "videoEmbed":
-            return <VideoEmbedBlock key={block.id} block={block} />;
-          case "contacts":
-            return <ContactsBlock key={block.id} block={block} />;
-          case "linkList":
-            return <LinkListBlock key={block.id} block={block} />;
-          case "largeFeaturedPost":
-            return <LargeFeaturedPostBlock key={block.id} block={block} />;
-          case "smallFeaturedPostsWrapper":
-            return <SmallFeaturedPostsBlock key={block.id} block={block} />;
-          case "hero":
-            return <Hero key={block.id} block={block} />;
-          default:
-            return null;
-        }
+      if (node.type === "block" && node.fields) {
+        return renderBlock(node.fields);
       }
+
       return null;
     });
   };
 
-  return renderNodes(nodes);
+  const renderBlocks = (blocksToRender: BlockTypes[]) => {
+    return blocksToRender.map(renderBlock);
+  };
+
+  if (nodes) return renderNodes(nodes);
+  if (blocks) return renderBlocks(blocks);
+
+  return null;
 };

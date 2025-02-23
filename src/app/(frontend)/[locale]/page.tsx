@@ -13,19 +13,17 @@ export default async function Home({ params }: { params: Params }) {
     config: configPromise,
   });
 
-  const { docs: articles } = await payload.find({
-    collection: "articles",
-    sort: "-publishedDate",
+  const frontPage = await payload.findGlobal({
+    slug: "front-page",
     locale: locale,
   });
+
+  console.log("frontPage", frontPage);
 
   return (
     <Container>
       <Header />
-      <FrontPageTemplate />
-      {articles.map((article) => (
-        <div key={article.id}>{article.title}</div>
-      ))}
+      <FrontPageTemplate content={frontPage} />
     </Container>
   );
 }

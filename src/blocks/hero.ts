@@ -8,6 +8,15 @@ export const heroBlock: Block = {
   },
   fields: [
     {
+      name: "blockType",
+      type: "text",
+      required: true,
+      defaultValue: "hero",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
       name: "title",
       type: "text",
       required: true,
