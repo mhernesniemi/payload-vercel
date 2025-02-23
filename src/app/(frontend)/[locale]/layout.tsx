@@ -7,6 +7,8 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { SITE_NAME } from "@/lib/constants";
 import { Toaster } from "@/components/Toaster";
+import { Footer } from "@/components/Footer";
+
 const inter = Inter({ subsets: ["latin"] });
 
 type Locale = "en" | "fi";
@@ -33,8 +35,11 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body className={`${inter.className} bg-stone-900 text-white`}>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+      <body className={`${inter.className} flex min-h-screen flex-col bg-stone-900 text-white`}>
+        <NextIntlClientProvider messages={messages}>
+          <div className="flex-grow">{children}</div>
+        </NextIntlClientProvider>
+        <Footer />
         <Toaster />
       </body>
     </html>
