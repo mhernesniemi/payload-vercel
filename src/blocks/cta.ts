@@ -19,7 +19,11 @@ export const ctaBlock: Block = {
       type: "textarea",
       localized: true,
     },
-    ...linkField,
+    {
+      name: "link",
+      type: "group",
+      fields: [...linkField],
+    },
   ],
   interfaceName: "CTABlock",
 };

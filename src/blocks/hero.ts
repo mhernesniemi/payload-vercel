@@ -1,3 +1,4 @@
+import { linkField } from "@/fields/link";
 import { Block } from "payload";
 
 export const heroBlock: Block = {
@@ -36,22 +37,9 @@ export const heroBlock: Block = {
       label: "Image",
     },
     {
-      name: "ctaButton",
+      name: "link",
       type: "group",
-      fields: [
-        {
-          name: "label",
-          type: "text",
-          required: true,
-          label: "Button text",
-        },
-        {
-          name: "link",
-          type: "text",
-          required: true,
-          label: "Link",
-        },
-      ],
+      fields: [...linkField],
     },
   ],
   interfaceName: "HeroBlock",

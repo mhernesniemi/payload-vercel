@@ -1,8 +1,4 @@
 {
-  "meta": {
-    "title": "Payload Demo",
-    "description": "Rakennettu Payload CMS:llä ja Next.js:llä"
-  },
   "articles": {
     "title": "Artikkelit",
     "publishedAt": "Julkaistu {date}",
@@ -34,9 +30,7 @@
     "articles": "Artikkelit"
   },
   "languageSwitcher": {
-    "switchLanguage": "Vaihda kieltä",
-    "finnish": "Suomi",
-    "english": "Englanti"
+    "switchLanguage": "Vaihda kieltä"
   },
   "search": {
     "clearSearch": "Tyhjennä haku",

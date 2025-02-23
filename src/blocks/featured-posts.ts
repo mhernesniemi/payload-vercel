@@ -1,3 +1,4 @@
+import { linkField } from "@/fields/link";
 import { Block } from "payload";
 
 export const largeFeaturedPostBlock: Block = {
@@ -13,18 +14,10 @@ export const largeFeaturedPostBlock: Block = {
       type: "textarea",
     },
     {
-      name: "link",
-      type: "text",
-    },
-    {
       name: "image",
       type: "upload",
       relationTo: "media",
       required: true,
-    },
-    {
-      name: "buttonText",
-      type: "text",
     },
     {
       name: "video",
@@ -32,6 +25,11 @@ export const largeFeaturedPostBlock: Block = {
       admin: {
         description: "YouTube video URL",
       },
+    },
+    {
+      name: "link",
+      type: "group",
+      fields: [...linkField],
     },
   ],
   interfaceName: "LargeFeaturedPostBlock",
@@ -50,14 +48,15 @@ export const smallFeaturedPostBlock: Block = {
       type: "textarea",
     },
     {
-      name: "link",
-      type: "text",
-    },
-    {
       name: "image",
       type: "upload",
       relationTo: "media",
       required: true,
+    },
+    {
+      name: "link",
+      type: "group",
+      fields: [...linkField],
     },
   ],
 };

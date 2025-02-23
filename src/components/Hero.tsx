@@ -2,12 +2,25 @@ import React from "react";
 import Image from "next/image";
 import { HeroBlock as HeroBlockType } from "@/payload-types";
 import Button from "@/components/Button";
+import Heading from "./Heading";
+import parseLink from "@/lib/parseLink";
+import { LinkListBlock } from "@/payload-types";
+
 type HeroProps = {
   block: HeroBlockType;
 };
 
 export function Hero({ block }: HeroProps) {
-  const { title, description, image, ctaButton } = block;
+  const { title, description, image, link } = block;
+
+  const linkData = link
+    ? parseLink({
+        label: link.label || undefined,
+        isExternal: link.isExternal ?? false,
+        externalUrl: link.externalUrl || undefined,
+        internalUrl: link.internalUrl || undefined,
+      } as NonNullable<LinkListBlock["links"]>[number])
+    : null;
 
   return (
     <div className="relative mt-12 flex w-full items-center justify-center overflow-hidden rounded-2xl py-24">
@@ -20,10 +33,12 @@ export function Hero({ block }: HeroProps) {
         )}
       </div>
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-        <h1 className="mb-6 text-5xl font-bold tracking-tight text-white">{title}</h1>
+        <Heading level="h1" size="xl" className="mb-6 text-white">
+          {title}
+        </Heading>
         <p className="mb-8 text-lg leading-relaxed text-stone-100">{description}</p>
         <div className="flex justify-center">
-          {ctaButton && <Button href={ctaButton.link}>{ctaButton.label}</Button>}
+          {linkData && link?.label && <Button href={linkData.url}>{link.label}</Button>}
         </div>
       </div>
     </div>

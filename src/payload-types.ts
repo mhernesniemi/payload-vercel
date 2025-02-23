@@ -531,9 +531,23 @@ export interface HeroBlock {
   title: string;
   description: string;
   image: number | Media;
-  ctaButton: {
-    label: string;
-    link: string;
+  link?: {
+    label?: string | null;
+    isExternal?: boolean | null;
+    internalUrl?:
+      | ({
+          relationTo: 'articles';
+          value: number | Article;
+        } | null)
+      | ({
+          relationTo: 'collection-pages';
+          value: number | CollectionPage;
+        } | null)
+      | ({
+          relationTo: 'news';
+          value: number | News;
+        } | null);
+    externalUrl?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -545,21 +559,24 @@ export interface HeroBlock {
 export interface CTABlock {
   title: string;
   text?: string | null;
-  isExternal?: boolean | null;
-  internalUrl?:
-    | ({
-        relationTo: 'articles';
-        value: number | Article;
-      } | null)
-    | ({
-        relationTo: 'collection-pages';
-        value: number | CollectionPage;
-      } | null)
-    | ({
-        relationTo: 'news';
-        value: number | News;
-      } | null);
-  externalUrl?: string | null;
+  link?: {
+    label?: string | null;
+    isExternal?: boolean | null;
+    internalUrl?:
+      | ({
+          relationTo: 'articles';
+          value: number | Article;
+        } | null)
+      | ({
+          relationTo: 'collection-pages';
+          value: number | CollectionPage;
+        } | null)
+      | ({
+          relationTo: 'news';
+          value: number | News;
+        } | null);
+    externalUrl?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -571,13 +588,29 @@ export interface CTABlock {
 export interface LargeFeaturedPostBlock {
   title: string;
   text?: string | null;
-  link?: string | null;
   image: number | Media;
-  buttonText?: string | null;
   /**
    * YouTube video URL
    */
   video?: string | null;
+  link?: {
+    label?: string | null;
+    isExternal?: boolean | null;
+    internalUrl?:
+      | ({
+          relationTo: 'articles';
+          value: number | Article;
+        } | null)
+      | ({
+          relationTo: 'collection-pages';
+          value: number | CollectionPage;
+        } | null)
+      | ({
+          relationTo: 'news';
+          value: number | News;
+        } | null);
+    externalUrl?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'largeFeaturedPost';
@@ -590,8 +623,25 @@ export interface SmallFeaturedPostsWrapperBlock {
   posts: {
     title: string;
     text?: string | null;
-    link?: string | null;
     image: number | Media;
+    link?: {
+      label?: string | null;
+      isExternal?: boolean | null;
+      internalUrl?:
+        | ({
+            relationTo: 'articles';
+            value: number | Article;
+          } | null)
+        | ({
+            relationTo: 'collection-pages';
+            value: number | CollectionPage;
+          } | null)
+        | ({
+            relationTo: 'news';
+            value: number | News;
+          } | null);
+      externalUrl?: string | null;
+    };
     id?: string | null;
     blockName?: string | null;
     blockType: 'smallFeaturedPost';
@@ -607,6 +657,7 @@ export interface SmallFeaturedPostsWrapperBlock {
 export interface LinkListBlock {
   links?:
     | {
+        label?: string | null;
         isExternal?: boolean | null;
         internalUrl?:
           | ({
@@ -691,6 +742,7 @@ export interface MainMenu {
     label: string;
     addLinks?: boolean | null;
     link?: {
+      label?: string | null;
       isExternal?: boolean | null;
       internalUrl?:
         | ({
@@ -711,6 +763,7 @@ export interface MainMenu {
       | {
           label: string;
           link?: {
+            label?: string | null;
             isExternal?: boolean | null;
             internalUrl?:
               | ({
@@ -731,6 +784,7 @@ export interface MainMenu {
             | {
                 label: string;
                 link?: {
+                  label?: string | null;
                   isExternal?: boolean | null;
                   internalUrl?:
                     | ({
@@ -793,11 +847,13 @@ export interface HeroBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
-  ctaButton?:
+  link?:
     | T
     | {
         label?: T;
-        link?: T;
+        isExternal?: T;
+        internalUrl?: T;
+        externalUrl?: T;
       };
   id?: T;
   blockName?: T;
@@ -809,9 +865,14 @@ export interface HeroBlockSelect<T extends boolean = true> {
 export interface CTABlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
-  isExternal?: T;
-  internalUrl?: T;
-  externalUrl?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        isExternal?: T;
+        internalUrl?: T;
+        externalUrl?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -822,10 +883,16 @@ export interface CTABlockSelect<T extends boolean = true> {
 export interface LargeFeaturedPostBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
-  link?: T;
   image?: T;
-  buttonText?: T;
   video?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        isExternal?: T;
+        internalUrl?: T;
+        externalUrl?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -842,8 +909,15 @@ export interface SmallFeaturedPostsWrapperBlockSelect<T extends boolean = true> 
           | {
               title?: T;
               text?: T;
-              link?: T;
               image?: T;
+              link?:
+                | T
+                | {
+                    label?: T;
+                    isExternal?: T;
+                    internalUrl?: T;
+                    externalUrl?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -859,6 +933,7 @@ export interface LinkListBlockSelect<T extends boolean = true> {
   links?:
     | T
     | {
+        label?: T;
         isExternal?: T;
         internalUrl?: T;
         externalUrl?: T;
@@ -922,6 +997,7 @@ export interface MainMenuSelect<T extends boolean = true> {
         link?:
           | T
           | {
+              label?: T;
               isExternal?: T;
               internalUrl?: T;
               externalUrl?: T;
@@ -933,6 +1009,7 @@ export interface MainMenuSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    label?: T;
                     isExternal?: T;
                     internalUrl?: T;
                     externalUrl?: T;
@@ -944,6 +1021,7 @@ export interface MainMenuSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
+                          label?: T;
                           isExternal?: T;
                           internalUrl?: T;
                           externalUrl?: T;
