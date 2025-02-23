@@ -1,11 +1,11 @@
 import { getPayload } from "payload";
 import { elasticClient } from "@/lib/elastic-utils";
-import config from "@payload-config";
-import { Article, CollectionPage, News, Reference } from "../payload-types";
+import config from "@/payload.config";
+import { Article, CollectionPage, News } from "../payload-types";
 import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 
-type IndexableDocument = Article | CollectionPage | News | Reference;
+type IndexableDocument = Article | CollectionPage | News;
 
 const reindexToElastic = async () => {
   try {
@@ -23,7 +23,7 @@ const reindexToElastic = async () => {
     console.log(`Created new index ${ELASTIC_INDEX_NAME}`);
 
     // Get all collections that should be indexed
-    const collections = ["articles", "collection-pages", "news", "references"] as const;
+    const collections = ["articles", "collection-pages", "news"] as const;
 
     for (const collectionSlug of collections) {
       console.log(`Processing collection: ${collectionSlug}`);

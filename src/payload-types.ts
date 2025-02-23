@@ -70,7 +70,6 @@ export interface Config {
     articles: Article;
     'collection-pages': CollectionPage;
     news: News;
-    references: Reference;
     categories: Category;
     contacts: Contact;
     'payload-locked-documents': PayloadLockedDocument;
@@ -84,7 +83,6 @@ export interface Config {
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'collection-pages': CollectionPagesSelect<false> | CollectionPagesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
-    references: ReferencesSelect<false> | ReferencesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     contacts: ContactsSelect<false> | ContactsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -289,35 +287,6 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "references".
- */
-export interface Reference {
-  id: number;
-  title: string;
-  heroText?: string | null;
-  heroImage?: (number | null) | Media;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  slug: string;
-  createdBy?: (number | null) | User;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -342,10 +311,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
-      } | null)
-    | ({
-        relationTo: 'references';
-        value: number | Reference;
       } | null)
     | ({
         relationTo: 'categories';
@@ -481,20 +446,6 @@ export interface NewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "references_select".
- */
-export interface ReferencesSelect<T extends boolean = true> {
-  title?: T;
-  heroText?: T;
-  heroImage?: T;
-  content?: T;
-  slug?: T;
-  createdBy?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -557,6 +508,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface FrontPage {
   id: number;
+  hero: HeroBlock[];
   content: (
     | CTABlock
     | LargeFeaturedPostBlock
@@ -569,6 +521,22 @@ export interface FrontPage {
   )[];
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  title: string;
+  description: string;
+  image: number | Media;
+  ctaButton: {
+    label: string;
+    link: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -590,10 +558,6 @@ export interface CTABlock {
     | ({
         relationTo: 'news';
         value: number | News;
-      } | null)
-    | ({
-        relationTo: 'references';
-        value: number | Reference;
       } | null);
   externalUrl?: string | null;
   id?: string | null;
@@ -656,10 +620,6 @@ export interface LinkListBlock {
           | ({
               relationTo: 'news';
               value: number | News;
-            } | null)
-          | ({
-              relationTo: 'references';
-              value: number | Reference;
             } | null);
         externalUrl?: string | null;
         id?: string | null;
@@ -744,10 +704,6 @@ export interface MainMenu {
         | ({
             relationTo: 'news';
             value: number | News;
-          } | null)
-        | ({
-            relationTo: 'references';
-            value: number | Reference;
           } | null);
       externalUrl?: string | null;
     };
@@ -768,10 +724,6 @@ export interface MainMenu {
               | ({
                   relationTo: 'news';
                   value: number | News;
-                } | null)
-              | ({
-                  relationTo: 'references';
-                  value: number | Reference;
                 } | null);
             externalUrl?: string | null;
           };
@@ -792,10 +744,6 @@ export interface MainMenu {
                     | ({
                         relationTo: 'news';
                         value: number | News;
-                      } | null)
-                    | ({
-                        relationTo: 'references';
-                        value: number | Reference;
                       } | null);
                   externalUrl?: string | null;
                 };
@@ -815,6 +763,11 @@ export interface MainMenu {
  * via the `definition` "front-page_select".
  */
 export interface FrontPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        hero?: T | HeroBlockSelect<T>;
+      };
   content?:
     | T
     | {
@@ -830,6 +783,23 @@ export interface FrontPageSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

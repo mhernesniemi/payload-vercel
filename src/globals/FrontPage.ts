@@ -7,6 +7,7 @@ import {
   linkListBlock,
   contactsBlock,
   quoteBlock,
+  heroBlock,
 } from "@/blocks";
 import { GlobalConfig } from "payload";
 
@@ -19,6 +20,13 @@ export const FrontPage: GlobalConfig = {
     group: "Pages",
   },
   fields: [
+    {
+      name: "hero",
+      type: "blocks",
+      required: true,
+      maxRows: 1,
+      blocks: [heroBlock],
+    },
     {
       name: "content",
       type: "blocks",

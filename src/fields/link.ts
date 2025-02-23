@@ -9,7 +9,7 @@ export const linkField: Field[] = [
   {
     name: "internalUrl",
     type: "relationship",
-    relationTo: ["articles", "collection-pages", "news", "references"],
+    relationTo: ["articles", "collection-pages", "news"],
     required: true,
     admin: {
       condition: (_, siblingData) => !siblingData.isExternal,

@@ -9,3 +9,4 @@ export { linkListBlock } from "./link-list";
 export { contactsBlock } from "./contact-people";
 export { videoEmbedBlock } from "./video-embed";
 export { quoteBlock } from "./quote";
+export { heroBlock } from "./hero";

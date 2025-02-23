@@ -9,6 +9,7 @@ import type {
   LargeFeaturedPostBlock as LargeFeaturedPostBlockType,
   SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType,
   ContactsBlock as ContactsBlockType,
+  HeroBlock as HeroBlockType,
 } from "@/payload-types";
 import { CTABlock } from "./CTABlock";
 import { MediaBlock } from "./MediaBlock";
@@ -19,7 +20,7 @@ import { LinkListBlock } from "./LinkListBlock";
 import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
 import SmallFeaturedPostsBlock from "./SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
-
+import { Hero } from "./Hero";
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
@@ -31,6 +32,7 @@ export type NodeTypes =
       | LargeFeaturedPostBlockType
       | SmallFeaturedPostsWrapperBlockType
       | ContactsBlockType
+      | HeroBlockType
     >;
 
 type Props = {
@@ -73,6 +75,8 @@ export const BlockRenderer = ({ nodes }: Props) => {
             return <LargeFeaturedPostBlock key={block.id} block={block} />;
           case "smallFeaturedPostsWrapper":
             return <SmallFeaturedPostsBlock key={block.id} block={block} />;
+          case "hero":
+            return <Hero key={block.id} block={block} />;
           default:
             return null;
         }
