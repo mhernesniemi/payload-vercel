@@ -18,8 +18,7 @@ export async function POST(request: Request) {
     if (!result.user) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
-
-    // Asetetaan Payloadin token evästeeseen
+    // Set Payload token in cookie
     const response = NextResponse.json(result);
 
     if (result.token) {

@@ -5,7 +5,7 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { MainMenu, MenuItem, MobileMenu } from "./MainMenu";
 import SearchSidePanel from "./SearchPanel";
-import { UserIcon } from "@heroicons/react/24/outline";
+import UserAuthNav from "./auth/UserAuthNav";
 
 export default async function Header() {
   const t = await getTranslations();
@@ -33,15 +33,7 @@ export default async function Header() {
           <MainMenu items={mainMenu.items as MenuItem[]} />
         </div>
         <div className="flex items-center justify-end gap-8 lg:w-[300px]">
-          <div className="flex items-center gap-4">
-            <Link
-              href="/auth-example/login"
-              className="group flex items-center gap-2 text-xs font-medium uppercase"
-            >
-              <UserIcon className="h-5 w-5 group-hover:text-amber-500" />
-              Log in
-            </Link>
-          </div>
+          <UserAuthNav />
           <SearchSidePanel />
           <LanguageSwitcher />
         </div>
