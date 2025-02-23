@@ -5,6 +5,7 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/auth/LogoutButton";
+import CreateArticle from "./create-article-temp";
 
 export default async function CreateArticlePage() {
   const payload = await getPayload({
@@ -21,6 +22,8 @@ export default async function CreateArticlePage() {
     redirect("/en/auth-example/login");
   }
 
+  console.log(session);
+
   return (
     <Container>
       <Header />
@@ -32,6 +35,7 @@ export default async function CreateArticlePage() {
           <p>Logged in user: {user.email}</p>
           <p>Role: {user.role}</p>
         </div>
+        <CreateArticle session={session} />
       </div>
     </Container>
   );
