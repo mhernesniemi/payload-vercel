@@ -1,12 +1,17 @@
 "use server";
 
 import { getPayload } from "payload";
-import configPromise from "@/payload.config";
 import { Article } from "@/payload-types";
 
+async function getConfig() {
+  const { default: configPromise } = await import("@/payload.config");
+  return configPromise;
+}
+
 export async function fetchUserArticles(userId: number) {
+  const config = await getConfig();
   const payload = await getPayload({
-    config: configPromise,
+    config,
   });
 
   const response = await payload.find({
@@ -22,8 +27,9 @@ export async function fetchUserArticles(userId: number) {
 }
 
 export async function createArticle(title: string, userId: number) {
+  const config = await getConfig();
   const payload = await getPayload({
-    config: configPromise,
+    config,
   });
 
   await payload.create({
@@ -39,8 +45,9 @@ export async function createArticle(title: string, userId: number) {
 }
 
 export async function deleteArticle(articleId: string, userId: number) {
+  const config = await getConfig();
   const payload = await getPayload({
-    config: configPromise,
+    config,
   });
 
   await payload.delete({
