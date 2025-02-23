@@ -3,16 +3,17 @@
 import { useState, useEffect } from "react";
 import { Article } from "@/payload-types";
 import { fetchUserArticles, createArticle } from "./actions";
+import { SanitizedCollectionPermission } from "payload";
 
 interface SessionProps {
-  session: {
-    user: {
-      id: number;
-    };
+  user: {
+    id: number;
+    role?: string;
   };
+  permissions: SanitizedCollectionPermission;
 }
 
-export default function CreateArticle({ session }: SessionProps) {
+export default function CreateArticle({ user }: SessionProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -20,11 +21,11 @@ export default function CreateArticle({ session }: SessionProps) {
   // Haetaan käyttäjän artikkelit kun komponentti latautuu
   useEffect(() => {
     const loadArticles = async () => {
-      const userArticles = await fetchUserArticles(session.user.id);
+      const userArticles = await fetchUserArticles(user.id);
       setArticles(userArticles);
     };
     loadArticles();
-  }, [session.user.id]);
+  }, [user.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ export default function CreateArticle({ session }: SessionProps) {
       await createArticle(title);
       setMessage("Artikkeli luotu onnistuneesti!");
       // Päivitetään artikkelilista
-      const updatedArticles = await fetchUserArticles(session.user.id);
+      const updatedArticles = await fetchUserArticles(user.id);
       setArticles(updatedArticles);
       // Tyhjennetään lomake
       setTitle("");

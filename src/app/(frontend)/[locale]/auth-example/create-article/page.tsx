@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import { headers } from "next/headers";
-import { getPayload } from "payload";
+import { getPayload, SanitizedCollectionPermission } from "payload";
 import configPromise from "@payload-config";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/auth/LogoutButton";
@@ -22,7 +22,7 @@ export default async function CreateArticlePage() {
     redirect("/en/auth-example/login");
   }
 
-  console.log(session);
+  const permissions = session?.permissions.collections?.articles;
 
   return (
     <Container>
@@ -35,7 +35,7 @@ export default async function CreateArticlePage() {
           <p>Logged in user: {user.email}</p>
           <p>Role: {user.role}</p>
         </div>
-        <CreateArticle session={session} />
+        <CreateArticle user={user} permissions={permissions as SanitizedCollectionPermission} />
       </div>
     </Container>
   );
