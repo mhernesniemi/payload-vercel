@@ -5,6 +5,7 @@ import { getPayload, SanitizedCollectionPermission } from "payload";
 import configPromise from "@payload-config";
 import { redirect } from "next/navigation";
 import CreateArticle from "./create-article-temp";
+import { fetchUserArticles } from "./actions";
 
 export default async function CreateArticlePage() {
   const payload = await getPayload({
@@ -23,10 +24,16 @@ export default async function CreateArticlePage() {
 
   const permissions = session?.permissions.collections?.articles;
 
+  const initialArticles = await fetchUserArticles(user.id);
+
   return (
     <Container>
       <Header />
-      <CreateArticle user={user} permissions={permissions as SanitizedCollectionPermission} />
+      <CreateArticle
+        user={user}
+        permissions={permissions as SanitizedCollectionPermission}
+        initialArticles={initialArticles}
+      />
     </Container>
   );
 }
