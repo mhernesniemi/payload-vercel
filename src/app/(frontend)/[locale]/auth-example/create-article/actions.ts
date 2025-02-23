@@ -12,7 +12,7 @@ export async function fetchUserArticles(userId: number) {
   const response = await payload.find({
     collection: "articles",
     where: {
-      "author.id": {
+      "createdBy.id": {
         equals: userId,
       },
     },
@@ -21,7 +21,7 @@ export async function fetchUserArticles(userId: number) {
   return response.docs as Article[];
 }
 
-export async function createArticle(title: string) {
+export async function createArticle(title: string, userId: number) {
   const payload = await getPayload({
     config: configPromise,
   });
@@ -31,6 +31,9 @@ export async function createArticle(title: string) {
     data: {
       title,
       slug: title.toLowerCase().replace(/ /g, "-"),
+    },
+    user: {
+      id: userId,
     },
   });
 }

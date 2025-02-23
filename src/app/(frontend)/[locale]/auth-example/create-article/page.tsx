@@ -30,7 +30,6 @@ export default async function CreateArticlePage() {
       <div className="mx-auto max-w-screen-lg py-16">
         <LogoutButton />
         <h1>Create Article</h1>
-        <p>This is a placeholder page for creating an article.</p>
         <div className="mt-4">
           <p>Logged in user: {user.email}</p>
           <p>Role: {user.role}</p>

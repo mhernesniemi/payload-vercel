@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Article } from "@/payload-types";
 import { fetchUserArticles, createArticle } from "./actions";
 import { SanitizedCollectionPermission } from "payload";
+import Button from "@/components/Button";
 
 interface SessionProps {
   user: {
@@ -18,6 +19,8 @@ export default function CreateArticle({ user }: SessionProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
 
+  console.log("user", user);
+
   // Haetaan käyttäjän artikkelit kun komponentti latautuu
   useEffect(() => {
     const loadArticles = async () => {
@@ -30,7 +33,7 @@ export default function CreateArticle({ user }: SessionProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createArticle(title);
+      await createArticle(title, user.id);
       setMessage("Artikkeli luotu onnistuneesti!");
       // Päivitetään artikkelilista
       const updatedArticles = await fetchUserArticles(user.id);
@@ -44,48 +47,58 @@ export default function CreateArticle({ user }: SessionProps) {
   };
 
   return (
-    <div className="mx-auto max-w-4xl p-4">
-      <h1 className="mb-4 text-2xl font-bold">Artikkelien hallinta</h1>
+    <div className="mx-auto my-16 max-w-6xl">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Artikkelien hallinta -osio */}
+        <div>
+          <h1 className="mb-6 text-2xl font-bold text-stone-100">Artikkelien hallinta</h1>
 
-      <form onSubmit={handleSubmit} className="mb-8">
-        <div className="mb-4">
-          <label htmlFor="title" className="mb-2 block">
-            Otsikko:
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded border p-2"
-            required
-          />
+          <form onSubmit={handleSubmit} className="mb-8">
+            <div className="mb-4">
+              <label htmlFor="title" className="mb-2 block text-stone-300">
+                Otsikko:
+              </label>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full rounded-lg border border-stone-600 bg-stone-700 p-2 text-stone-100"
+                required
+              />
+            </div>
+
+            <Button type="submit" style="secondary" size="sm">
+              Luo artikkeli
+            </Button>
+          </form>
+
+          {message && (
+            <div className="mb-4 rounded-lg bg-green-900/20 p-3 text-green-400 ring-1 ring-green-900">
+              {message}
+            </div>
+          )}
         </div>
 
-        <button
-          type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-        >
-          Luo artikkeli
-        </button>
-      </form>
-
-      {message && <div className="mb-4 rounded bg-green-100 p-2 text-green-700">{message}</div>}
-
-      <div>
-        <h2 className="mb-4 text-xl font-bold">Omat artikkelit</h2>
-        {articles.length > 0 ? (
-          <div className="space-y-4">
-            {articles.map((article) => (
-              <div key={article.id} className="rounded border p-4">
-                <h3 className="font-bold">{article.title}</h3>
-                <p className="text-sm text-gray-500">Slug: {article.slug}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>Ei artikkeleita</p>
-        )}
+        {/* Omat artikkelit -osio */}
+        <div>
+          <h2 className="mb-6 text-2xl font-bold text-stone-100">Omat artikkelit</h2>
+          {articles.length > 0 ? (
+            <div className="space-y-4">
+              {articles.map((article) => (
+                <div
+                  key={article.id}
+                  className="rounded-lg border border-stone-700 bg-stone-900 p-4"
+                >
+                  <h3 className="font-bold text-stone-100">{article.title}</h3>
+                  <p className="text-sm text-stone-400">Slug: {article.slug}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-stone-400">Ei artikkeleita</p>
+          )}
+        </div>
       </div>
     </div>
   );
