@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getPayload } from "payload";
 import config from "../../../../payload.config";
+import { cookies } from "next/headers";
 
 const initializePayload = async () => {
   try {
@@ -68,6 +69,7 @@ const handler = NextAuth({
       return token;
     },
     async signIn({ user, account }) {
+      console.log("password", process.env.SSO_SHARED_PASSWORD);
       if (account?.provider === "google") {
         try {
           if (!user.email) {
@@ -93,10 +95,28 @@ const handler = NextAuth({
                 email: user.email,
                 googleId: user.id,
                 role: "user",
-                password: Math.random().toString(36).slice(-8),
+                password: process.env.SSO_SHARED_PASSWORD,
               },
             });
           }
+
+          const result = await payload.login({
+            collection: "users",
+            data: {
+              email: user.email,
+              password: process.env.SSO_SHARED_PASSWORD || "",
+            },
+          });
+
+          if (result.token) {
+            (await cookies()).set("payload-token", result.token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production",
+              sameSite: "lax",
+              path: "/",
+            });
+          }
+
           return true;
         } catch (error) {
           console.error("Error handling Google sign in:", error);
