@@ -35,7 +35,7 @@ export default async function Header() {
         <div className="flex items-center justify-end gap-8 lg:w-[300px]">
           <div className="flex items-center gap-4">
             <Link
-              href="/login"
+              href="/auth-example/login"
               className="group flex items-center gap-2 text-xs font-medium uppercase"
             >
               <UserIcon className="h-5 w-5 group-hover:text-amber-500" />

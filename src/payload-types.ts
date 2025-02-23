@@ -177,7 +177,7 @@ export interface Article {
   title: string;
   heroText?: string | null;
   heroImage?: (number | null) | Media;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -191,7 +191,7 @@ export interface Article {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   slug: string;
   author?: (number | null) | Contact;
   categories?: (number | Category)[] | null;
@@ -237,7 +237,7 @@ export interface CollectionPage {
   title: string;
   heroText?: string | null;
   heroImage?: (number | null) | Media;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -251,7 +251,7 @@ export interface CollectionPage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   slug: string;
   updatedAt: string;
   createdAt: string;
@@ -265,7 +265,7 @@ export interface News {
   title: string;
   heroText?: string | null;
   heroImage?: (number | null) | Media;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -279,7 +279,7 @@ export interface News {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   slug: string;
   updatedAt: string;
   createdAt: string;
@@ -293,7 +293,7 @@ export interface Reference {
   title: string;
   heroText?: string | null;
   heroImage?: (number | null) | Media;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -307,7 +307,7 @@ export interface Reference {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   slug: string;
   updatedAt: string;
   createdAt: string;

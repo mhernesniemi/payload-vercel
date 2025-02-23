@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
 import { useTranslations } from "next-intl";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,21 +23,29 @@ export default function LoginPage() {
     const password = formData.get("password") as string;
 
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
       });
 
-      if (result?.error) {
-        setError(t("errors.invalidCredentials"));
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError("Invalid credentials");
         return;
       }
 
-      const callbackUrl = searchParams.get("from") || "/";
+      console.log("Login response:", data);
+
+      const callbackUrl = searchParams.get("from") || "/en/auth-example/create-article";
       router.push(callbackUrl);
-    } catch (_error) {
-      setError(t("errors.loginError"));
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Login error");
     } finally {
       setLoading(false);
     }

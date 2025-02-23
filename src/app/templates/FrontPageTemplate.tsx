@@ -5,6 +5,8 @@ import { useSession, signIn, signOut } from "next-auth/react";
 export default function FrontPageTemplate() {
   const { data: session, status } = useSession();
 
+  console.log("client session", session);
+
   return (
     <div className="mx-auto max-w-screen-md py-16">
       {status === "authenticated" && session && (

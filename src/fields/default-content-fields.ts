@@ -33,7 +33,6 @@ export const defaultContentFields: Field[] = [
   {
     name: "content",
     type: "richText",
-    required: true,
     localized: true,
     editor: lexicalEditor({
       features: ({ defaultFeatures }) => {
