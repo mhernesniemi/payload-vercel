@@ -123,7 +123,7 @@ function SearchComponents() {
 
   return (
     <div>
-      <Heading level="h1" size="xl" className="">
+      <Heading level="h1" size="lg" className="">
         {t("search")}
       </Heading>
       <div className="flex flex-col gap-10">

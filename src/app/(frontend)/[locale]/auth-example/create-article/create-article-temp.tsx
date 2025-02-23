@@ -72,7 +72,7 @@ export default function CreateArticle({ user, permissions, initialArticles }: Se
         </div>
         <LogoutButton />
       </div>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
         {permissions?.create && (
           <div>
             <Heading level="h2" size="md">

@@ -7,11 +7,12 @@ type FrontPageTemplateProps = {
 };
 
 export default function FrontPageTemplate({ content }: FrontPageTemplateProps) {
-  console.log("content", content);
   return (
-    <div className="mx-auto max-w-screen-md py-16">
-      <BlockRenderer blocks={content.content} />
+    <div>
       {content.hero && <BlockRenderer blocks={content.hero} />}
+      <div className="mx-auto max-w-screen-md py-16">
+        <BlockRenderer blocks={content.content} />
+      </div>
     </div>
   );
 }

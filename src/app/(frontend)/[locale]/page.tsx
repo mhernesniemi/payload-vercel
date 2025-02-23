@@ -18,8 +18,6 @@ export default async function Home({ params }: { params: Params }) {
     locale: locale,
   });
 
-  console.log("frontPage", frontPage);
-
   return (
     <Container>
       <Header />
