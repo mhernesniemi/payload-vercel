@@ -1,8 +1,4 @@
 {
-  "meta": {
-    "title": "Payload Demo",
-    "description": "Built with Payload CMS and Next.js"
-  },
   "articles": {
     "title": "Articles",
     "publishedAt": "Published on {date}",

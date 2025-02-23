@@ -1,14 +1,13 @@
 import { Link } from "@/i18n/routing";
-import { getTranslations } from "next-intl/server";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { MainMenu, MenuItem, MobileMenu } from "./MainMenu";
 import SearchSidePanel from "./SearchPanel";
 import UserAuthNav from "./auth/UserAuthNav";
+import { SITE_NAME } from "@/lib/constants";
 
 export default async function Header() {
-  const t = await getTranslations();
   const payload = await getPayload({
     config: configPromise,
   });
@@ -26,7 +25,7 @@ export default async function Header() {
         </div>
         <div className="lg:w-[300px]">
           <Link href="/" className="text-xl font-bold">
-            {t("meta.title")}
+            {SITE_NAME}
           </Link>
         </div>
         <div className="hidden lg:block lg:flex-1">
