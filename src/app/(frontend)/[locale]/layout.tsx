@@ -6,6 +6,7 @@ import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { SITE_NAME } from "@/lib/constants";
+import { Toaster } from "@/components/Toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 type Locale = "en" | "fi";
@@ -34,6 +35,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html lang={locale}>
       <body className={`${inter.className} bg-stone-900 text-white`}>
         <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <Toaster />
       </body>
     </html>
   );

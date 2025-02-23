@@ -37,3 +37,17 @@ export async function createArticle(title: string, userId: number) {
     },
   });
 }
+
+export async function deleteArticle(articleId: string, userId: number) {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  await payload.delete({
+    collection: "articles",
+    id: articleId,
+    user: {
+      id: userId,
+    },
+  });
+}

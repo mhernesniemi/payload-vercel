@@ -54,7 +54,7 @@ export const afterDeleteHook: CollectionAfterDeleteHook = async ({ doc, collecti
     const exists = await elasticClient.indices.exists({ index: collection.slug });
     if (exists) {
       await elasticClient.delete({
-        index: collection.slug,
+        index: ELASTIC_INDEX_NAME,
         id: doc.id,
         refresh: true,
       });
