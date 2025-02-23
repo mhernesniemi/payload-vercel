@@ -23,8 +23,6 @@ export default function CreateArticle({ user, permissions }: SessionProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [title, setTitle] = useState("");
 
-  console.log("permissions client", permissions);
-
   // Fetch user articles when the component loads
   useEffect(() => {
     const loadArticles = async () => {
@@ -118,7 +116,10 @@ export default function CreateArticle({ user, permissions }: SessionProps) {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <Link href={`/articles/${article.slug}`} className="font-bold text-stone-100">
+                      <Link
+                        href={`/articles/${article.slug}`}
+                        className="font-bold text-stone-100 hover:text-amber-500"
+                      >
                         {article.title}
                       </Link>
                       <p className="text-sm text-stone-400">Slug: {article.slug}</p>

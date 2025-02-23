@@ -44,7 +44,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
       console.log(`Document ${doc.id} indexed in ${ELASTIC_INDEX_NAME}`);
     }
   } catch (error) {
-    console.error(`Error in afterChangeHook for ${collection.slug}:`, error);
+    console.error(`Error in afterChangeHook for ${doc.id}:`, error);
   }
   return doc;
 };
@@ -58,10 +58,10 @@ export const afterDeleteHook: CollectionAfterDeleteHook = async ({ doc, collecti
         id: doc.id,
         refresh: true,
       });
-      console.log(`Document ${doc.id} deleted from ${collection.slug}`);
+      console.log(`Document ${doc.id} deleted from ${ELASTIC_INDEX_NAME}`);
     }
   } catch (error) {
-    console.error(`Error in afterDeleteHook for ${collection.slug}:`, error);
+    console.error(`Error in afterDeleteHook for ${doc.id}:`, error);
   }
   return doc;
 };

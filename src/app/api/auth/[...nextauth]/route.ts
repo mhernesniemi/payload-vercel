@@ -69,7 +69,6 @@ const handler = NextAuth({
       return token;
     },
     async signIn({ user, account }) {
-      console.log("password", process.env.SSO_SHARED_PASSWORD);
       if (account?.provider === "google") {
         try {
           if (!user.email) {
