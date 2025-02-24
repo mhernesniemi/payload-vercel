@@ -24,7 +24,7 @@ export function Footer() {
   return (
     <footer className="mt-[150px] bg-stone-800 py-16">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-12 xl:grid-cols-6 xl:gap-24">
           {/* Company Info */}
           <div className="text-stone-400 md:col-span-2">
             {footer.general?.title && (

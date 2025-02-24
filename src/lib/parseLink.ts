@@ -1,43 +1,32 @@
-import { MenuItem } from "../components/MainMenu";
-import { LinkListBlock } from "../payload-types";
+type LinkData = {
+  label: string | null | undefined;
+  externalUrl?: string | null;
+  internalUrl?: {
+    relationTo: "articles" | "collection-pages" | "news";
+    value: number | { slug: string; title: string };
+  } | null;
+};
 
-interface LinkData {
-  url: string;
-  isExternal: boolean;
-  title?: string;
-}
+export default function parseLink(data: LinkData = { label: "" }) {
+  const { label, externalUrl, internalUrl } = data;
+  const isExternal = !!externalUrl;
 
-/**
- * Parses a link from either MenuItem or LinkListBlock item into a standardized LinkData format
- * @param item - MenuItem or LinkListBlock item to parse
- * @returns Parsed link data with url, external status and optional title
- */
-const parseLink = (item: MenuItem | NonNullable<LinkListBlock["links"]>[number]): LinkData => {
-  // Extract the link object from the item
-  const link = "link" in item ? item.link : item;
-  const isExternal = link.isExternal ?? false;
-
-  // Default values
   let url = "/";
   let title: string | undefined;
 
-  if (isExternal && link.externalUrl) {
-    url = link.externalUrl;
-  } else if (link.internalUrl) {
-    const { relationTo, value } = link.internalUrl;
-
-    // Handle internal URL with object value containing slug
+  if (isExternal && externalUrl) {
+    url = externalUrl;
+  } else if (internalUrl) {
+    const { relationTo, value } = internalUrl;
     if (typeof value === "object" && "slug" in value) {
       url = `/${relationTo}/${value.slug}`;
-      title = "title" in value ? value.title : undefined;
+      title = label ?? value.title;
     }
   }
 
   return {
     url,
     isExternal,
-    ...(title && { title }),
+    title,
   };
-};
-
-export default parseLink;
+}
