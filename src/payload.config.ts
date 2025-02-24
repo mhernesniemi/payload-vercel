@@ -17,7 +17,7 @@ import { News } from "./collections/News";
 import { Categories } from "./collections/Categories";
 import { Contacts } from "./collections/Contacts";
 import { FooterMenu } from "./globals/FooterMenu";
-
+import { Footer } from "./globals/Footer";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -31,7 +31,7 @@ export default buildConfig({
     dateFormat: "dd.MM.yyyy",
   },
   collections: [Users, Media, Articles, CollectionPage, News, Categories, Contacts],
-  globals: [FrontPage, MainMenu, FooterMenu],
+  globals: [FrontPage, MainMenu, FooterMenu, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

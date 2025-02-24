@@ -96,11 +96,13 @@ export interface Config {
     'front-page': FrontPage;
     'main-menu': MainMenu;
     'footer-menu': FooterMenu;
+    footer: Footer;
   };
   globalsSelect: {
     'front-page': FrontPageSelect<false> | FrontPageSelect<true>;
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     'footer-menu': FooterMenuSelect<false> | FooterMenuSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: 'fi' | 'en';
   user: User & {
@@ -852,6 +854,46 @@ export interface FooterMenu {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  general: {
+    title: string;
+    description: string;
+    social: {
+      /**
+       * Link URL
+       */
+      facebook: string;
+      /**
+       * Link URL
+       */
+      instagram: string;
+      /**
+       * Link URL
+       */
+      linkedin: string;
+      /**
+       * Link URL
+       */
+      youtube: string;
+    };
+  };
+  contact: {
+    title: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    phone: string;
+    email: string;
+  };
+  copyright: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "front-page_select".
  */
 export interface FrontPageSelect<T extends boolean = true> {
@@ -1098,6 +1140,40 @@ export interface FooterMenuSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  general?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        social?:
+          | T
+          | {
+              facebook?: T;
+              instagram?: T;
+              linkedin?: T;
+              youtube?: T;
+            };
+      };
+  contact?:
+    | T
+    | {
+        title?: T;
+        address?: T;
+        postalCode?: T;
+        city?: T;
+        phone?: T;
+        email?: T;
+      };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

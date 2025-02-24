@@ -1,9 +1,8 @@
 import Container from "./Container";
 import Heading from "./Heading";
-import { SITE_NAME } from "@/lib/constants";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
-import { FacebookIcon, InstagramIcon } from "./Icons";
+import { FacebookIcon, InstagramIcon, LinkedInIcon, YoutubeIcon } from "./Icons";
 const payload = await getPayload({
   config: configPromise,
 });
@@ -13,30 +12,57 @@ const footerMenu = await payload.findGlobal({
   depth: 2,
 });
 
+const footer = await payload.findGlobal({
+  slug: "footer",
+});
+
 export function Footer() {
-  console.log("footerMenu", footerMenu);
   return (
     <footer className="mt-[150px] bg-stone-800 py-16">
       <Container>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-6">
           {/* Company Info */}
           <div className="text-stone-400 md:col-span-2 md:pr-12">
-            <Heading level="h3" size="sm" className="mb-4 text-white">
-              {SITE_NAME}
-            </Heading>
-            <p className="mb-4">
-              Welcome to our website! We are dedicated to providing you with the best experience
-              possible.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-stone-400 hover:text-white">
-                <span className="sr-only">Facebook</span>
-                <FacebookIcon />
-              </a>
-              <a href="#" className="text-stone-400 hover:text-white">
-                <span className="sr-only">Instagram</span>
-                <InstagramIcon />
-              </a>
+            {footer?.general?.title && (
+              <Heading level="h3" size="sm" className="mb-4 text-white">
+                {footer.general.title}
+              </Heading>
+            )}
+            {footer?.general?.description && <p className="mb-4">{footer.general.description}</p>}
+            <div className="flex gap-4">
+              {footer?.general?.social?.facebook && (
+                <a
+                  href={footer.general.social.facebook}
+                  className="text-stone-400 hover:text-white"
+                >
+                  <span className="sr-only">Facebook</span>
+                  <FacebookIcon />
+                </a>
+              )}
+              {footer?.general?.social?.instagram && (
+                <a
+                  href={footer.general.social.instagram}
+                  className="text-stone-400 hover:text-white"
+                >
+                  <span className="sr-only">Instagram</span>
+                  <InstagramIcon />
+                </a>
+              )}
+              {footer?.general?.social?.linkedin && (
+                <a
+                  href={footer.general.social.linkedin}
+                  className="text-stone-400 hover:text-white"
+                >
+                  <span className="sr-only">LinkedIn</span>
+                  <LinkedInIcon />
+                </a>
+              )}
+              {footer?.general?.social?.youtube && (
+                <a href={footer.general.social.youtube} className="text-stone-400 hover:text-white">
+                  <span className="sr-only">YouTube</span>
+                  <YoutubeIcon />
+                </a>
+              )}
             </div>
           </div>
 
