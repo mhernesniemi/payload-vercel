@@ -60,5 +60,8 @@
       "invalidCredentials": "Virheelliset kirjautumistiedot",
       "loginError": "Kirjautumisessa tapahtui virhe"
     }
+  },
+  "footer": {
+    "phone": "Puhelin"
   }
 }
