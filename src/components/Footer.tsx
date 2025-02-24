@@ -24,9 +24,9 @@ export function Footer() {
   return (
     <footer className="mt-[150px] bg-stone-800 py-16">
       <Container>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-6">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-6">
           {/* Company Info */}
-          <div className="text-stone-400 md:col-span-2 md:pr-12">
+          <div className="text-stone-400 md:col-span-2">
             {footer.general?.title && (
               <Heading level="h3" size="sm" className="mb-4 text-white">
                 {footer.general.title}
@@ -71,7 +71,7 @@ export function Footer() {
           </div>
 
           {/* Footer Menu */}
-          <div className="md:col-span-4 md:pl-12">
+          <div className="md:col-span-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {footerMenu.items.map((menuItem, index) => (
                 <div key={index} className="text-stone-400">
@@ -123,13 +123,11 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="textone mt-12 border-t border-stone-700 pt-8 text-center text-stone-400">
-          <p>
-            {footer.copyright && (
-              <>
-                &copy; {new Date().getFullYear()} {footer.copyright}
-              </>
-            )}
-          </p>
+          {footer.copyright && (
+            <p>
+              &copy; {new Date().getFullYear()} {footer.copyright}
+            </p>
+          )}
         </div>
       </Container>
     </footer>
