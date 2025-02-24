@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkFieldWithLabel } from "@/fields/link";
 import { Block } from "payload";
 
 export const heroBlock: Block = {
@@ -39,7 +39,7 @@ export const heroBlock: Block = {
     {
       name: "link",
       type: "group",
-      fields: [...linkField],
+      fields: [...linkFieldWithLabel],
     },
   ],
   interfaceName: "HeroBlock",

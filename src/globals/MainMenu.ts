@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkFieldWithLabel } from "@/fields/link";
 import { GlobalConfig } from "payload";
 
 export const MainMenu: GlobalConfig = {
@@ -30,7 +30,7 @@ export const MainMenu: GlobalConfig = {
         {
           name: "link",
           type: "group",
-          fields: linkField,
+          fields: linkFieldWithLabel,
           admin: {
             condition: (_, siblingData) => !siblingData.addLinks,
           },
@@ -51,7 +51,7 @@ export const MainMenu: GlobalConfig = {
             {
               name: "link",
               type: "group",
-              fields: linkField,
+              fields: linkFieldWithLabel,
             },
             {
               name: "grandchildren",
@@ -66,7 +66,7 @@ export const MainMenu: GlobalConfig = {
                 {
                   name: "link",
                   type: "group",
-                  fields: linkField,
+                  fields: linkFieldWithLabel,
                 },
               ],
             },

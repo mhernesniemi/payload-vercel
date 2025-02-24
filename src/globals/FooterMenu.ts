@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkFieldWithLabel } from "@/fields/link";
 import { GlobalConfig } from "payload";
 
 export const FooterMenu: GlobalConfig = {
@@ -29,7 +29,7 @@ export const FooterMenu: GlobalConfig = {
             {
               name: "link",
               type: "group",
-              fields: linkField,
+              fields: linkFieldWithLabel,
             },
           ],
         },

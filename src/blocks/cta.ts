@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkFieldWithLabel } from "@/fields/link";
 import { Block } from "payload";
 
 export const ctaBlock: Block = {
@@ -22,7 +22,7 @@ export const ctaBlock: Block = {
     {
       name: "link",
       type: "group",
-      fields: [...linkField],
+      fields: [...linkFieldWithLabel],
     },
   ],
   interfaceName: "CTABlock",

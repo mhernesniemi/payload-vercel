@@ -2,10 +2,6 @@ import { Field } from "payload";
 
 export const linkField: Field[] = [
   {
-    name: "label",
-    type: "text",
-  },
-  {
     name: "isExternal",
     type: "checkbox",
     label: "External link",
@@ -27,4 +23,12 @@ export const linkField: Field[] = [
       condition: (_, siblingData) => siblingData.isExternal,
     },
   },
+];
+
+export const linkFieldWithLabel: Field[] = [
+  {
+    name: "label",
+    type: "text",
+  },
+  ...linkField,
 ];

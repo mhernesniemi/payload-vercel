@@ -629,7 +629,6 @@ export interface SmallFeaturedPostsWrapperBlock {
     text?: string | null;
     image: number | Media;
     link?: {
-      label?: string | null;
       isExternal?: boolean | null;
       internalUrl?:
         | ({
@@ -993,7 +992,6 @@ export interface SmallFeaturedPostsWrapperBlockSelect<T extends boolean = true> 
               link?:
                 | T
                 | {
-                    label?: T;
                     isExternal?: T;
                     internalUrl?: T;
                     externalUrl?: T;

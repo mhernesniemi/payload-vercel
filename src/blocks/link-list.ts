@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkFieldWithLabel } from "@/fields/link";
 import { Block } from "payload";
 
 export const linkListBlock: Block = {
@@ -7,7 +7,7 @@ export const linkListBlock: Block = {
     {
       name: "links",
       type: "array",
-      fields: [...linkField],
+      fields: [...linkFieldWithLabel],
     },
   ],
   interfaceName: "LinkListBlock",

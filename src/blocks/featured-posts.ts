@@ -1,4 +1,4 @@
-import { linkField } from "@/fields/link";
+import { linkField, linkFieldWithLabel } from "@/fields/link";
 import { Block } from "payload";
 
 export const largeFeaturedPostBlock: Block = {
@@ -29,7 +29,7 @@ export const largeFeaturedPostBlock: Block = {
     {
       name: "link",
       type: "group",
-      fields: [...linkField],
+      fields: [...linkFieldWithLabel],
     },
   ],
   interfaceName: "LargeFeaturedPostBlock",
