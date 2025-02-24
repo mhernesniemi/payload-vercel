@@ -3,30 +3,11 @@
 import { Popover, PopoverPanel, PopoverButton, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import Link from "next/link";
-import parseLink from "../lib/parseLink";
+import { parseMenuLinks } from "../lib/parseLink";
+import { MenuItem } from "../types/menu";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";
 import clsx from "clsx";
-
-export type MenuItem = {
-  label: string;
-  onlyLabel: null | string;
-  link: {
-    isExternal: boolean | null;
-    internalUrl?: {
-      relationTo: string;
-      value: {
-        id: number;
-        title: string;
-        slug: string;
-      };
-    };
-    externalUrl?: string;
-  };
-  children?: MenuItem[];
-  grandchildren?: MenuItem[];
-  id: string;
-};
 
 interface MainMenuProps {
   items: MenuItem[];
@@ -91,16 +72,19 @@ export function MainMenu({ items }: MainMenuProps) {
                           {child.label}
                         </h3>
                         <div className="space-y-4">
-                          {child.grandchildren?.map((grandchild) => (
-                            <div key={grandchild.id}>
-                              <Link
-                                href={parseLink(grandchild).url}
-                                className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                              >
-                                {grandchild.label}
-                              </Link>
-                            </div>
-                          ))}
+                          {child.grandchildren?.map((grandchild) => {
+                            const { linkUrl, linkLabel } = parseMenuLinks(grandchild);
+                            return (
+                              <div key={grandchild.id}>
+                                <Link
+                                  href={linkUrl ?? ""}
+                                  className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                                >
+                                  {linkLabel}
+                                </Link>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     ))}
@@ -110,16 +94,19 @@ export function MainMenu({ items }: MainMenuProps) {
                     <div className="space-y-4">
                       {item.children
                         .filter((child) => !child.grandchildren?.length)
-                        .map((child) => (
-                          <div key={child.id}>
-                            <Link
-                              href={parseLink(child).url}
-                              className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                            >
-                              {child.label}
-                            </Link>
-                          </div>
-                        ))}
+                        .map((child) => {
+                          const { linkUrl } = parseMenuLinks(child);
+                          return (
+                            <div key={child.id}>
+                              <Link
+                                href={linkUrl ?? ""}
+                                className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                              >
+                                {child.label}
+                              </Link>
+                            </div>
+                          );
+                        })}
                     </div>
                   )}
                 </div>
@@ -130,10 +117,12 @@ export function MainMenu({ items }: MainMenuProps) {
       );
     }
 
+    const { linkUrl } = parseMenuLinks(item);
+
     return (
       <Link
         key={item.id}
-        href={parseLink(item).url}
+        href={linkUrl ?? ""}
         className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
       >
         {item.label}
@@ -158,23 +147,32 @@ type SidePanelItem = SidePanelLink & {
 };
 
 export function MobileMenu({ items }: { items: MenuItem[] }) {
-  const convertGrandchildToSidePanelLink = (grandchild: MenuItem): SidePanelLink => ({
-    title: grandchild.label,
-    url: parseLink(grandchild).url,
-  });
+  const convertGrandchildToSidePanelLink = (grandchild: MenuItem): SidePanelLink => {
+    const { linkUrl } = parseMenuLinks(grandchild);
+    return {
+      title: grandchild.label,
+      url: linkUrl ?? "",
+    };
+  };
 
-  const convertChildToSidePanelSubLink = (child: MenuItem): SidePanelSubLink => ({
-    title: child.label,
-    url: parseLink(child).url,
-    sublinks: child.grandchildren?.map(convertGrandchildToSidePanelLink),
-  });
+  const convertChildToSidePanelSubLink = (child: MenuItem): SidePanelSubLink => {
+    const { linkUrl } = parseMenuLinks(child);
+    return {
+      title: child.label,
+      url: linkUrl ?? "",
+      sublinks: child.grandchildren?.map(convertGrandchildToSidePanelLink),
+    };
+  };
 
   const convertToSidePanelItems = (menuItems: MenuItem[]): SidePanelItem[] => {
-    return menuItems.map((item) => ({
-      title: item.label,
-      url: parseLink(item).url,
-      sublinks: item.children?.map(convertChildToSidePanelSubLink),
-    }));
+    return menuItems.map((item) => {
+      const { linkUrl } = parseMenuLinks(item);
+      return {
+        title: item.label,
+        url: linkUrl ?? "",
+        sublinks: item.children?.map(convertChildToSidePanelSubLink),
+      };
+    });
   };
 
   const sidePanelItems = convertToSidePanelItems(items);

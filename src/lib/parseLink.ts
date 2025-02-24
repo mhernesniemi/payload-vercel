@@ -1,24 +1,9 @@
-import { Config } from "../payload-types";
-type CollectionTypes = keyof Config["collections"];
-
-type InternalLink = {
-  relationTo: CollectionTypes;
-  value: number | { slug: string; title: string };
-};
-
-type ExternalLink = {
-  url: string;
-};
-
-type LinkType = {
-  internalUrl?: InternalLink | null;
-  externalUrl?: string | null;
-  label?: string | null;
-};
+import { MenuItem, InternalLink, LinkType } from "../types/menu";
 
 type ParsedLink = {
   linkUrl?: string;
   linkLabel?: string;
+  isExternal?: boolean;
 };
 
 export function parseInternalUrl(link?: InternalLink | null) {
@@ -28,10 +13,9 @@ export function parseInternalUrl(link?: InternalLink | null) {
   }
 }
 
-export function parseExternalUrl(link?: string | ExternalLink | null) {
+export function parseExternalUrl(link?: string | null) {
   if (!link) return undefined;
   if (typeof link === "string") return link;
-  return link.url;
 }
 
 export function parseUrl(link?: LinkType | null) {
@@ -47,9 +31,23 @@ export function parseLabel(link?: LinkType | null) {
   if (link.externalUrl) return link.label ?? link.externalUrl;
 }
 
+export function isExternalLink(link?: LinkType | null): boolean {
+  return link?.externalUrl !== undefined;
+}
+
 export function parseLink(link?: LinkType | null): ParsedLink {
   return {
     linkUrl: parseUrl(link),
     linkLabel: parseLabel(link),
+    isExternal: isExternalLink(link),
+  };
+}
+
+export function parseMenuLinks(menuItem?: MenuItem): ParsedLink {
+  if (!menuItem) return {};
+  return {
+    linkUrl: parseUrl(menuItem.link),
+    linkLabel: menuItem.label,
+    isExternal: isExternalLink(menuItem.link),
   };
 }
