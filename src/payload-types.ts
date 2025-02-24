@@ -95,10 +95,12 @@ export interface Config {
   globals: {
     'front-page': FrontPage;
     'main-menu': MainMenu;
+    'footer-menu': FooterMenu;
   };
   globalsSelect: {
     'front-page': FrontPageSelect<false> | FrontPageSelect<true>;
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
+    'footer-menu': FooterMenuSelect<false> | FooterMenuSelect<true>;
   };
   locale: 'fi' | 'en';
   user: User & {
@@ -814,6 +816,42 @@ export interface MainMenu {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-menu".
+ */
+export interface FooterMenu {
+  id: number;
+  items: {
+    label: string;
+    children?:
+      | {
+          link?: {
+            label?: string | null;
+            isExternal?: boolean | null;
+            internalUrl?:
+              | ({
+                  relationTo: 'articles';
+                  value: number | Article;
+                } | null)
+              | ({
+                  relationTo: 'collection-pages';
+                  value: number | CollectionPage;
+                } | null)
+              | ({
+                  relationTo: 'news';
+                  value: number | News;
+                } | null);
+            externalUrl?: string | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "front-page_select".
  */
 export interface FrontPageSelect<T extends boolean = true> {
@@ -1027,6 +1065,34 @@ export interface MainMenuSelect<T extends boolean = true> {
                           externalUrl?: T;
                         };
                     id?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-menu_select".
+ */
+export interface FooterMenuSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        label?: T;
+        children?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    label?: T;
+                    isExternal?: T;
+                    internalUrl?: T;
+                    externalUrl?: T;
                   };
               id?: T;
             };

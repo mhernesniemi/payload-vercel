@@ -1,7 +1,20 @@
 import Container from "./Container";
 import Heading from "./Heading";
 import { SITE_NAME } from "@/lib/constants";
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+
+const payload = await getPayload({
+  config: configPromise,
+});
+
+const footerMenu = await payload.findGlobal({
+  slug: "footer-menu",
+  depth: 2,
+});
+
 export function Footer() {
+  console.log("footerMenu", footerMenu);
   return (
     <footer className="mt-[150px] bg-stone-800 py-16">
       <Container>
