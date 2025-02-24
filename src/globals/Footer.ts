@@ -16,13 +16,11 @@ export const Footer: GlobalConfig = {
         {
           name: "title",
           type: "text",
-          required: true,
           localized: true,
         },
         {
           name: "description",
           type: "text",
-          required: true,
           localized: true,
         },
         {
@@ -32,28 +30,28 @@ export const Footer: GlobalConfig = {
             {
               name: "facebook",
               type: "text",
-              required: true,
+
               localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "instagram",
               type: "text",
-              required: true,
+
               localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "linkedin",
               type: "text",
-              required: true,
+
               localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "youtube",
               type: "text",
-              required: true,
+
               localized: true,
               admin: { description: "Link URL" },
             },
@@ -65,18 +63,17 @@ export const Footer: GlobalConfig = {
       name: "contact",
       type: "group",
       fields: [
-        { name: "title", type: "text", required: true, localized: true },
-        { name: "address", type: "text", required: true, localized: true },
-        { name: "postalCode", type: "text", required: true, localized: true },
-        { name: "city", type: "text", required: true, localized: true },
-        { name: "phone", type: "text", required: true, localized: true },
-        { name: "email", type: "text", required: true, localized: true },
+        { name: "title", type: "text", localized: true },
+        { name: "address", type: "text", localized: true },
+        { name: "postalCode", type: "text", localized: true },
+        { name: "city", type: "text", localized: true },
+        { name: "phone", type: "text", localized: true },
+        { name: "email", type: "text", localized: true },
       ],
     },
     {
       name: "copyright",
       type: "text",
-      required: true,
       localized: true,
     },
   ],

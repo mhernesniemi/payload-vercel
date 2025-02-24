@@ -27,14 +27,14 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-6">
           {/* Company Info */}
           <div className="text-stone-400 md:col-span-2 md:pr-12">
-            {footer.general.title && (
+            {footer.general?.title && (
               <Heading level="h3" size="sm" className="mb-4 text-white">
                 {footer.general.title}
               </Heading>
             )}
-            {footer.general.description && <p className="mb-4">{footer.general.description}</p>}
+            {footer.general?.description && <p className="mb-4">{footer.general?.description}</p>}
             <div className="flex gap-4">
-              {footer.general.social.facebook && (
+              {footer.general?.social?.facebook && (
                 <a
                   href={footer.general.social.facebook}
                   className="text-stone-400 hover:text-white"
@@ -43,7 +43,7 @@ export function Footer() {
                   <FacebookIcon />
                 </a>
               )}
-              {footer.general.social.instagram && (
+              {footer.general?.social?.instagram && (
                 <a
                   href={footer.general.social.instagram}
                   className="text-stone-400 hover:text-white"
@@ -52,7 +52,7 @@ export function Footer() {
                   <InstagramIcon />
                 </a>
               )}
-              {footer.general.social.linkedin && (
+              {footer.general?.social?.linkedin && (
                 <a
                   href={footer.general.social.linkedin}
                   className="text-stone-400 hover:text-white"
@@ -61,7 +61,7 @@ export function Footer() {
                   <LinkedInIcon />
                 </a>
               )}
-              {footer.general.social.youtube && (
+              {footer.general?.social?.youtube && (
                 <a href={footer.general.social.youtube} className="text-stone-400 hover:text-white">
                   <span className="sr-only">YouTube</span>
                   <YoutubeIcon />
@@ -92,14 +92,22 @@ export function Footer() {
 
               {/* Contact Info */}
               <div className="text-stone-400">
-                {footer.contact.title && (
+                {footer.contact?.title && (
                   <Heading level="h3" size="sm" className="mb-4 text-white">
                     {footer.contact.title}
                   </Heading>
                 )}
                 {footer.contact && (
                   <address className="not-italic">
-                    {footer.contact.address && <p className="mb-2">{footer.contact.address}</p>}
+                    <div className="mb-2">
+                      {footer.contact.address && <p>{footer.contact.address}</p>}
+                      {footer.contact.city && (
+                        <p>
+                          {footer.contact.postalCode} {footer.contact.city}
+                        </p>
+                      )}
+                    </div>
+
                     {footer.contact.phone && (
                       <p>
                         {t("footer.phone")}: {footer.contact.phone}
@@ -116,7 +124,11 @@ export function Footer() {
         {/* Copyright */}
         <div className="textone mt-12 border-t border-stone-700 pt-8 text-center text-stone-400">
           <p>
-            &copy; {new Date().getFullYear()} {footer.copyright}
+            {footer.copyright && (
+              <>
+                &copy; {new Date().getFullYear()} {footer.copyright}
+              </>
+            )}
           </p>
         </div>
       </Container>

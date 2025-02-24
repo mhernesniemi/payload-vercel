@@ -858,37 +858,37 @@ export interface FooterMenu {
  */
 export interface Footer {
   id: number;
-  general: {
-    title: string;
-    description: string;
-    social: {
+  general?: {
+    title?: string | null;
+    description?: string | null;
+    social?: {
       /**
        * Link URL
        */
-      facebook: string;
+      facebook?: string | null;
       /**
        * Link URL
        */
-      instagram: string;
+      instagram?: string | null;
       /**
        * Link URL
        */
-      linkedin: string;
+      linkedin?: string | null;
       /**
        * Link URL
        */
-      youtube: string;
+      youtube?: string | null;
     };
   };
-  contact: {
-    title: string;
-    address: string;
-    postalCode: string;
-    city: string;
-    phone: string;
-    email: string;
+  contact?: {
+    title?: string | null;
+    address?: string | null;
+    postalCode?: string | null;
+    city?: string | null;
+    phone?: string | null;
+    email?: string | null;
   };
-  copyright: string;
+  copyright?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
