@@ -3,23 +3,25 @@ import Heading from "./Heading";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { FacebookIcon, InstagramIcon, LinkedInIcon, YoutubeIcon } from "./Icons";
-import { useTranslations } from "next-intl";
+import { parseLink } from "@/lib/parseLink";
+import { getTranslations } from "next-intl/server";
 
-const payload = await getPayload({
-  config: configPromise,
-});
+export async function Footer() {
+  const payload = await getPayload({
+    config: configPromise,
+  });
 
-const footerMenu = await payload.findGlobal({
-  slug: "footer-menu",
-  depth: 2,
-});
+  const [footerMenu, footer] = await Promise.all([
+    payload.findGlobal({
+      slug: "footer-menu",
+      depth: 2,
+    }),
+    payload.findGlobal({
+      slug: "footer",
+    }),
+  ]);
 
-const footer = await payload.findGlobal({
-  slug: "footer",
-});
-
-export function Footer() {
-  const t = useTranslations();
+  const t = await getTranslations();
 
   return (
     <footer className="mt-[150px] bg-stone-800 py-16">
@@ -79,13 +81,16 @@ export function Footer() {
                     {menuItem.label}
                   </Heading>
                   <ul className="space-y-2">
-                    {menuItem.children?.map((child, index) => (
-                      <li key={index}>
-                        <a href={""} className="hover:text-white">
-                          {child.link?.label}
-                        </a>
-                      </li>
-                    ))}
+                    {menuItem.children?.map((child, index) => {
+                      const { linkUrl, linkLabel } = parseLink(child.link);
+                      return (
+                        <li key={index}>
+                          <a href={linkUrl} className="hover:text-white">
+                            {linkLabel}
+                          </a>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}

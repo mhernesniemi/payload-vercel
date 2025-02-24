@@ -8,6 +8,7 @@ import UserAuthNav from "./auth/UserAuthNav";
 import { SITE_NAME } from "@/lib/constants";
 import { getTranslations } from "next-intl/server";
 import { MenuItem } from "@/types/menu";
+
 export default async function Header() {
   const t = await getTranslations("header");
   const payload = await getPayload({
