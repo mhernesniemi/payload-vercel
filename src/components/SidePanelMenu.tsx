@@ -4,9 +4,9 @@ import { ChevronRightIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import SidePanel from "./SidePanel";
-import Link from "next/link";
-import parseLink from "../lib/parseLink";
-import { MenuItem as MainMenuItem } from "./MainMenu";
+import { parseLink } from "@/lib/parseLink";
+import { MenuItem as MainMenuItem } from "@/types/menu";
+import { Link } from "@/i18n/routing";
 
 interface MenuItem {
   title: string;
@@ -21,11 +21,14 @@ interface SidePanelMenuProps {
 
 // Helper function to convert MainMenuItem type to MenuItem type
 const convertMainMenuItems = (menuItems: MainMenuItem[]): MenuItem[] => {
-  return menuItems.map((item) => ({
-    title: item.label,
-    url: parseLink(item).url,
-    sublinks: item.children ? convertMainMenuItems(item.children) : undefined,
-  }));
+  return menuItems.map((item) => {
+    const { linkUrl } = parseLink(item.link);
+    return {
+      title: item.label,
+      url: linkUrl ?? "",
+      sublinks: item.children ? convertMainMenuItems(item.children) : undefined,
+    };
+  });
 };
 
 export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePanelMenuProps) {

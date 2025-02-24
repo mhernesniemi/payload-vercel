@@ -2,12 +2,13 @@
 
 import { Popover, PopoverPanel, PopoverButton, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import Link from "next/link";
+
 import { parseMenuLinks } from "../lib/parseLink";
 import { MenuItem } from "../types/menu";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";
 import clsx from "clsx";
+import { Link } from "@/i18n/routing";
 
 interface MainMenuProps {
   items: MenuItem[];
