@@ -9,7 +9,7 @@ interface ArticleTemplateProps {
 export default function ArticleTemplate({ article }: ArticleTemplateProps) {
   const heroImage = article.heroImage as { url: string; alt: string };
   return (
-    <article className="py-16">
+    <main id="main-content" className="py-16">
       {heroImage?.url && (
         <Image
           src={heroImage.url}
@@ -30,6 +30,6 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
       <div className="mx-auto mt-12 max-w-screen-lg">
         <BlockRenderer nodes={article.content?.root?.children as NodeTypes[]} />
       </div>
-    </article>
+    </main>
   );
 }

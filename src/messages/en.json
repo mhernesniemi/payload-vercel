@@ -63,5 +63,8 @@
   },
   "footer": {
     "phone": "Phone"
+  },
+  "header": {
+    "skipToContent": "Skip to content"
   }
 }

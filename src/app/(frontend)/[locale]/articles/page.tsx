@@ -19,7 +19,7 @@ export default async function ArticlesPage({ params }: { params: Params }) {
   });
 
   return (
-    <main className="mx-auto flex max-w-screen-md flex-col gap-8 py-16">
+    <main id="main-content" className="mx-auto flex max-w-screen-md flex-col gap-8 py-16">
       <h1 className="mb-8 text-4xl font-bold">Articles</h1>
 
       {articles.map((article) => (

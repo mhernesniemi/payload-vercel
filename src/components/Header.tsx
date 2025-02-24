@@ -6,8 +6,10 @@ import { MainMenu, MenuItem, MobileMenu } from "./MainMenu";
 import SearchSidePanel from "./SearchPanel";
 import UserAuthNav from "./auth/UserAuthNav";
 import { SITE_NAME } from "@/lib/constants";
+import { getTranslations } from "next-intl/server";
 
 export default async function Header() {
+  const t = await getTranslations("header");
   const payload = await getPayload({
     config: configPromise,
   });
@@ -19,6 +21,9 @@ export default async function Header() {
 
   return (
     <>
+      <a href="#main-content" className="sr-only focus:not-sr-only">
+        {t("skipToContent")}
+      </a>
       <div className="flex w-full justify-center pt-4 xl:hidden">
         <Link href="/" className="text-xl font-bold">
           {SITE_NAME}

@@ -63,5 +63,8 @@
   },
   "footer": {
     "phone": "Puhelin"
+  },
+  "header": {
+    "skipToContent": "Hyppää pääsisältöön"
   }
 }
