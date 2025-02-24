@@ -16,6 +16,11 @@ type LinkType = {
   label?: string | null;
 };
 
+type ParsedLink = {
+  linkUrl?: string;
+  linkLabel?: string;
+};
+
 export function parseInternalUrl(link?: InternalLink | null) {
   if (!link) return undefined;
   if (typeof link.value === "object" && "slug" in link.value) {
@@ -40,4 +45,11 @@ export function parseLabel(link?: LinkType | null) {
   if (link.internalUrl && typeof link.internalUrl.value === "object")
     return link.label ?? link.internalUrl.value.title;
   if (link.externalUrl) return link.label ?? link.externalUrl;
+}
+
+export function parseLink(link?: LinkType | null): ParsedLink {
+  return {
+    linkUrl: parseUrl(link),
+    linkLabel: parseLabel(link),
+  };
 }
