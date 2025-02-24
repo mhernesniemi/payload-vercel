@@ -10,6 +10,7 @@ export type LinkType = {
   internalUrl?: InternalLink | null;
   externalUrl?: string | null;
   label?: string | null;
+  isExternal?: boolean | null;
 };
 
 export type MenuItem = {

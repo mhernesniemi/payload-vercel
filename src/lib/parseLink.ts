@@ -32,7 +32,8 @@ export function parseLabel(link?: LinkType | null) {
 }
 
 export function isExternalLink(link?: LinkType | null): boolean {
-  return link?.externalUrl !== undefined;
+  if (!link) return false;
+  return link.isExternal === true || (link.externalUrl !== undefined && link.externalUrl !== null);
 }
 
 export function parseLink(link?: LinkType | null): ParsedLink {
