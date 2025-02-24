@@ -3,7 +3,7 @@ import Image from "next/image";
 import { HeroBlock as HeroBlockType } from "@/payload-types";
 import Button from "@/components/Button";
 import Heading from "./Heading";
-import parseLink from "@/lib/parseLink";
+import parseInternalLink from "@/lib/parseLink";
 
 type HeroProps = {
   block: HeroBlockType;
@@ -12,13 +12,9 @@ type HeroProps = {
 export function Hero({ block }: HeroProps) {
   const { title, description, image, link } = block;
 
-  const linkData = parseLink({
-    label: link?.label,
-    externalUrl: link?.externalUrl,
-    internalUrl: link?.internalUrl,
-  });
+  const linkData = parseInternalLink(link?.internalUrl);
 
-  console.log(block);
+  console.log(linkData);
 
   return (
     <div className="relative mt-12 flex w-full items-center justify-center overflow-hidden rounded-2xl py-24">
