@@ -23,7 +23,7 @@ export default async function UserAuthNav() {
           className="group flex items-center gap-2 text-xs font-medium uppercase"
         >
           <UserIcon className="h-5 w-5 group-hover:text-amber-500" />
-          <span>Profile</span>
+          <span className="hidden xl:block">Profile</span>
         </Link>
       </div>
     );
@@ -36,7 +36,7 @@ export default async function UserAuthNav() {
         className="group flex items-center gap-2 text-xs font-medium uppercase"
       >
         <UserIcon className="h-5 w-5 group-hover:text-amber-500" />
-        <span>Login</span>
+        <span className="hidden xl:block">Login</span>
       </Link>
     </div>
   );
