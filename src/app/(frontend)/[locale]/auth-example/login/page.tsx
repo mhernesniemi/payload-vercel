@@ -7,17 +7,16 @@ import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { GoogleIcon } from "@/components/Icons";
 import Heading from "@/components/Heading";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const t = useTranslations("auth");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
@@ -34,20 +33,16 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        setError("Invalid credentials");
+        toast.error(t("errors.invalidCredentials"));
         return;
       }
-
-      console.log("Login response:", data);
 
       const callbackUrl = searchParams.get("from") || "/en/auth-example/create-article";
       router.push(callbackUrl);
     } catch (error) {
       console.error("Login error:", error);
-      setError("Login error");
+      toast.error(t("errors.loginError"));
     } finally {
       setLoading(false);
     }
@@ -68,7 +63,6 @@ export default function LoginPage() {
           </Heading>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && <div className="text-center text-sm text-red-500">{error}</div>}
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <label htmlFor="email" className="sr-only">
