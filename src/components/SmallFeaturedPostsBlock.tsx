@@ -32,7 +32,7 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
                 </div>
               )}
               <div className="p-6">
-                <Link href={linkUrl || ""}>
+                <Link href={linkUrl || ""} className="block">
                   <span className="absolute inset-x-0 inset-y-0 z-10"></span>
                   <Heading level="h2" size="sm" className="mb-2 group-hover:text-amber-500">
                     {post.title}

@@ -40,7 +40,7 @@ export async function Footer() {
                 <li>
                   <a
                     href={footer.general.social.facebook}
-                    className="text-stone-400 hover:text-white"
+                    className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">Facebook</span>
                     <FacebookIcon />
@@ -51,7 +51,7 @@ export async function Footer() {
                 <li>
                   <a
                     href={footer.general.social.instagram}
-                    className="text-stone-400 hover:text-white"
+                    className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">Instagram</span>
                     <InstagramIcon />
@@ -62,7 +62,7 @@ export async function Footer() {
                 <li>
                   <a
                     href={footer.general.social.linkedin}
-                    className="text-stone-400 hover:text-white"
+                    className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <LinkedInIcon />
@@ -73,7 +73,7 @@ export async function Footer() {
                 <li>
                   <a
                     href={footer.general.social.youtube}
-                    className="text-stone-400 hover:text-white"
+                    className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">YouTube</span>
                     <YoutubeIcon />
