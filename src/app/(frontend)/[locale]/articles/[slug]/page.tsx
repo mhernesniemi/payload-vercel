@@ -36,16 +36,6 @@ async function getArticleBySlug({ params, searchParams }: Props) {
     .then((res) => res.docs[0]);
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const article = await getArticleBySlug(props);
-
-  if (!article) return {};
-
-  return {
-    title: `${article.title} | ${SITE_NAME}`,
-  };
-}
-
 export default async function ArticlePage(props: Props) {
   const article = await getArticleBySlug(props);
 
@@ -59,4 +49,14 @@ export default async function ArticlePage(props: Props) {
       <ArticleTemplate article={article} />
     </Container>
   );
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const article = await getArticleBySlug(props);
+
+  if (!article) return {};
+
+  return {
+    title: `${article.title} | ${SITE_NAME}`,
+  };
 }
