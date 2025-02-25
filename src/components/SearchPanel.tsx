@@ -1,6 +1,6 @@
 "use client";
 
-import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
+import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
 import createClient from "@searchkit/instantsearch-client";
 import { Link, useRouter } from "@/i18n/routing";
 import SidePanel from "./SidePanel";
@@ -60,6 +60,18 @@ const searchClient = {
 interface Hit {
   title: string;
   slug: string;
+}
+
+// Only used for screen readers
+function SearchStats() {
+  const { nbHits } = useStats();
+  const t = useTranslations("search");
+
+  return (
+    <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      {nbHits} {nbHits === 1 ? t("result") : t("results")}
+    </div>
+  );
 }
 
 function Hit({ hit }: { hit: Hit }) {
@@ -159,6 +171,7 @@ export default function SearchSidePanel() {
             <div className="sticky top-0 z-10 bg-stone-800 pb-2 pt-4">
               <CustomSearchBox inSidePanel={true} />
             </div>
+            <SearchStats />
             <Hits hitComponent={Hit} />
           </InstantSearch>
         </div>

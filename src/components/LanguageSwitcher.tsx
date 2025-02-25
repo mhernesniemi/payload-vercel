@@ -45,7 +45,7 @@ export default function LanguageSwitcher() {
                 <div className="w-4">
                   {locale === "fi" && <CheckIcon className="h-4 w-4 text-amber-500" />}
                 </div>
-                <span>Suomi</span>
+                <span lang="fi">Suomi</span>
               </button>
             </MenuItem>
             <MenuItem>
@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
                 <div className="w-4">
                   {locale === "en" && <CheckIcon className="h-4 w-4 text-amber-500" />}
                 </div>
-                <span>English</span>
+                <span lang="en">English</span>
               </button>
             </MenuItem>
           </div>

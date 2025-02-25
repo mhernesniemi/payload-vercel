@@ -76,7 +76,7 @@ export async function Footer() {
           <div className="md:col-span-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {footerMenu.items.map((menuItem, index) => (
-                <div key={index} className="text-stone-400">
+                <nav key={index} className="text-stone-400">
                   <Heading level="h3" size="sm" className="mb-4 text-white">
                     {menuItem.label}
                   </Heading>
@@ -92,7 +92,7 @@ export async function Footer() {
                       );
                     })}
                   </ul>
-                </div>
+                </nav>
               ))}
 
               {/* Contact Info */}

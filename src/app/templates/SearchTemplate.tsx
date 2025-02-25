@@ -65,7 +65,7 @@ function SearchStats() {
   const t = useTranslations("search");
 
   return (
-    <div className="text-stone-400">
+    <div className="text-stone-400" role="status" aria-live="polite" aria-atomic="true">
       {nbHits} {nbHits === 1 ? t("result") : t("results")}
     </div>
   );

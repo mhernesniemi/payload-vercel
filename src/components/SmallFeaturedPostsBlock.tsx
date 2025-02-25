@@ -11,11 +11,11 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
   return (
     <div className="my-24 w-full">
       <h2 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h2>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {block.posts.map((post) => {
           const { linkUrl } = parseLink(post.link);
           return (
-            <div key={post.id} className="group relative overflow-hidden rounded-xl bg-stone-800">
+            <li key={post.id} className="group relative overflow-hidden rounded-xl bg-stone-800">
               {typeof post.image === "object" && post.image.url && (
                 <div className="relative h-48 w-full">
                   <Image
@@ -35,10 +35,10 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
                 </h3>
                 {post.text && <p className="mb-4 line-clamp-2 text-stone-300">{post.text}</p>}
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }
