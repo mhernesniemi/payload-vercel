@@ -20,7 +20,7 @@ export function LinkListBlock({ block }: Props) {
                 href={linkUrl ?? ""}
                 target={isExternal ? "_blank" : undefined}
                 rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-2"
+                className="group flex items-center gap-2 hover:text-amber-500"
               >
                 <ChevronRightIcon className="h-4 w-4 text-amber-500 transition-transform duration-200 group-hover:translate-x-[2px]" />
                 <span>{linkLabel}</span>
