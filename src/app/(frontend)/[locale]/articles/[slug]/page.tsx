@@ -13,16 +13,13 @@ type Props = {
 };
 
 async function getArticleBySlug({ params, searchParams }: Props) {
-  const resolvedParams = await params;
-  const { slug, locale } = resolvedParams;
-  const resolvedSearchParams = await searchParams;
-  const preview = resolvedSearchParams.preview as string;
+  const { slug, locale } = await params;
+  const preview = (await searchParams).preview as string;
+  const previewMode = preview === process.env.PREVIEW_SECRET;
 
   const payload = await getPayload({
     config: configPromise,
   });
-
-  const previewMode = preview === process.env.PREVIEW_SECRET;
 
   return payload
     .find({
