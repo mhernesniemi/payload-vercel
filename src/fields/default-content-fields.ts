@@ -62,6 +62,22 @@ export const defaultContentFields: Field[] = [
     unique: true,
     admin: {
       position: "sidebar",
+      description: "The slug is automatically generated from the title",
+    },
+    hooks: {
+      beforeValidate: [
+        ({ data, value }: { data?: { title?: string }; value?: string }) => {
+          if (!value && data?.title) {
+            return data.title
+              .toLowerCase()
+              .replace(/ä/g, "a")
+              .replace(/ö/g, "o")
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-|-$/g, "");
+          }
+          return value;
+        },
+      ],
     },
   },
   {

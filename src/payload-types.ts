@@ -194,6 +194,9 @@ export interface Article {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * The slug is automatically generated from the title
+   */
   slug: string;
   createdBy?: (number | null) | User;
   author?: (number | null) | Contact;
@@ -255,6 +258,9 @@ export interface CollectionPage {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * The slug is automatically generated from the title
+   */
   slug: string;
   createdBy?: (number | null) | User;
   updatedAt: string;
@@ -284,6 +290,9 @@ export interface News {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * The slug is automatically generated from the title
+   */
   slug: string;
   createdBy?: (number | null) | User;
   updatedAt: string;

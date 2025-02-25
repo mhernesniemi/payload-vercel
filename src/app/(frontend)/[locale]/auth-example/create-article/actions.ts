@@ -20,6 +20,9 @@ export async function fetchUserArticles(userId: number) {
       "createdBy.id": {
         equals: userId,
       },
+      _status: {
+        equals: "published",
+      },
     },
   });
 
@@ -37,6 +40,7 @@ export async function createArticle(title: string, userId: number) {
     data: {
       title,
       slug: title.toLowerCase().replace(/ /g, "-"),
+      _status: "published",
     },
     user: {
       id: userId,
