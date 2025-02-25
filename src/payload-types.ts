@@ -765,6 +765,7 @@ export interface MainMenu {
     children?:
       | {
           label: string;
+          addLinks?: boolean | null;
           link?: {
             label?: string | null;
             isExternal?: boolean | null;
@@ -1084,6 +1085,7 @@ export interface MainMenuSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
+              addLinks?: T;
               link?:
                 | T
                 | {

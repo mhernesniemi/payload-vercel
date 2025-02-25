@@ -61,6 +61,9 @@
       "loginError": "An error occurred during login"
     }
   },
+  "mainMenu": {
+    "mainMenu": "Main Menu"
+  },
   "footer": {
     "phone": "Phone"
   },

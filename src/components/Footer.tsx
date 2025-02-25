@@ -75,25 +75,29 @@ export async function Footer() {
           {/* Footer Menu */}
           <div className="md:col-span-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-              {footerMenu.items.map((menuItem, index) => (
-                <nav key={index} className="text-stone-400">
-                  <Heading level="h3" size="sm" className="mb-4 text-white">
-                    {menuItem.label}
-                  </Heading>
-                  <ul className="space-y-2">
-                    {menuItem.children?.map((child, index) => {
-                      const { linkUrl, linkLabel } = parseLink(child.link);
-                      return (
-                        <li key={index}>
-                          <a href={linkUrl} className="hover:text-white">
-                            {linkLabel}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </nav>
-              ))}
+              <nav>
+                <ul>
+                  {footerMenu.items.map((menuItem, index) => (
+                    <li key={index} className="text-stone-400">
+                      <Heading level="h3" size="sm" className="mb-4 text-white">
+                        {menuItem.label}
+                      </Heading>
+                      <ul className="space-y-2" aria-label={menuItem.label}>
+                        {menuItem.children?.map((child, index) => {
+                          const { linkUrl, linkLabel } = parseLink(child.link);
+                          return (
+                            <li key={index}>
+                              <a href={linkUrl} className="hover:text-white">
+                                {linkLabel}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
               {/* Contact Info */}
               <div className="text-stone-400">
@@ -112,7 +116,6 @@ export async function Footer() {
                         </p>
                       )}
                     </div>
-
                     {footer.contact.phone && (
                       <p>
                         {t("footer.phone")}: {footer.contact.phone}

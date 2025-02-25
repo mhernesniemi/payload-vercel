@@ -17,121 +17,123 @@ interface MainMenuProps {
 export function MainMenu({ items }: MainMenuProps) {
   const renderMenuItem = (item: MenuItem) => {
     const hasChildren = item.children && item.children.length > 0;
+    const { linkUrl } = parseMenuLinks(item);
 
     if (hasChildren) {
       return (
-        <Popover key={item.id} className="relative px-3 py-2">
-          <PopoverButton className="main-nav-item group flex items-center font-medium focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
-            <span className="transition-colors duration-200 group-data-[open]:text-amber-500">
-              {item.label}
-            </span>
-            <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
-          </PopoverButton>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-200"
-            enterFrom="opacity-0 translate-y-1"
-            enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 translate-y-1"
-          >
-            <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
-              <div className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
-                <div
-                  // If the item has grandchildren, use a grid layout
-                  className={clsx(
-                    "bg-stone-800 *:relative",
-                    item.children?.some(
-                      (child) => child.grandchildren && child.grandchildren.length > 0,
-                    )
-                      ? "grid gap-x-4 gap-y-10 px-10 pb-10 pt-6"
-                      : "min-w-[200px] pb-8 pl-10 pr-6 pt-6",
-                  )}
-                  // Calculate the number of columns
-                  style={
-                    item.children?.some(
-                      (child) => child.grandchildren && child.grandchildren.length > 0,
-                    )
-                      ? {
-                          gridTemplateColumns: `repeat(${Math.min(
-                            3,
-                            item.children?.filter(
-                              (child) => child.grandchildren && child.grandchildren.length > 0,
-                            ).length || 1,
-                          )}, 200px)`,
-                        }
-                      : undefined
-                  }
-                >
-                  {/* Child components with grandchildren */}
-                  {item.children
-                    ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
-                    .map((child) => (
-                      <div key={child.id}>
-                        <h3 className="mb-3 text-sm font-medium leading-snug tracking-wide text-stone-400">
-                          {child.label}
-                        </h3>
-                        <div className="space-y-4">
-                          {child.grandchildren?.map((grandchild) => {
-                            const { linkUrl, linkLabel } = parseMenuLinks(grandchild);
+        <li key={item.id}>
+          <Popover className="relative px-3 py-2">
+            <PopoverButton className="main-nav-item group flex items-center font-medium focus:outline-none data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-amber-500">
+              <span className="transition-colors duration-200 group-data-[open]:text-amber-500">
+                {item.label}
+              </span>
+              <ChevronDownIcon className="ml-2 h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover:text-amber-500 group-data-[open]:rotate-180 group-data-[open]:text-amber-500" />
+            </PopoverButton>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
+                <ul className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div
+                    className={clsx(
+                      "bg-stone-800 *:relative",
+                      item.children?.some(
+                        (child) => child.grandchildren && child.grandchildren.length > 0,
+                      )
+                        ? "grid gap-x-4 gap-y-10 px-10 pb-10 pt-6"
+                        : "min-w-[200px] pb-8 pl-10 pr-6 pt-6",
+                    )}
+                    style={
+                      item.children?.some(
+                        (child) => child.grandchildren && child.grandchildren.length > 0,
+                      )
+                        ? {
+                            gridTemplateColumns: `repeat(${Math.min(
+                              3,
+                              item.children?.filter(
+                                (child) => child.grandchildren && child.grandchildren.length > 0,
+                              ).length || 1,
+                            )}, 200px)`,
+                          }
+                        : undefined
+                    }
+                  >
+                    {item.children
+                      ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
+                      .map((child) => (
+                        <li key={child.id} className="bg-stone-800">
+                          <h3 className="mb-3 text-sm font-medium leading-snug tracking-wide text-stone-400">
+                            {child.label}
+                          </h3>
+                          <ul className="space-y-4">
+                            {child.grandchildren?.map((grandchild) => {
+                              const { linkUrl, linkLabel } = parseMenuLinks(grandchild);
+                              return (
+                                <li key={grandchild.id}>
+                                  <Link
+                                    href={linkUrl ?? ""}
+                                    className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                                  >
+                                    {linkLabel}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </li>
+                      ))}
+
+                    {item.children?.some((child) => !child.grandchildren?.length) && (
+                      <>
+                        {item.children
+                          .filter((child) => !child.grandchildren?.length)
+                          .map((child) => {
+                            const { linkUrl } = parseMenuLinks(child);
                             return (
-                              <div key={grandchild.id}>
+                              <li key={child.id} className="bg-stone-800">
                                 <Link
                                   href={linkUrl ?? ""}
                                   className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
                                 >
-                                  {linkLabel}
+                                  {child.label}
                                 </Link>
-                              </div>
+                              </li>
                             );
                           })}
-                        </div>
-                      </div>
-                    ))}
-
-                  {/* Child components without grandchildren */}
-                  {item.children?.some((child) => !child.grandchildren?.length) && (
-                    <div className="space-y-4">
-                      {item.children
-                        .filter((child) => !child.grandchildren?.length)
-                        .map((child) => {
-                          const { linkUrl } = parseMenuLinks(child);
-                          return (
-                            <div key={child.id}>
-                              <Link
-                                href={linkUrl ?? ""}
-                                className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                              >
-                                {child.label}
-                              </Link>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </PopoverPanel>
-          </Transition>
-        </Popover>
+                      </>
+                    )}
+                  </div>
+                </ul>
+              </PopoverPanel>
+            </Transition>
+          </Popover>
+        </li>
       );
     }
 
-    const { linkUrl } = parseMenuLinks(item);
-
     return (
-      <Link
-        key={item.id}
-        href={linkUrl ?? ""}
-        className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
-      >
-        {item.label}
-      </Link>
+      <li key={item.id}>
+        <Link
+          href={linkUrl ?? ""}
+          className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
+        >
+          {item.label}
+        </Link>
+      </li>
     );
   };
 
-  return <nav className="flex items-center justify-center gap-4">{items.map(renderMenuItem)}</nav>;
+  return (
+    <nav>
+      <ul className="flex items-center justify-center gap-4">{items.map(renderMenuItem)}</ul>
+    </nav>
+  );
 }
 
 type SidePanelLink = {

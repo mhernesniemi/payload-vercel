@@ -66,5 +66,8 @@
   },
   "header": {
     "skipToContent": "Hyppää pääsisältöön"
+  },
+  "mainMenu": {
+    "mainMenu": "Päävalikko"
   }
 }
