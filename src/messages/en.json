@@ -62,7 +62,8 @@
     }
   },
   "mainMenu": {
-    "mainMenu": "Main Menu"
+    "mainMenu": "Main Menu",
+    "back": "Back to previous menu level"
   },
   "footer": {
     "phone": "Phone"

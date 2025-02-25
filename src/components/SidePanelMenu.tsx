@@ -7,6 +7,7 @@ import SidePanel from "./SidePanel";
 import { parseLink } from "@/lib/parseLink";
 import { MenuItem as MainMenuItem } from "@/types/menu";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 interface MenuItem {
   title: string;
@@ -32,6 +33,7 @@ const convertMainMenuItems = (menuItems: MainMenuItem[]): MenuItem[] => {
 };
 
 export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePanelMenuProps) {
+  const t = useTranslations("mainMenu");
   const processedItems: MenuItem[] = isMainMenuItems
     ? convertMainMenuItems(items as MainMenuItem[])
     : (items as MenuItem[]);
@@ -77,7 +79,7 @@ export default function SidePanelMenu({ items, isMainMenuItems = false }: SidePa
       openLabel={
         <div className="flex items-center gap-2">
           <Bars3Icon className="h-6 w-6 stroke-2" />
-          <span className="sr-only">Menu</span>
+          <span className="sr-only">{t("mainMenu")}</span>
         </div>
       }
       position="left"
