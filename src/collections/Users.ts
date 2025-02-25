@@ -7,6 +7,11 @@ export const Users: CollectionConfig = {
     group: "Misc",
   },
   auth: true,
+  access: {
+    admin: ({ req: { user } }) => {
+      return user?.role === "admin";
+    },
+  },
   fields: [
     {
       name: "role",
