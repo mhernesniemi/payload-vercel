@@ -6,6 +6,7 @@ import { FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { GoogleIcon } from "@/components/Icons";
+import Heading from "@/components/Heading";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -62,7 +63,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md space-y-8 rounded-lg bg-stone-800 p-8 shadow-lg">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold">{t("signIn")}</h2>
+          <Heading level="h2" size="lg" className="mt-6 text-center">
+            {t("signIn")}
+          </Heading>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && <div className="text-center text-sm text-red-500">{error}</div>}

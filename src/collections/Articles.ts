@@ -9,7 +9,7 @@ export const Articles: CollectionConfig = {
     group: "Pages",
     preview: (doc, { locale }) => {
       if (doc?.slug) {
-        return `/${locale}/articles/${doc.slug}`;
+        return `/${locale}/articles/${doc.slug}?preview=${process.env.PREVIEW_SECRET}`;
       }
       return null;
     },
