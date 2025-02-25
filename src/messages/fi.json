@@ -23,7 +23,8 @@
     "loading": "Ladataan...",
     "error": "Virhe ladattaessa sisältöä",
     "notFound": "Sivua ei löytynyt",
-    "readMore": "Lue lisää"
+    "readMore": "Lue lisää",
+    "close": "Sulje"
   },
   "navigation": {
     "home": "Koti",
@@ -63,13 +64,14 @@
   },
   "footer": {
     "phone": "Puhelin",
-    "menuLabel": "Alatunnisteen valikko"
+    "menuLabel": "Footer-valikko"
   },
   "header": {
     "skipToContent": "Hyppää pääsisältöön"
   },
   "mainMenu": {
     "mainMenu": "Päävalikko",
-    "back": "Takaisin edelliselle valikkotasolle"
+    "back": "Takaisin",
+    "backAccessibility": "Takaisin edelliselle valikkotasolle"
   }
 }

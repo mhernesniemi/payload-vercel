@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/routing";
-import { clsx } from "clsx";
+import { cn } from "@/lib/utils";
 
 interface ButtonProps {
   style?: "primary" | "secondary" | "text" | "disabled";
@@ -44,7 +44,7 @@ export default function Button({
   if (href && !disabled) {
     return (
       <Link href={href} id={id}>
-        <div className={clsx(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}>
+        <div className={cn(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}>
           {children}
         </div>
       </Link>
@@ -55,7 +55,7 @@ export default function Button({
     <button
       onClick={disabled ? undefined : onClick}
       type={type}
-      className={clsx(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}
+      className={cn(baseStyles, sizeStyles, widthStyles, styleVariants[buttonStyle])}
       id={id}
       disabled={disabled}
     >

@@ -7,7 +7,7 @@ import { parseMenuLinks } from "../lib/parseLink";
 import { MenuItem } from "../types/menu";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/routing";
 
 interface MainMenuProps {
@@ -41,7 +41,7 @@ export function MainMenu({ items }: MainMenuProps) {
               <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
                 <ul className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                   <div
-                    className={clsx(
+                    className={cn(
                       "bg-stone-800 *:relative",
                       item.children?.some(
                         (child) => child.grandchildren && child.grandchildren.length > 0,

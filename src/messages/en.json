@@ -23,7 +23,8 @@
     "loading": "Loading...",
     "error": "Error loading content",
     "notFound": "Page not found",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "close": "Close"
   },
   "navigation": {
     "home": "Home",
@@ -63,7 +64,9 @@
   },
   "mainMenu": {
     "mainMenu": "Main Menu",
-    "back": "Back to previous menu level"
+    "back": "Back",
+    "backAccessibility": "Back to previous menu level",
+    "close": "Close"
   },
   "footer": {
     "phone": "Phone",

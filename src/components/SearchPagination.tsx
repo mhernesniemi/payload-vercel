@@ -1,7 +1,7 @@
 import { usePagination } from "react-instantsearch";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTranslations } from "next-intl";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export default function SearchPagination() {
   const { pages, currentRefinement, nbPages, isFirstPage, isLastPage, refine, createURL } =
@@ -36,7 +36,7 @@ export default function SearchPagination() {
                   event.preventDefault();
                   refine(page);
                 }}
-                className={clsx(
+                className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-lg border text-white",
                   {
                     "border-amber-500": isActive,
