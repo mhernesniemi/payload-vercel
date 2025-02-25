@@ -1,3 +1,4 @@
+import Heading from "@/components/Heading";
 import { Link } from "@/i18n/routing";
 import configPromise from "@payload-config";
 
@@ -20,7 +21,9 @@ export default async function ArticlesPage({ params }: { params: Params }) {
 
   return (
     <main id="main-content" className="mx-auto flex max-w-screen-md flex-col gap-8 py-16">
-      <h1 className="mb-8 text-4xl font-bold">Articles</h1>
+      <Heading level="h1" size="lg" className="mb-8">
+        Articles
+      </Heading>
 
       {articles.map((article) => (
         <div key={article.id}>

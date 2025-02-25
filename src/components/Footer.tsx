@@ -30,54 +30,69 @@ export async function Footer() {
           {/* Company Info */}
           <div className="text-stone-400 md:col-span-2">
             {footer.general?.title && (
-              <Heading level="h3" size="sm" className="mb-4 text-white">
+              <Heading level="h2" size="sm" className="mb-4 text-white">
                 {footer.general.title}
               </Heading>
             )}
             {footer.general?.description && <p className="mb-4">{footer.general?.description}</p>}
-            <div className="flex gap-4">
+            <ul className="flex gap-4">
               {footer.general?.social?.facebook && (
-                <a
-                  href={footer.general.social.facebook}
-                  className="text-stone-400 hover:text-white"
-                >
-                  <span className="sr-only">Facebook</span>
-                  <FacebookIcon />
-                </a>
+                <li>
+                  <a
+                    href={footer.general.social.facebook}
+                    className="text-stone-400 hover:text-white"
+                  >
+                    <span className="sr-only">Facebook</span>
+                    <FacebookIcon />
+                  </a>
+                </li>
               )}
               {footer.general?.social?.instagram && (
-                <a
-                  href={footer.general.social.instagram}
-                  className="text-stone-400 hover:text-white"
-                >
-                  <span className="sr-only">Instagram</span>
-                  <InstagramIcon />
-                </a>
+                <li>
+                  <a
+                    href={footer.general.social.instagram}
+                    className="text-stone-400 hover:text-white"
+                  >
+                    <span className="sr-only">Instagram</span>
+                    <InstagramIcon />
+                  </a>
+                </li>
               )}
               {footer.general?.social?.linkedin && (
-                <a
-                  href={footer.general.social.linkedin}
-                  className="text-stone-400 hover:text-white"
-                >
-                  <span className="sr-only">LinkedIn</span>
-                  <LinkedInIcon />
-                </a>
+                <li>
+                  <a
+                    href={footer.general.social.linkedin}
+                    className="text-stone-400 hover:text-white"
+                  >
+                    <span className="sr-only">LinkedIn</span>
+                    <LinkedInIcon />
+                  </a>
+                </li>
               )}
               {footer.general?.social?.youtube && (
-                <a href={footer.general.social.youtube} className="text-stone-400 hover:text-white">
-                  <span className="sr-only">YouTube</span>
-                  <YoutubeIcon />
-                </a>
+                <li>
+                  <a
+                    href={footer.general.social.youtube}
+                    className="text-stone-400 hover:text-white"
+                  >
+                    <span className="sr-only">YouTube</span>
+                    <YoutubeIcon />
+                  </a>
+                </li>
               )}
-            </div>
+            </ul>
           </div>
 
           {/* Footer Menu */}
           <div className="md:col-span-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {footerMenu.items.map((menuItem, index) => (
-                <nav key={index} className="text-stone-400">
-                  <Heading level="h3" size="sm" className="mb-4 text-white">
+                <nav
+                  key={index}
+                  className="text-stone-400"
+                  aria-label={`${t("footer.menuLabel")} ${menuItem.label}`}
+                >
+                  <Heading level="h2" size="sm" className="mb-4 text-white">
                     {menuItem.label}
                   </Heading>
                   <ul className="space-y-2">
@@ -98,7 +113,7 @@ export async function Footer() {
               {/* Contact Info */}
               <div className="text-stone-400">
                 {footer.contact?.title && (
-                  <Heading level="h3" size="sm" className="mb-4 text-white">
+                  <Heading level="h2" size="sm" className="mb-4 text-white">
                     {footer.contact.title}
                   </Heading>
                 )}

@@ -1,6 +1,4 @@
-import clsx from "clsx";
-import { twMerge } from "tailwind-merge";
-
+import { cn } from "@/lib/utils";
 interface HeadingProps {
   level: "h1" | "h2" | "h3" | "h4";
   size?: "xl" | "lg" | "md" | "sm" | "xs";
@@ -20,14 +18,12 @@ export default function Heading({ level, size, children, className }: HeadingPro
 
   return (
     <Tag
-      className={twMerge(
-        clsx(
-          size === "xl" && "mb-10 text-5xl font-bold",
-          size === "lg" && "mb-8 text-4xl font-bold",
-          size === "md" && "mb-6 text-2xl font-semibold",
-          size === "sm" && "mb-4 text-lg font-semibold",
-          size === "xs" && "mb-4 text-base font-medium",
-        ),
+      className={cn(
+        size === "xl" && "mb-10 text-5xl font-bold",
+        size === "lg" && "mb-8 text-4xl font-bold",
+        size === "md" && "mb-6 text-2xl font-semibold",
+        size === "sm" && "mb-4 text-xl font-semibold",
+        size === "xs" && "mb-4 text-base font-medium",
         className,
       )}
       id={id}

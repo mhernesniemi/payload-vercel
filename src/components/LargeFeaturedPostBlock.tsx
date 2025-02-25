@@ -23,7 +23,7 @@ export function LargeFeaturedPostBlock({ block }: Props) {
           </div>
         )}
         <div className="p-8">
-          <h3 className="mb-4 text-3xl font-bold text-stone-100">{block.title}</h3>
+          <h2 className="mb-4 text-3xl font-bold text-stone-100">{block.title}</h2>
           <p className="text-lg leading-relaxed text-stone-300">{block.text}</p>
           {linkUrl && (
             <Link

@@ -1,7 +1,7 @@
 import { ContactsBlock as ContactsBlockType } from "@/payload-types";
 import Image from "next/image";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
-
+import Heading from "./Heading";
 type Props = {
   block: ContactsBlockType;
 };
@@ -9,7 +9,11 @@ type Props = {
 export function ContactsBlock({ block }: Props) {
   return (
     <div className="my-24">
-      <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h3>
+      {block.blockName && (
+        <Heading level="h2" size="md" className="mb-6">
+          {block.blockName}
+        </Heading>
+      )}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {block.contacts?.map(
           (contact) =>
@@ -26,7 +30,9 @@ export function ContactsBlock({ block }: Props) {
                     />
                   </div>
                 )}
-                <h3 className="mb-1 text-xl font-semibold text-stone-100">{contact.name}</h3>
+                <Heading level="h3" size="sm" className="mb-3 text-stone-400">
+                  {contact.name}
+                </Heading>
                 {contact.title && (
                   <p className="mb-3 text-sm font-medium text-stone-400">{contact.title}</p>
                 )}

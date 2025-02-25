@@ -62,7 +62,8 @@
     }
   },
   "footer": {
-    "phone": "Puhelin"
+    "phone": "Puhelin",
+    "menuLabel": "Alatunnisteen valikko"
   },
   "header": {
     "skipToContent": "Hyppää pääsisältöön"

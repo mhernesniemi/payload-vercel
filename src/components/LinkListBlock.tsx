@@ -2,7 +2,7 @@ import { LinkListBlock as LinkListBlockType } from "@/payload-types";
 import { Link } from "@/i18n/routing";
 import { parseLink } from "@/lib/parseLink";
 import { ChevronRightIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
-
+import Heading from "./Heading";
 type Props = {
   block: LinkListBlockType;
 };
@@ -10,7 +10,11 @@ type Props = {
 export function LinkListBlock({ block }: Props) {
   return (
     <div className="my-24">
-      <h3 className="mb-6 text-2xl font-bold text-stone-100">{block.blockName}</h3>
+      {block.blockName && (
+        <Heading level="h2" size="md" className="mb-6">
+          {block.blockName}
+        </Heading>
+      )}
       <ul className="space-y-3">
         {block.links?.map((link) => {
           const { linkUrl, linkLabel, isExternal } = parseLink(link);
