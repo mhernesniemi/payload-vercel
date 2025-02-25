@@ -7,8 +7,8 @@ import { parseMenuLinks } from "../lib/parseLink";
 import { MenuItem } from "../types/menu";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";
-import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/routing";
+import clsx from "clsx";
 
 interface MainMenuProps {
   items: MenuItem[];
@@ -41,7 +41,7 @@ export function MainMenu({ items }: MainMenuProps) {
               <PopoverPanel className="absolute left-1/2 z-10 mt-3 -translate-x-1/2 transform px-2">
                 <ul className="overflow-hidden rounded-lg border border-stone-700 shadow-lg ring-1 ring-black ring-opacity-5">
                   <div
-                    className={cn(
+                    className={clsx(
                       "bg-stone-800 *:relative",
                       item.children?.some(
                         (child) => child.grandchildren && child.grandchildren.length > 0,
@@ -74,16 +74,19 @@ export function MainMenu({ items }: MainMenuProps) {
                           <ul className="space-y-4">
                             {child.grandchildren?.map((grandchild) => {
                               const { linkUrl, linkLabel } = parseMenuLinks(grandchild);
-                              return (
-                                <li key={grandchild.id}>
-                                  <Link
-                                    href={linkUrl ?? ""}
-                                    className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                                  >
-                                    {linkLabel}
-                                  </Link>
-                                </li>
-                              );
+                              if (linkUrl) {
+                                return (
+                                  <li key={grandchild.id}>
+                                    <Link
+                                      href={linkUrl}
+                                      className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                                    >
+                                      {linkLabel}
+                                    </Link>
+                                  </li>
+                                );
+                              }
+                              return null;
                             })}
                           </ul>
                         </li>
@@ -117,16 +120,19 @@ export function MainMenu({ items }: MainMenuProps) {
       );
     }
 
-    return (
-      <li key={item.id}>
-        <Link
-          href={linkUrl ?? ""}
-          className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
-        >
-          {item.label}
-        </Link>
-      </li>
-    );
+    if (linkUrl) {
+      return (
+        <li key={item.id}>
+          <Link
+            href={linkUrl}
+            className="px-3 py-2 text-base font-medium transition-colors hover:text-amber-500"
+          >
+            {item.label}
+          </Link>
+        </li>
+      );
+    }
+    return null;
   };
 
   return (

@@ -98,13 +98,16 @@ export async function Footer() {
                   <ul className="space-y-2">
                     {menuItem.children?.map((child, index) => {
                       const { linkUrl, linkLabel } = parseLink(child.link);
-                      return (
-                        <li key={index}>
-                          <a href={linkUrl} className="hover:text-white">
-                            {linkLabel}
-                          </a>
-                        </li>
-                      );
+                      if (linkUrl) {
+                        return (
+                          <li key={index}>
+                            <a href={linkUrl} className="hover:text-white">
+                              {linkLabel}
+                            </a>
+                          </li>
+                        );
+                      }
+                      return null;
                     })}
                   </ul>
                 </nav>

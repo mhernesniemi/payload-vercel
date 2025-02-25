@@ -18,20 +18,23 @@ export function LinkListBlock({ block }: Props) {
       <ul className="space-y-3">
         {block.links?.map((link) => {
           const { linkUrl, linkLabel, isExternal } = parseLink(link);
-          return (
-            <li key={link.id} className="flex items-center gap-2">
-              <Link
-                href={linkUrl ?? ""}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-2 hover:text-amber-500"
-              >
-                <ChevronRightIcon className="h-4 w-4 text-amber-500 transition-transform duration-200 group-hover:translate-x-[2px]" />
-                <span>{linkLabel}</span>
-                {isExternal && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
-              </Link>
-            </li>
-          );
+          if (linkUrl) {
+            return (
+              <li key={link.id} className="flex items-center gap-2">
+                <Link
+                  href={linkUrl ?? ""}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="group flex items-center gap-2 hover:text-amber-500"
+                >
+                  <ChevronRightIcon className="h-4 w-4 text-amber-500 transition-transform duration-200 group-hover:translate-x-[2px]" />
+                  <span>{linkLabel}</span>
+                  {isExternal && <ArrowTopRightOnSquareIcon className="ml-1 inline h-4 w-4" />}
+                </Link>
+              </li>
+            );
+          }
+          return null;
         })}
       </ul>
     </div>
