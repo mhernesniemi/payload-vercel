@@ -101,7 +101,7 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   };
 
   return (
-    <div className="relative mt-10">
+    <div className="relative mt-2">
       <input
         ref={inputRef}
         type="text"
@@ -129,7 +129,7 @@ function AdvancedSearchLink() {
   const { query } = useContext(SearchContext);
   const t = useTranslations("search");
   return (
-    <div className="p-10 text-center">
+    <div className="pb-10 pt-4 text-center">
       <Link
         href={`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`}
         className="p-4 text-amber-500 underline-offset-2 hover:underline"
@@ -154,9 +154,11 @@ export default function SearchSidePanel() {
         title={t("search")}
         footer={<AdvancedSearchLink />}
       >
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-2">
           <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
-            <CustomSearchBox inSidePanel={true} />
+            <div className="sticky top-0 z-10 bg-stone-800 pb-2 pt-4">
+              <CustomSearchBox inSidePanel={true} />
+            </div>
             <Hits hitComponent={Hit} />
           </InstantSearch>
         </div>
