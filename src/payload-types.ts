@@ -758,9 +758,24 @@ export interface DynamicListBlock {
   limit: number;
   fetchedItems?:
     | {
-        title?: string | null;
+        reference:
+          | {
+              relationTo: 'articles';
+              value: number | Article;
+            }
+          | {
+              relationTo: 'news';
+              value: number | News;
+            }
+          | {
+              relationTo: 'collection-pages';
+              value: number | CollectionPage;
+            }
+          | {
+              relationTo: 'contacts';
+              value: number | Contact;
+            };
         id?: string | null;
-        collection?: string | null;
       }[]
     | null;
   id?: string | null;
@@ -1108,9 +1123,8 @@ export interface DynamicListBlockSelect<T extends boolean = true> {
   fetchedItems?:
     | T
     | {
-        title?: T;
+        reference?: T;
         id?: T;
-        collection?: T;
       };
   id?: T;
   blockName?: T;

@@ -86,26 +86,27 @@ export const dynamicListBlock: Block = {
                   sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
                   limit: siblingData.limit,
                 });
-                return response.docs;
+
+                return response.docs.map((doc) => ({
+                  reference: {
+                    relationTo: collection,
+                    value: doc.id,
+                  },
+                }));
               }),
             );
-
+            console.log("results", results);
+            console.log("results.flat()", results.flat());
             return results.flat();
           }) as FieldHook,
         ],
       },
       fields: [
         {
-          name: "title",
-          type: "text",
-        },
-        {
-          name: "id",
-          type: "text",
-        },
-        {
-          name: "collection",
-          type: "text",
+          name: "reference",
+          type: "relationship",
+          relationTo: ["articles", "news", "collection-pages", "contacts"],
+          required: true,
         },
       ],
     },
