@@ -5,6 +5,7 @@ type CollectionType = "articles" | "news" | "collection-pages" | "contacts";
 
 export const dynamicListBlock: Block = {
   slug: "dynamicList",
+  interfaceName: "DynamicListBlock",
   labels: {
     singular: "Dynamic List",
     plural: "Dynamic Lists",
@@ -80,6 +81,7 @@ export const dynamicListBlock: Block = {
                   collection: collection,
                   sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
                   limit: siblingData.limit,
+                  depth: 2,
                 });
 
                 return response.docs.map((doc) => ({
@@ -104,5 +106,4 @@ export const dynamicListBlock: Block = {
       ],
     },
   ],
-  interfaceName: "DynamicListBlock",
 };
