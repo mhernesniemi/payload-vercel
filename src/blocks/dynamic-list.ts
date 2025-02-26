@@ -1,4 +1,4 @@
-import { Block, FieldHook } from "payload";
+import { Block } from "payload";
 import { getPayload } from "payload";
 
 type CollectionType = "articles" | "news" | "collection-pages" | "contacts";
@@ -52,26 +52,21 @@ export const dynamicListBlock: Block = {
       max: 100,
     },
     {
-      name: "fetchedItems",
+      name: "items",
       type: "array",
       admin: {
         readOnly: true,
       },
       hooks: {
-        beforeChange: [
-          (async ({ siblingData, value }) => {
-            console.log("siblingData.collections", siblingData?.collections);
-            console.log("siblingData.sortBy", siblingData?.sortBy);
-            console.log("siblingData.sortOrder", siblingData?.sortOrder);
-            console.log("siblingData.limit", siblingData?.limit);
-
+        afterRead: [
+          async ({ siblingData }) => {
             if (
               !siblingData?.collections ||
               !siblingData?.sortBy ||
               !siblingData?.sortOrder ||
               !siblingData?.limit
             ) {
-              return value || [];
+              return [];
             }
 
             const config = await import("@/payload.config").then((m) => m.default);
@@ -95,10 +90,8 @@ export const dynamicListBlock: Block = {
                 }));
               }),
             );
-            console.log("results", results);
-            console.log("results.flat()", results.flat());
             return results.flat();
-          }) as FieldHook,
+          },
         ],
       },
       fields: [

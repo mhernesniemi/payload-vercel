@@ -756,7 +756,7 @@ export interface DynamicListBlock {
   sortBy: 'createdAt' | 'updatedAt' | 'publishedDate';
   sortOrder: 'asc' | 'desc';
   limit: number;
-  fetchedItems?:
+  items?:
     | {
         reference:
           | {
@@ -1120,7 +1120,7 @@ export interface DynamicListBlockSelect<T extends boolean = true> {
   sortBy?: T;
   sortOrder?: T;
   limit?: T;
-  fetchedItems?:
+  items?:
     | T
     | {
         reference?: T;

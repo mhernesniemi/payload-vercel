@@ -54,8 +54,6 @@ export default function DynamicListBlock({ block }: Props) {
     loadItems();
   }, [block.collections, block.sortBy, block.sortOrder, block.limit]);
 
-  console.log("items", items);
-
   return (
     <div className="my-24 w-full">
       {block.blockName && (
