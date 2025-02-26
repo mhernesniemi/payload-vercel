@@ -46,6 +46,7 @@ export default buildConfig({
       url: process.env.DATABASE_URI || "",
       authToken: process.env.DATABASE_AUTH_TOKEN || "",
     },
+    push: false,
   }),
   sharp,
   plugins: [
