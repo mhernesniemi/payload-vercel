@@ -7,13 +7,13 @@ interface ArticleTemplateProps {
 }
 
 export default function ArticleTemplate({ article }: ArticleTemplateProps) {
-  const heroImage = article.heroImage as { url: string; alt: string };
+  const image = article.image as { url: string; alt: string };
   return (
     <main id="main-content" className="py-16">
-      {heroImage?.url && (
+      {image?.url && (
         <Image
-          src={heroImage.url}
-          alt={heroImage.alt || ""}
+          src={image.url}
+          alt={image.alt || ""}
           width={1920}
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"

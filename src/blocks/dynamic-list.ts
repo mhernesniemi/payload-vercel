@@ -48,7 +48,7 @@ export const dynamicListBlock: Block = {
       name: "limit",
       type: "number",
       required: true,
-      defaultValue: 10,
+      defaultValue: 3,
       min: 1,
       max: 100,
     },
@@ -84,6 +84,7 @@ export const dynamicListBlock: Block = {
                   sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
                   limit: Math.ceil(siblingData.limit * siblingData.collections.length),
                   depth: 0,
+                  draft: false,
                 });
 
                 return response.docs.map((doc) => ({
@@ -92,6 +93,7 @@ export const dynamicListBlock: Block = {
                     value: doc.id,
                   },
                   sortValue: doc[siblingData.sortBy as keyof typeof doc],
+                  sticky: Boolean(doc.sticky),
                 }));
               }),
             );
@@ -100,6 +102,11 @@ export const dynamicListBlock: Block = {
 
             // Sort combined results
             const sortedResults = flattenedResults.sort((a, b) => {
+              // First check sticky status
+              if (a.sticky && !b.sticky) return -1;
+              if (!a.sticky && b.sticky) return 1;
+
+              // If sticky status is the same, sort by date
               if (siblingData.sortOrder === "desc") {
                 return (
                   new Date(b.sortValue as string).getTime() -

@@ -20,12 +20,12 @@ export const defaultContentFields: Field[] = [
     localized: true,
   },
   {
-    name: "heroText",
+    name: "description",
     type: "textarea",
     localized: true,
   },
   {
-    name: "heroImage",
+    name: "image",
     type: "upload",
     relationTo: "media",
     localized: true,
@@ -62,7 +62,7 @@ export const defaultContentFields: Field[] = [
     unique: true,
     admin: {
       position: "sidebar",
-      description: "The slug is automatically generated from the title",
+      description: "The slug is automatically generated from the title if empty",
     },
     hooks: {
       beforeValidate: [
@@ -87,6 +87,7 @@ export const defaultContentFields: Field[] = [
     admin: {
       position: "sidebar",
       readOnly: true,
+      hidden: true,
     },
     hooks: {
       beforeChange: [
@@ -97,6 +98,14 @@ export const defaultContentFields: Field[] = [
           return value;
         },
       ],
+    },
+  },
+  {
+    name: "sticky",
+    type: "checkbox",
+    admin: {
+      position: "sidebar",
+      description: "If checked, the post is displayed at the top of lists",
     },
   },
 ];

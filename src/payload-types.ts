@@ -177,8 +177,8 @@ export interface Media {
 export interface Article {
   id: number;
   title: string;
-  heroText?: string | null;
-  heroImage?: (number | null) | Media;
+  description?: string | null;
+  image?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -195,10 +195,14 @@ export interface Article {
     [k: string]: unknown;
   } | null;
   /**
-   * The slug is automatically generated from the title
+   * The slug is automatically generated from the title if empty
    */
   slug: string;
   createdBy?: (number | null) | User;
+  /**
+   * If checked, the post is displayed at the top of lists
+   */
+  sticky?: boolean | null;
   author?: (number | null) | Contact;
   categories?: (number | Category)[] | null;
   publishedDate?: string | null;
@@ -242,8 +246,8 @@ export interface Category {
 export interface CollectionPage {
   id: number;
   title: string;
-  heroText?: string | null;
-  heroImage?: (number | null) | Media;
+  description?: string | null;
+  image?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -260,10 +264,14 @@ export interface CollectionPage {
     [k: string]: unknown;
   } | null;
   /**
-   * The slug is automatically generated from the title
+   * The slug is automatically generated from the title if empty
    */
   slug: string;
   createdBy?: (number | null) | User;
+  /**
+   * If checked, the post is displayed at the top of lists
+   */
+  sticky?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -274,8 +282,8 @@ export interface CollectionPage {
 export interface News {
   id: number;
   title: string;
-  heroText?: string | null;
-  heroImage?: (number | null) | Media;
+  description?: string | null;
+  image?: (number | null) | Media;
   content?: {
     root: {
       type: string;
@@ -292,10 +300,14 @@ export interface News {
     [k: string]: unknown;
   } | null;
   /**
-   * The slug is automatically generated from the title
+   * The slug is automatically generated from the title if empty
    */
   slug: string;
   createdBy?: (number | null) | User;
+  /**
+   * If checked, the post is displayed at the top of lists
+   */
+  sticky?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -418,11 +430,12 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
-  heroText?: T;
-  heroImage?: T;
+  description?: T;
+  image?: T;
   content?: T;
   slug?: T;
   createdBy?: T;
+  sticky?: T;
   author?: T;
   categories?: T;
   publishedDate?: T;
@@ -437,11 +450,12 @@ export interface ArticlesSelect<T extends boolean = true> {
  */
 export interface CollectionPagesSelect<T extends boolean = true> {
   title?: T;
-  heroText?: T;
-  heroImage?: T;
+  description?: T;
+  image?: T;
   content?: T;
   slug?: T;
   createdBy?: T;
+  sticky?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -451,11 +465,12 @@ export interface CollectionPagesSelect<T extends boolean = true> {
  */
 export interface NewsSelect<T extends boolean = true> {
   title?: T;
-  heroText?: T;
-  heroImage?: T;
+  description?: T;
+  image?: T;
   content?: T;
   slug?: T;
   createdBy?: T;
+  sticky?: T;
   updatedAt?: T;
   createdAt?: T;
 }

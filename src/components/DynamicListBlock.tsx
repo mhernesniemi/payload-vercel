@@ -10,14 +10,11 @@ type Props = {
 
 type ImageItemType = {
   id?: string | number;
-  heroImage?: number | Media | null;
   image?: number | Media | null;
 };
 
 const getImageData = (item: ImageItemType): Media | undefined => {
-  if ("heroImage" in item) {
-    return typeof item.heroImage === "object" ? item.heroImage || undefined : undefined;
-  } else if ("image" in item) {
+  if ("image" in item) {
     return typeof item.image === "object" ? item.image || undefined : undefined;
   }
   return undefined;
@@ -35,10 +32,10 @@ export default function DynamicListBlock({ block }: Props) {
         </Heading>
       )}
       <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {items?.map((item) => {
+        {items?.map((item, index) => {
           if (!item || typeof item === "number") return null;
           return (
-            <Fragment key={item.id}>
+            <Fragment key={item.slug + index}>
               <Card title={item.title} href={item.slug} image={getImageData(item)} />
             </Fragment>
           );
