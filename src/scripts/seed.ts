@@ -270,7 +270,7 @@ export const seed = async ({
           link: {
             label: "View News",
             isExternal: true,
-            externalUrl: "/news",
+            externalUrl: "#",
           },
         },
         {
@@ -279,8 +279,9 @@ export const seed = async ({
           text: "Read our most popular article",
           image: mediaItems[1].id,
           link: {
+            label: "Read here",
             isExternal: true,
-            externalUrl: "/articles/article-1",
+            externalUrl: "#",
           },
         },
       ],
@@ -298,30 +299,84 @@ export const seed = async ({
             {
               label: "Technology",
               addLinks: true,
-              grandchildren: categories
-                .filter((cat) => cat.label === "Technology")
-                .map((cat) => ({
-                  label: cat.label,
+              grandchildren: [
+                {
+                  label: "Technology",
                   link: {
-                    label: cat.label,
+                    label: "Technology",
                     isExternal: true,
-                    externalUrl: `/categories/${cat.slug}`,
+                    externalUrl: "#",
                   },
-                })),
+                },
+                {
+                  label: "Business",
+                  link: {
+                    label: "Business",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+                {
+                  label: "Science",
+                  link: {
+                    label: "Science",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+              ],
             },
             {
-              label: "Business",
+              label: "Commerce",
               addLinks: true,
-              grandchildren: categories
-                .filter((cat) => cat.label === "Business")
-                .map((cat) => ({
-                  label: cat.label,
+              grandchildren: [
+                {
+                  label: "Retail  ",
                   link: {
-                    label: cat.label,
+                    label: "Retail",
                     isExternal: true,
-                    externalUrl: `/categories/${cat.slug}`,
+                    externalUrl: "#",
                   },
-                })),
+                },
+                {
+                  label: "Wholesale",
+                  link: {
+                    label: "Wholesale",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+                {
+                  label: "Distribution",
+                  link: {
+                    label: "Distribution",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+              ],
+            },
+            {
+              label: "Services",
+              addLinks: true,
+              grandchildren: [
+                {
+                  label: "Consulting",
+                  link: {
+                    label: "Consulting",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+                {
+                  label: "Training",
+                  link: {
+                    label: "Training",
+                    isExternal: true,
+                    externalUrl: "#",
+                  },
+                },
+              ],
             },
           ],
         },
@@ -330,7 +385,7 @@ export const seed = async ({
           link: {
             label: "News",
             isExternal: true,
-            externalUrl: "/news",
+            externalUrl: "#",
           },
         },
         {
@@ -338,7 +393,7 @@ export const seed = async ({
           link: {
             label: "Contact",
             isExternal: true,
-            externalUrl: "/contact",
+            externalUrl: "#",
           },
         },
         {
@@ -346,7 +401,7 @@ export const seed = async ({
           link: {
             label: "Read our blog",
             isExternal: true,
-            externalUrl: "https://blog.company.com",
+            externalUrl: "#",
           },
         },
       ],
@@ -365,21 +420,21 @@ export const seed = async ({
               link: {
                 label: "About Us",
                 isExternal: true,
-                externalUrl: "/about-us",
+                externalUrl: "#",
               },
             },
             {
               link: {
                 label: "Contact",
                 isExternal: true,
-                externalUrl: "/contact",
+                externalUrl: "#",
               },
             },
             {
               link: {
                 label: "Careers",
                 isExternal: true,
-                externalUrl: "https://careers.company.com",
+                externalUrl: "#",
               },
             },
           ],
@@ -391,21 +446,21 @@ export const seed = async ({
               link: {
                 label: "Articles",
                 isExternal: true,
-                externalUrl: "/articles",
+                externalUrl: "#",
               },
             },
             {
               link: {
                 label: "News",
                 isExternal: true,
-                externalUrl: "/news",
+                externalUrl: "#",
               },
             },
             {
               link: {
                 label: "Blog",
                 isExternal: true,
-                externalUrl: "https://blog.company.com",
+                externalUrl: "#",
               },
             },
           ],
