@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { GoogleIcon } from "@/components/Icons";
 import Heading from "@/components/Heading";
 import { toast } from "sonner";
+import Button from "@/components/Button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -93,13 +94,9 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
+            <Button type="submit" disabled={loading} fullWidth>
               {loading ? t("loading") : t("signIn")}
-            </button>
+            </Button>
           </div>
         </form>
 
@@ -114,13 +111,10 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-6">
-            <button
-              onClick={handleGoogleSignIn}
-              className="flex w-full items-center justify-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm hover:bg-opacity-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            >
+            <Button onClick={handleGoogleSignIn} fullWidth>
               <GoogleIcon className="mr-2" />
               {t("continueWithGoogle")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
