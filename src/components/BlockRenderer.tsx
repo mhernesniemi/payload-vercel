@@ -67,6 +67,7 @@ export const BlockRenderer = ({ nodes, blocks }: Props) => {
       case "hero":
         return <Hero key={block.id} block={block} />;
       case "dynamicList":
+        console.log("dynamicList", block);
         return <DynamicListBlock key={block.id} block={block} />;
       default:
         return null;

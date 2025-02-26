@@ -1,4 +1,7 @@
-import { Block } from "payload";
+import { Block, FieldHook } from "payload";
+import { getPayload } from "payload";
+
+type CollectionType = "articles" | "news" | "collection-pages" | "contacts";
 
 export const dynamicListBlock: Block = {
   slug: "dynamicList",
@@ -47,6 +50,64 @@ export const dynamicListBlock: Block = {
       defaultValue: 10,
       min: 1,
       max: 100,
+    },
+    {
+      name: "fetchedItems",
+      type: "array",
+      admin: {
+        readOnly: true,
+      },
+      hooks: {
+        beforeChange: [
+          (async ({ siblingData, value }) => {
+            console.log("siblingData.collections", siblingData?.collections);
+            console.log("siblingData.sortBy", siblingData?.sortBy);
+            console.log("siblingData.sortOrder", siblingData?.sortOrder);
+            console.log("siblingData.limit", siblingData?.limit);
+
+            if (
+              !siblingData?.collections ||
+              !siblingData?.sortBy ||
+              !siblingData?.sortOrder ||
+              !siblingData?.limit
+            ) {
+              return value || [];
+            }
+
+            const config = await import("@/payload.config").then((m) => m.default);
+            const payload = await getPayload({
+              config,
+            });
+
+            const results = await Promise.all(
+              (siblingData.collections as CollectionType[]).map(async (collection) => {
+                const response = await payload.find({
+                  collection: collection,
+                  sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
+                  limit: siblingData.limit,
+                });
+                return response.docs;
+              }),
+            );
+
+            return results.flat();
+          }) as FieldHook,
+        ],
+      },
+      fields: [
+        {
+          name: "title",
+          type: "text",
+        },
+        {
+          name: "id",
+          type: "text",
+        },
+        {
+          name: "collection",
+          type: "text",
+        },
+      ],
     },
   ],
   interfaceName: "DynamicListBlock",

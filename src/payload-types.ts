@@ -202,6 +202,7 @@ export interface Article {
   author?: (number | null) | Contact;
   categories?: (number | Category)[] | null;
   publishedDate?: string | null;
+  collection?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -425,6 +426,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   author?: T;
   categories?: T;
   publishedDate?: T;
+  collection?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -754,6 +756,13 @@ export interface DynamicListBlock {
   sortBy: 'createdAt' | 'updatedAt' | 'publishedDate';
   sortOrder: 'asc' | 'desc';
   limit: number;
+  fetchedItems?:
+    | {
+        title?: string | null;
+        id?: string | null;
+        collection?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'dynamicList';
@@ -1096,6 +1105,13 @@ export interface DynamicListBlockSelect<T extends boolean = true> {
   sortBy?: T;
   sortOrder?: T;
   limit?: T;
+  fetchedItems?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+        collection?: T;
+      };
   id?: T;
   blockName?: T;
 }

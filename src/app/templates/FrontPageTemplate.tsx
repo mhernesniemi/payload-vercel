@@ -7,6 +7,8 @@ type FrontPageTemplateProps = {
 };
 
 export default function FrontPageTemplate({ content }: FrontPageTemplateProps) {
+  console.log("content", content);
+
   return (
     <main id="main-content">
       {content.hero && <BlockRenderer blocks={content.hero} />}

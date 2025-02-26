@@ -43,6 +43,15 @@ export const Articles: CollectionConfig = {
         },
       },
     },
+    {
+      name: "collection",
+      type: "text",
+      defaultValue: "articles",
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
   ],
   versions: {
     drafts: true,
