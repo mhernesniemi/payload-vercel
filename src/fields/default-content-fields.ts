@@ -90,11 +90,11 @@ export const defaultContentFields: Field[] = [
     },
     hooks: {
       beforeChange: [
-        ({ req, operation }) => {
-          if (operation === "create" && req.user) {
+        ({ req, operation, value }) => {
+          if (!value && operation === "create" && req.user) {
             return req.user.id;
           }
-          return null;
+          return value;
         },
       ],
     },
