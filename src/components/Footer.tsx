@@ -14,7 +14,7 @@ export async function Footer() {
   const [footerMenu, footer] = await Promise.all([
     payload.findGlobal({
       slug: "footer-menu",
-      depth: 2,
+      depth: 0,
     }),
     payload.findGlobal({
       slug: "footer",

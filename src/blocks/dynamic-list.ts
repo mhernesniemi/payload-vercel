@@ -83,7 +83,7 @@ export const dynamicListBlock: Block = {
                   collection: collection,
                   sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
                   limit: siblingData.limit,
-                  depth: 2,
+                  depth: 0,
                 });
 
                 return response.docs.map((doc) => ({
