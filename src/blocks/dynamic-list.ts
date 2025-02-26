@@ -82,7 +82,7 @@ export const dynamicListBlock: Block = {
                 const response = await payload.find({
                   collection: collection,
                   sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
-                  limit: siblingData.limit,
+                  limit: Math.ceil(siblingData.limit * siblingData.collections.length),
                   depth: 0,
                 });
 
