@@ -9,6 +9,7 @@ import {
   quoteBlock,
   heroBlock,
 } from "@/blocks";
+import { dynamicListBlock } from "@/blocks/dynamic-list";
 import { GlobalConfig } from "payload";
 
 export const FrontPage: GlobalConfig = {
@@ -40,6 +41,7 @@ export const FrontPage: GlobalConfig = {
         videoEmbedBlock,
         mediaBlock,
         quoteBlock,
+        dynamicListBlock,
       ],
     },
   ],

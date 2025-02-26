@@ -10,6 +10,7 @@ import type {
   SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType,
   ContactsBlock as ContactsBlockType,
   HeroBlock as HeroBlockType,
+  DynamicListBlock as DynamicListBlockType,
 } from "@/payload-types";
 import { CTABlock } from "./CTABlock";
 import { MediaBlock } from "./MediaBlock";
@@ -21,7 +22,7 @@ import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
 import SmallFeaturedPostsBlock from "./SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
 import { Hero } from "./Hero";
-
+import DynamicListBlock from "./DynamicListBlock";
 type BaseBlockTypes =
   | CTABlockType
   | MediaBlockType
@@ -31,7 +32,8 @@ type BaseBlockTypes =
   | LargeFeaturedPostBlockType
   | SmallFeaturedPostsWrapperBlockType
   | ContactsBlockType
-  | HeroBlockType;
+  | HeroBlockType
+  | DynamicListBlockType;
 
 export type NodeTypes = DefaultNodeTypes | SerializedBlockNode<BaseBlockTypes>;
 type BlockTypes = BaseBlockTypes;
@@ -64,6 +66,8 @@ export const BlockRenderer = ({ nodes, blocks }: Props) => {
         return <SmallFeaturedPostsBlock key={block.id} block={block} />;
       case "hero":
         return <Hero key={block.id} block={block} />;
+      case "dynamicList":
+        return <DynamicListBlock key={block.id} block={block} />;
       default:
         return null;
     }

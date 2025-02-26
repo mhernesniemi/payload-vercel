@@ -531,6 +531,7 @@ export interface FrontPage {
     | VideoEmbedBlock
     | MediaBlock
     | QuoteBlock
+    | DynamicListBlock
   )[];
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -746,6 +747,19 @@ export interface QuoteBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicListBlock".
+ */
+export interface DynamicListBlock {
+  collections: ('articles' | 'news' | 'collection-pages' | 'contacts')[];
+  sortBy: 'createdAt' | 'updatedAt' | 'publishedDate';
+  sortOrder: 'asc' | 'desc';
+  limit: number;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'dynamicList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-menu".
  */
 export interface MainMenu {
@@ -922,6 +936,7 @@ export interface FrontPageSelect<T extends boolean = true> {
         videoEmbed?: T | VideoEmbedBlockSelect<T>;
         media?: T | MediaBlockSelect<T>;
         quote?: T | QuoteBlockSelect<T>;
+        dynamicList?: T | DynamicListBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1069,6 +1084,18 @@ export interface QuoteBlockSelect<T extends boolean = true> {
   author?: T;
   title?: T;
   image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DynamicListBlock_select".
+ */
+export interface DynamicListBlockSelect<T extends boolean = true> {
+  collections?: T;
+  sortBy?: T;
+  sortOrder?: T;
+  limit?: T;
   id?: T;
   blockName?: T;
 }
