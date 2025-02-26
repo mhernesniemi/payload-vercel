@@ -1,50 +1,26 @@
 import { DynamicListBlock as DynamicListBlockType } from "@/payload-types";
-import Heading from "./Heading";
-import Card, { CardProps } from "./Card";
-import { Fragment } from "react";
 import { Media } from "@/payload-types";
+import Heading from "./Heading";
+import Card from "./Card";
+import { Fragment } from "react";
 
 type Props = {
   block: DynamicListBlockType;
 };
 
-type ItemType = {
+type ImageItemType = {
   id?: string | number;
-  title?: string;
-  name?: string;
-  slug?: string;
-  url?: string;
-  heroImage?: Media;
-  image?: Media;
+  heroImage?: number | Media | null;
+  image?: number | Media | null;
 };
 
-// Differentiate between different fields for different collection types
-const getItemData = (item: ItemType): CardProps => {
-  const data: CardProps = {
-    title: "",
-    href: "",
-    image: undefined,
-  };
-
+const getImageData = (item: ImageItemType): Media | undefined => {
   if ("heroImage" in item) {
-    data.image = item.heroImage;
+    return typeof item.heroImage === "object" ? item.heroImage || undefined : undefined;
   } else if ("image" in item) {
-    data.image = item.image;
+    return typeof item.image === "object" ? item.image || undefined : undefined;
   }
-
-  if ("title" in item) {
-    data.title = item.title || "";
-  } else if ("name" in item) {
-    data.title = item.name || "";
-  }
-
-  if ("slug" in item) {
-    data.href = item.slug || "";
-  } else if ("url" in item) {
-    data.href = item.url || "";
-  }
-
-  return data;
+  return undefined;
 };
 
 export default function DynamicListBlock({ block }: Props) {
@@ -63,7 +39,7 @@ export default function DynamicListBlock({ block }: Props) {
           if (!item || typeof item === "number") return null;
           return (
             <Fragment key={item.id}>
-              <Card {...getItemData(item as ItemType)} />
+              <Card title={item.title} href={item.slug} image={getImageData(item)} />
             </Fragment>
           );
         })}

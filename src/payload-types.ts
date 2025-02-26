@@ -770,10 +770,6 @@ export interface DynamicListBlock {
           | {
               relationTo: 'collection-pages';
               value: number | CollectionPage;
-            }
-          | {
-              relationTo: 'contacts';
-              value: number | Contact;
             };
         id?: string | null;
       }[]
