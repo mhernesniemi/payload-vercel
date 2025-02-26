@@ -57,6 +57,7 @@ export const dynamicListBlock: Block = {
       type: "array",
       admin: {
         readOnly: true,
+        hidden: true,
       },
       hooks: {
         afterRead: [
@@ -75,6 +76,7 @@ export const dynamicListBlock: Block = {
               config,
             });
 
+            // Get all the results from the collections
             const results = await Promise.all(
               (siblingData.collections as CollectionType[]).map(async (collection) => {
                 const response = await payload.find({
@@ -89,10 +91,34 @@ export const dynamicListBlock: Block = {
                     relationTo: collection,
                     value: doc.id,
                   },
+                  sortValue: doc[siblingData.sortBy as keyof typeof doc],
                 }));
               }),
             );
-            return results.flat();
+
+            const flattenedResults = results.flat();
+
+            // Sort combined results
+            const sortedResults = flattenedResults.sort((a, b) => {
+              if (siblingData.sortOrder === "desc") {
+                return (
+                  new Date(b.sortValue as string).getTime() -
+                  new Date(a.sortValue as string).getTime()
+                );
+              }
+              return (
+                new Date(a.sortValue as string).getTime() -
+                new Date(b.sortValue as string).getTime()
+              );
+            });
+
+            // Apply final limit
+            const limitedResults = sortedResults.slice(0, siblingData.limit);
+
+            // Return only the reference objects
+            return limitedResults.map((item) => ({
+              reference: item.reference,
+            }));
           },
         ],
       },
