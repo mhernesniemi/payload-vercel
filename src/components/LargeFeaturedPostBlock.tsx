@@ -1,7 +1,8 @@
 import { LargeFeaturedPostBlock as LargeFeaturedPostBlockType } from "@/payload-types";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
 import { parseLink } from "@/lib/parseLink";
+import Button from "./Button";
+
 type Props = {
   block: LargeFeaturedPostBlockType;
 };
@@ -26,12 +27,11 @@ export function LargeFeaturedPostBlock({ block }: Props) {
           <h2 className="mb-4 text-3xl font-bold text-stone-100">{block.title}</h2>
           <p className="text-lg leading-relaxed text-stone-300">{block.text}</p>
           {linkUrl && (
-            <Link
-              href={linkUrl}
-              className="mt-6 inline-block rounded-lg bg-stone-800 px-6 py-3 text-stone-100 ring-1 ring-stone-700 transition-colors hover:bg-stone-700"
-            >
-              {linkLabel || "Read more"}
-            </Link>
+            <div className="mt-6 flex justify-center">
+              <Button href={linkUrl} style="secondary">
+                {linkLabel || "Read more"}
+              </Button>
+            </div>
           )}
         </div>
       </div>

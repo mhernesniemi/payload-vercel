@@ -34,7 +34,7 @@ export default function Button({
   const styleVariants = {
     primary: "bg-stone-700 hover:bg-stone-600 active:bg-stone-700 text-white",
     secondary:
-      "text-stone-100 outline outline-2 outline-offset-[-2px] outline-stone-600 hover:bg-stone-800 active:bg-stone-900",
+      "text-stone-100 outline outline-2 outline-offset-[-2px] outline-stone-600 hover:bg-stone-900 active:bg-stone-950",
     text: "text-slate-300 hover:text-slate-200 active:text-slate-300",
     disabled: "cursor-not-allowed bg-gray-500 text-white",
   };

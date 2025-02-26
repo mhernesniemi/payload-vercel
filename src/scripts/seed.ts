@@ -284,6 +284,85 @@ export const seed = async ({
             externalUrl: "#",
           },
         },
+        {
+          blockType: "smallFeaturedPostsWrapper",
+          posts: [
+            {
+              title: "Technology Trends",
+              text: "Discover the latest technology trends",
+              image: mediaItems[2].id,
+              link: {
+                internalUrl: {
+                  relationTo: "articles",
+                  value: 1,
+                },
+              },
+            },
+            {
+              title: "Business Insights",
+              text: "Expert analysis on business developments",
+              image: mediaItems[3].id,
+              link: {
+                internalUrl: {
+                  relationTo: "articles",
+                  value: 2,
+                },
+              },
+            },
+            {
+              title: "Science News",
+              text: "Breaking discoveries in science",
+              image: mediaItems[4].id,
+              link: {
+                internalUrl: {
+                  relationTo: "articles",
+                  value: 3,
+                },
+              },
+            },
+          ],
+        },
+        {
+          blockType: "media",
+          media: mediaItems[5].id,
+          caption:
+            "We are dedicated to bringing you the most relevant and engaging content across various fields including technology, business, and science.",
+        },
+        {
+          blockType: "quote",
+          quote: "Our mission is to deliver high-quality content that matters",
+          author: "Editorial Team",
+        },
+        {
+          blockType: "videoEmbed",
+          title: "Stay Connected",
+          youtubeId: "dQw4w9WgXcQ",
+          description:
+            "Follow us on social media and subscribe to our newsletter to stay updated with the latest content.",
+        },
+        {
+          blockType: "linkList",
+          links: [
+            {
+              internalUrl: {
+                relationTo: "articles",
+                value: 1,
+              },
+            },
+            {
+              isExternal: true,
+              externalUrl: "/news",
+            },
+            {
+              isExternal: true,
+              externalUrl: "/contact",
+            },
+          ],
+        },
+        {
+          blockType: "contacts",
+          contacts: [mediaItems[7].id, mediaItems[8].id, mediaItems[9].id],
+        },
       ],
     },
   });
