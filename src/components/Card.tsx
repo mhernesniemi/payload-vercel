@@ -3,7 +3,7 @@ import { Link } from "@/i18n/routing";
 import Heading from "./Heading";
 import { Media } from "@/payload-types";
 
-type CardProps = {
+export type CardProps = {
   image?: Media;
   title: string | null | undefined;
   text?: string | null;
