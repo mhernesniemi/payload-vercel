@@ -72,7 +72,7 @@ src/
 ├── collections/      # Payload CMS collections
 ├── components/       # React components
 ├── fields/          # Custom Payload CMS fields
-├── globals/         # Payload CMS global configs
+├── globals/         # Payload CMS single use collections
 ├── i18n/            # Internationalization configs
 ├── lib/             # Utility functions and shared code
 ├── messages/        # Translation messages
