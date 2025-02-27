@@ -1,7 +1,7 @@
 import { LargeFeaturedPostBlock as LargeFeaturedPostBlockType } from "@/payload-types";
 import Image from "next/image";
 import { parseLink } from "@/lib/parseLink";
-import Button from "./Button";
+import Button from "../Button";
 
 type Props = {
   block: LargeFeaturedPostBlockType;

@@ -1,6 +1,6 @@
 import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType } from "@/payload-types";
-import Heading from "./Heading";
-import Card from "./Card";
+import Heading from "../Heading";
+import Card from "../Card";
 import { parseLink } from "@/lib/parseLink";
 import { Fragment } from "react";
 

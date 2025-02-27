@@ -1,5 +1,5 @@
 import { CTABlock as CTABlockType } from "@/payload-types";
-import Heading from "./Heading";
+import Heading from "../Heading";
 type Props = {
   block: CTABlockType;
 };

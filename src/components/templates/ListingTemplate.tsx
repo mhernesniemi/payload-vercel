@@ -3,8 +3,8 @@ import Header from "../Header";
 import Heading from "../Heading";
 import { Article } from "../../payload-types";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { formatDateLong } from "@/lib/utils";
+import { Link } from "@/i18n/routing";
 
 interface ListingTemplateProps {
   articles: Article[];

@@ -1,7 +1,7 @@
 import { DynamicListBlock as DynamicListBlockType } from "@/payload-types";
 import { Media } from "@/payload-types";
-import Heading from "./Heading";
-import Card from "./Card";
+import Heading from "../Heading";
+import Card from "../Card";
 import { Fragment } from "react";
 
 type Props = {
