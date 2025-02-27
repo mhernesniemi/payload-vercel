@@ -30,6 +30,7 @@ export default async function ArticlesPage({
     draft: false,
     limit: perPage,
     page: currentPage,
+    depth: 0,
   });
 
   return (

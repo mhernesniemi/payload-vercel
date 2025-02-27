@@ -4,6 +4,7 @@ import Heading from "../Heading";
 import { Article } from "../../payload-types";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { formatDateLong } from "@/lib/utils";
 
 interface ListingTemplateProps {
   articles: Article[];
@@ -45,11 +46,7 @@ export function ListingTemplate({
               </h2>
               {article.publishedDate && (
                 <p className="mt-2 text-sm text-stone-400">
-                  {new Date(article.publishedDate).toLocaleDateString(locale, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {formatDateLong(article.publishedDate, locale)}
                 </p>
               )}
             </Link>
