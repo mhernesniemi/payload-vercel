@@ -22,38 +22,30 @@ This is a starter template for building web applications with Payload CMS and SQ
 
 ## 🛠️ Installation
 
-1. Clone the repository:
-
-```bash
-git clone [repository-url]
-```
+1. Clone the repository
 
 2. Install dependencies:
 
 ```bash
-npm install
-# or
-yarn install
+pnpm i
 ```
 
 3. Start the development environment:
 
 ```bash
-npm run dev
-# or
-yarn dev
+pnpm dev
 ```
 
 ## 📜 Available Scripts
 
-- `npm run dev` - Start development server with Turbopack
-- `npm run devsafe` - Start development server with clean .next directory
-- `npm run build` - Build the application
-- `npm run start` - Start production server
-- `npm run generate:types` - Generate Payload CMS types
-- `npm run generate:importmap` - Generate import map
-- `npm run reindex` - Reindex data to Elasticsearch
-- `npm run seed` - Run database seeding script
+- `pnpm dev` - Start development server with Turbopack
+- `pnpm devsafe` - Start development server with clean .next directory
+- `pnpm build` - Build the application
+- `pnpm start` - Start production server
+- `pnpm generate:types` - Generate Payload CMS types
+- `pnpm generate:importmap` - Generate import map
+- `pnpm reindex` - Reindex data to Elasticsearch
+- `pnpm seed` - Run database seeding script
 
 ## 🔐 Environment Variables
 
