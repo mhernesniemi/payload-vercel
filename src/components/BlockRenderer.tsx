@@ -12,17 +12,17 @@ import type {
   HeroBlock as HeroBlockType,
   DynamicListBlock as DynamicListBlockType,
 } from "@/payload-types";
-import { CTABlock } from "./CTABlock";
-import { MediaBlock } from "./MediaBlock";
-import { QuoteBlock } from "./QuoteBlock";
-import { VideoEmbedBlock } from "./VideoEmbedBlock";
-import { ContactsBlock } from "./ContactsBlock";
-import { LinkListBlock } from "./LinkListBlock";
-import { LargeFeaturedPostBlock } from "./LargeFeaturedPostBlock";
-import SmallFeaturedPostsBlock from "./SmallFeaturedPostsBlock";
+import { CTABlock } from "./blocks/CTABlock";
+import { MediaBlock } from "./blocks/MediaBlock";
+import { QuoteBlock } from "./blocks/QuoteBlock";
+import { VideoEmbedBlock } from "./blocks/VideoEmbedBlock";
+import { ContactsBlock } from "./blocks/ContactsBlock";
+import { LinkListBlock } from "./blocks/LinkListBlock";
+import { LargeFeaturedPostBlock } from "./blocks/LargeFeaturedPostBlock";
+import SmallFeaturedPostsBlock from "./blocks/SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
 import { Hero } from "./Hero";
-import DynamicListBlock from "./DynamicListBlock";
+import DynamicListBlock from "./blocks/DynamicListBlock";
 type BaseBlockTypes =
   | CTABlockType
   | MediaBlockType

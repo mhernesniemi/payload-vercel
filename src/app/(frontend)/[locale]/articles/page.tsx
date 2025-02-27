@@ -9,10 +9,11 @@ export default async function ArticlesPage({
   searchParams,
 }: {
   params: Params;
-  searchParams: { page?: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { locale } = await params;
-  const currentPage = Number(searchParams.page) || 1;
+  const searchParamsResolved = await searchParams;
+  const currentPage = Number(searchParamsResolved.page) || 1;
   const perPage = 40;
 
   const payload = await getPayload({
