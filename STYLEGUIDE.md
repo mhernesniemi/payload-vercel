@@ -101,10 +101,6 @@ This document outlines the coding standards and naming conventions for the proje
      }
      ```
 
-5. Helper functions
-
-   - Component internal helper functions
-
 ### Component Structure Example
 
 ```typescript
