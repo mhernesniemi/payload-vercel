@@ -3,7 +3,7 @@ import Heading from "./Heading";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { FacebookIcon, InstagramIcon, LinkedInIcon, YoutubeIcon } from "./Icons";
-import { parseLink } from "@/lib/parseLink";
+import { parseLink } from "@/lib/parse-link";
 import { getTranslations } from "next-intl/server";
 
 export async function Footer() {

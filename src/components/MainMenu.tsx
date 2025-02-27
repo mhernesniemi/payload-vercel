@@ -3,7 +3,7 @@
 import { Popover, PopoverPanel, PopoverButton, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-import { parseMenuLinks } from "../lib/parseLink";
+import { parseMenuLinks } from "../lib/parse-link";
 import { MenuItem } from "../types/menu";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import SidePanelMenu from "./SidePanelMenu";

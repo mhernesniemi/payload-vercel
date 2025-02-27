@@ -4,7 +4,7 @@ import { ChevronRightIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import SidePanel from "./SidePanel";
-import { parseLink } from "@/lib/parseLink";
+import { parseLink } from "@/lib/parse-link";
 import { MenuItem as MainMenuItem } from "@/types/menu";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";

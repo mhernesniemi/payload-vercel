@@ -7,17 +7,17 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 
-import { Users } from "./collections/users";
-import { Media } from "./collections/media";
 import { FrontPage } from "./globals/FrontPage";
-import { Articles } from "./collections/articles";
 import { MainMenu } from "./globals/MainMenu";
 import { CollectionPage } from "./collections/collection-page";
+import { FooterMenu } from "./globals/FooterMenu";
+import { Footer } from "./globals/Footer";
+import { Users } from "./collections/users";
+import { Media } from "./collections/media";
+import { Articles } from "./collections/articles";
 import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
 import { Contacts } from "./collections/contacts";
-import { FooterMenu } from "./globals/FooterMenu";
-import { Footer } from "./globals/Footer";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 

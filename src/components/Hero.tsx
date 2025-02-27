@@ -3,7 +3,7 @@ import Image from "next/image";
 import { HeroBlock as HeroBlockType } from "@/payload-types";
 import Button from "@/components/Button";
 import Heading from "./Heading";
-import { parseLink } from "@/lib/parseLink";
+import { parseLink } from "@/lib/parse-link";
 
 type HeroProps = {
   block: HeroBlockType;

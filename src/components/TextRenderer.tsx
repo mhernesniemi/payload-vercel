@@ -7,7 +7,7 @@ import {
   IS_CODE,
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
-} from "@/lib/nodeFormat";
+} from "@/lib/node-format";
 import { SerializedTextNode } from "@payloadcms/richtext-lexical";
 import type {
   SerializedElementNode,
