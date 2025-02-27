@@ -16,7 +16,7 @@ This is a starter template for building web applications with Payload CMS and SQ
   - Motion for animations
   - Sonner for notifications
 - **Internationalization**: next-intl
-- **Authentication**: NextAuth.js
+- **SSO Authentication**: NextAuth.js
 - **SEO**: Payload CMS SEO plugin
 - **Rich Text Editor**: Payload CMS Lexical editor
 
