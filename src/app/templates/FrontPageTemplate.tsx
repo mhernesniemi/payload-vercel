@@ -1,5 +1,3 @@
-"use client";
-
 import { FrontPage } from "@/payload-types";
 import { BlockRenderer } from "@/components/BlockRenderer";
 type FrontPageTemplateProps = {

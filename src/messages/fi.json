@@ -6,6 +6,12 @@
     "noArticles": "Ei artikkeleita",
     "backToArticles": "Takaisin artikkeleihin"
   },
+  "listing": {
+    "pagination": "Sivutus",
+    "previousPage": "Edellinen sivu",
+    "nextPage": "Seuraava sivu",
+    "totalDocs": "Yhteensä"
+  },
   "blocks": {
     "linkList": {
       "title": "Linkit"
