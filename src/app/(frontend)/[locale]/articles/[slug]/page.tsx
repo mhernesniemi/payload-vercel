@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { SITE_NAME } from "@/lib/constants";
 import Container from "@/components/Container";
-import ArticleTemplate from "@/app/templates/ArticleTemplate";
 import Header from "@/components/Header";
+import ArticleTemplate from "@/components/templates/ArticleTemplate";
 
 type Props = {
   params: Promise<{ locale: "fi" | "en"; slug: string }>;

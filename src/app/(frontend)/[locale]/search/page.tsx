@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import SearchTemplate from "@/app/templates/SearchTemplate";
+import SearchTemplate from "@/components/templates/SearchTemplate";
 
 type Params = Promise<{ locale: "fi" | "en" }>;
 

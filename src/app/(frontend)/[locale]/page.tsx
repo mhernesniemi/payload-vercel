@@ -1,6 +1,6 @@
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
-import FrontPageTemplate from "@/app/templates/FrontPageTemplate";
+import FrontPageTemplate from "@/components/templates/FrontPageTemplate";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 
