@@ -83,6 +83,10 @@ src/
 └── payload.config.ts # Payload CMS configuration
 ```
 
+## 📚 Style Guide
+
+For detailed coding standards and naming conventions, please refer to our [Style Guide](./STYLEGUIDE.md).
+
 ## 👩‍💻 Development
 
 The project uses several development tools:
