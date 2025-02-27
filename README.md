@@ -1,4 +1,4 @@
-# 🚀 Payload CMS Starter Template
+# Payload CMS Starter Template
 
 This is a starter template for building web applications with Payload CMS and SQLite database, powered by Next.js 15 and React 19.
 
