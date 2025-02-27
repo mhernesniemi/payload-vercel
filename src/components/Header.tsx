@@ -30,7 +30,7 @@ export default async function Header() {
           {SITE_NAME}
         </Link>
       </div>
-      <header className="sticky top-0 z-40 bg-stone-900">
+      <header className="sticky top-0 z-40 bg-stone-900/80 backdrop-blur-md">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 xl:px-0">
           <div className="xl:hidden">
             <MobileMenu items={mainMenu.items as MenuItem[]} />

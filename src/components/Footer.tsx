@@ -24,7 +24,7 @@ export async function Footer() {
   const t = await getTranslations();
 
   return (
-    <footer className="mt-[150px] bg-stone-800 py-16">
+    <footer className="bg-stone-800 py-16">
       <Container>
         <div className="grid grid-cols-1 gap-12 xl:grid-cols-6 xl:gap-24">
           {/* Company Info */}

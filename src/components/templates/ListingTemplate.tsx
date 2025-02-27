@@ -38,9 +38,10 @@ export function ListingTemplate({
         {articles.map((article) => (
           <div
             key={article.id}
-            className="group rounded-lg bg-stone-800 p-6 transition-all hover:ring-1 hover:ring-amber-500"
+            className="group relative rounded-lg bg-stone-800 p-6 transition-all hover:ring-1 hover:ring-amber-500"
           >
             <Link href={`/articles/${article.slug}`} className="block">
+              <span className="absolute inset-x-0 inset-y-0 z-10"></span>
               <h2 className="text-xl font-semibold text-stone-100 group-hover:text-amber-500">
                 {article.title}
               </h2>

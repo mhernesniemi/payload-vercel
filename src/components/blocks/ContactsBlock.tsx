@@ -30,43 +30,34 @@ export function ContactsBlock({ block }: Props) {
                     />
                   </div>
                 )}
-                <Heading level="h3" size="sm" className="mb-3 text-stone-400">
+                <Heading level="h3" size="sm" className="mb-1 text-stone-400">
                   {contact.name}
                 </Heading>
                 {contact.title && (
                   <p className="mb-3 text-sm font-medium text-stone-400">{contact.title}</p>
                 )}
-                <div className="space-y-2">
+                <div className="mt-4 space-y-2">
                   <p className="flex items-center text-stone-300">
                     <EnvelopeIcon className="mr-2 h-4 w-4" />
-                    <a href={`mailto:${contact.email}`} className="text-stone-300">
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="text-sm text-stone-300 hover:text-amber-500"
+                    >
                       {contact.email}
                     </a>
                   </p>
                   {contact.phone && (
                     <p className="flex items-center text-stone-300">
                       <PhoneIcon className="mr-2 h-4 w-4" />
-                      <a href={`tel:${contact.phone}`} className="text-stone-300">
+                      <a
+                        href={`tel:${contact.phone}`}
+                        className="text-sm text-stone-300 hover:text-amber-500"
+                      >
                         {contact.phone}
                       </a>
                     </p>
                   )}
                 </div>
-                {contact.categories && contact.categories.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {contact.categories.map(
-                      (category) =>
-                        typeof category === "object" && (
-                          <span
-                            key={category.id}
-                            className="rounded-full bg-stone-800 px-3 py-1 text-xs font-medium text-stone-300"
-                          >
-                            {category.label}
-                          </span>
-                        ),
-                    )}
-                  </div>
-                )}
               </div>
             ),
         )}
