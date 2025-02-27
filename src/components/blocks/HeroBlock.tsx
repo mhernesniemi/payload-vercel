@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { HeroBlock as HeroBlockType } from "@/payload-types";
 import Button from "@/components/Button";
-import Heading from "./Heading";
+import Heading from "../Heading";
 import { parseLink } from "@/lib/parse-link";
 
 type HeroProps = {
   block: HeroBlockType;
 };
 
-export function Hero({ block }: HeroProps) {
+export function HeroBlock({ block }: HeroProps) {
   const { title, description, image, link } = block;
 
   const { linkUrl, linkLabel } = parseLink(link);

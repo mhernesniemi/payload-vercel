@@ -21,7 +21,7 @@ import { LinkListBlock } from "./blocks/LinkListBlock";
 import { LargeFeaturedPostBlock } from "./blocks/LargeFeaturedPostBlock";
 import SmallFeaturedPostsBlock from "./blocks/SmallFeaturedPostsBlock";
 import { TextRenderer } from "./TextRenderer";
-import { Hero } from "./Hero";
+import { HeroBlock } from "./blocks/HeroBlock";
 import DynamicListBlock from "./blocks/DynamicListBlock";
 type BaseBlockTypes =
   | CTABlockType
@@ -65,7 +65,7 @@ export const BlockRenderer = ({ nodes, blocks }: Props) => {
       case "smallFeaturedPostsWrapper":
         return <SmallFeaturedPostsBlock key={block.id} block={block} />;
       case "hero":
-        return <Hero key={block.id} block={block} />;
+        return <HeroBlock key={block.id} block={block} />;
       case "dynamicList":
         return <DynamicListBlock key={block.id} block={block} />;
       default:
