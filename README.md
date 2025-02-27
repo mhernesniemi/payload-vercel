@@ -1,6 +1,6 @@
 # Payload CMS Starter Template
 
-This is a demo project showcasing how to use Payload CMS with SQLite database, built with Next.js 15 and React 19.
+This is a starter template for building web applications with Payload CMS and SQLite database, powered by Next.js 15 and React 19.
 
 ## ✨ Features
 
