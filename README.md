@@ -1,4 +1,4 @@
-# Payload CMS Starter Template
+# 🚀 Payload CMS Starter Template
 
 This is a starter template for building web applications with Payload CMS and SQLite database, powered by Next.js 15 and React 19.
 
@@ -24,13 +24,25 @@ This is a starter template for building web applications with Payload CMS and SQ
 
 1. Clone the repository
 
-2. Install dependencies:
+2. Start Elasticsearch container:
+
+```bash
+docker compose up -d elasticsearch
+```
+
+This will start Elasticsearch on port 9200. You can verify it's running with:
+
+```bash
+curl http://localhost:9200
+```
+
+3. Install dependencies:
 
 ```bash
 pnpm i
 ```
 
-3. Start the development environment:
+4. Start the development environment:
 
 ```bash
 pnpm dev
@@ -80,3 +92,21 @@ The project uses several development tools:
 - Prettier for code formatting
 - Husky for Git hooks
 - lint-staged for pre-commit checks
+
+## 🐳 Docker Services
+
+### Elasticsearch
+
+- Version: 7.17.18
+- Port: 9200
+- Memory: 512MB (min) - 512MB (max)
+- Security: Disabled for development
+- Data persistence: Volume mounted at `/usr/share/elasticsearch/data`
+
+## 📄 License
+
+MIT
+
+## 💬 Support
+
+If you encounter any problems or have questions, please open an issue in this repository.
