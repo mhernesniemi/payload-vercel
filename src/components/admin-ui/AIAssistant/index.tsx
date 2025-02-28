@@ -29,8 +29,6 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
   const [originalText, setOriginalText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  console.log("originalText", originalText);
-
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -50,7 +48,6 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");
         setValue(cleanedResponse);
-        console.log("AI Response:", cleanedResponse);
       }
     } catch (error) {
       console.error("Error generating content:", error);
