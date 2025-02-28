@@ -36,13 +36,15 @@ This will start Elasticsearch on port 9200. You can verify it's running with:
 curl http://localhost:9200
 ```
 
-3. Install dependencies:
+3. Copy the `.env.example` file as `.env` and fill in the required variables.
+
+4. Install dependencies:
 
 ```bash
 pnpm i
 ```
 
-4. Start the development environment:
+5. Start the development environment:
 
 ```bash
 pnpm dev
@@ -58,10 +60,6 @@ pnpm dev
 - `pnpm generate:importmap` - Generate import map
 - `pnpm reindex` - Reindex data to Elasticsearch
 - `pnpm seed` - Run database seeding script
-
-## 🔐 Environment Variables
-
-Copy the `.env.example` file as `.env` and fill in the required variables.
 
 ## 📁 Project Structure
 
