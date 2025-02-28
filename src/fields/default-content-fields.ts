@@ -20,11 +20,16 @@ export const defaultContentFields: Field[] = [
     localized: true,
   },
   {
-    name: "testComponentField",
+    name: "titleAIAssistant",
     type: "ui",
     admin: {
       components: {
-        Field: "@/components/admin-ui/AIAssistant",
+        Field: {
+          path: "@/components/admin-ui/AIAssistant",
+          clientProps: {
+            appliedTo: "title",
+          },
+        },
       },
     },
   },
@@ -32,6 +37,20 @@ export const defaultContentFields: Field[] = [
     name: "description",
     type: "textarea",
     localized: true,
+  },
+  {
+    name: "descriptionAIAssistant",
+    type: "ui",
+    admin: {
+      components: {
+        Field: {
+          path: "@/components/admin-ui/AIAssistant",
+          clientProps: {
+            appliedTo: "description",
+          },
+        },
+      },
+    },
   },
   {
     name: "image",

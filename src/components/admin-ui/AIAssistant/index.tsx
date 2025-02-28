@@ -9,8 +9,12 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-const Field: React.FC = () => {
-  const { value, setValue } = useField<string>({ path: "title" });
+interface FieldProps {
+  appliedTo: string;
+}
+
+const Field: React.FC<FieldProps> = ({ appliedTo }) => {
+  const { value, setValue } = useField<string>({ path: appliedTo });
   const [prompt, setPrompt] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
