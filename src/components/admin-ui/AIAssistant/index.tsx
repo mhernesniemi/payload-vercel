@@ -41,7 +41,7 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
         messages: [
           {
             role: "user",
-            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${value}". Use the same language as in data sources, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system. If the text in "prompt" refers to "title" or "description", use the values of "title" and "description" in the response.`,
+            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${value}". Use the same language as in data sources, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system.`,
           },
         ],
       });
