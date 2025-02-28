@@ -36,7 +36,7 @@ This will start Elasticsearch on port 9200. You can verify it's running with:
 curl http://localhost:9200
 ```
 
-3. Copy the `.env.example` file as `.env` and fill in the required variables.
+3. Copy the `.env.example` file as `.env` and fill in the required variables
 
 4. Install dependencies:
 
@@ -49,6 +49,8 @@ pnpm i
 ```bash
 pnpm dev
 ```
+
+6. Open the admin UI at http://localhost:3000/admin or the website at http://localhost:3000
 
 ## 📜 Available Scripts
 

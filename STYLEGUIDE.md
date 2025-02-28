@@ -91,10 +91,17 @@ This document outlines the coding standards and naming conventions for the proje
    - Use named function with export default syntax
    - Destructure props parameters
    - Check required props values at the beginning of the component
+   - For helper functions, prefer using const with arrow function syntax
    - Example:
+
      ```typescript
      export default function Component({ title, isOptional }: ComponentProps) {
        if (!title) return null;
+
+       const helperFunction = () => {
+         // helper function logic
+       };
+
        return (
          // JSX
        );
