@@ -1,6 +1,7 @@
 import { Field } from "payload";
 import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { BlocksFeature } from "@payloadcms/richtext-lexical";
+import { TestFeature } from "@/features/lexical/test-feature";
 import {
   mediaBlock,
   largeFeaturedPostBlock,
@@ -69,6 +70,7 @@ export const defaultContentFields: Field[] = [
           HeadingFeature({
             enabledHeadingSizes: ["h2", "h3"],
           }),
+          TestFeature(),
           BlocksFeature({
             blocks: [
               mediaBlock,

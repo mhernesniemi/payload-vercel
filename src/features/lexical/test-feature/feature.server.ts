@@ -7,7 +7,7 @@ export const TestFeature = createServerFeature({
         label: "Test Feature",
       },
     },
-    ClientFeature: "./feature.client#TestClientFeature",
+    ClientFeature: "@/features/lexical/test-feature/feature.client#TestClientFeature",
   },
   key: "testFeature",
 });
