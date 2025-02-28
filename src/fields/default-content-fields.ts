@@ -20,6 +20,15 @@ export const defaultContentFields: Field[] = [
     localized: true,
   },
   {
+    name: "testComponentField",
+    type: "ui",
+    admin: {
+      components: {
+        Field: "@/components/TestComponent",
+      },
+    },
+  },
+  {
     name: "description",
     type: "textarea",
     localized: true,

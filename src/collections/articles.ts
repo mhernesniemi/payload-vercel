@@ -15,15 +15,6 @@ export const Articles: CollectionConfig = {
     },
   },
   fields: [
-    {
-      name: "testComponentField",
-      type: "ui",
-      admin: {
-        components: {
-          Field: "@/components/TestComponent",
-        },
-      },
-    },
     ...defaultContentFields,
     {
       name: "author",

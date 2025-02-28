@@ -13,6 +13,7 @@ const Field: React.FC = () => {
   const [aiResponse, setAiResponse] = useState("");
   const { value, setValue } = useField<string>({ path: "title" });
   const [prompt, setPrompt] = useState("");
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,28 +44,45 @@ const Field: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <div style={{ marginBottom: "20px" }}>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Syötä AI-promptisi tähän..."
-          style={{ width: "100%", minHeight: "100px" }}
-        />
-      </div>
+    <div className="ai-container">
       <button
-        onClick={handleGenerateContent}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
+        onClick={(e) => {
+          e.preventDefault();
+          setIsFormVisible(!isFormVisible);
         }}
+        className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+        style={{ marginBottom: "0", marginTop: "0" }}
       >
-        Generoi sisältöä
+        AI assistant
+        {isFormVisible && <span style={{ marginLeft: "8px" }}>✕</span>}
       </button>
+
+      {isFormVisible && (
+        <>
+          <div className="field-type textarea" style={{ padding: "0 20px" }}>
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Write your prompt here..."
+              style={{
+                width: "100%",
+                minHeight: "50px",
+                padding: "10px",
+                marginTop: "20px",
+              }}
+            />
+            <div>
+              <button
+                onClick={handleGenerateContent}
+                className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
+                style={{ marginTop: "12px", marginBottom: "10px" }}
+              >
+                Generate content
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       {aiResponse && (
         <div style={{ marginTop: "20px" }}>
           <h3>AI:n vastaus:</h3>

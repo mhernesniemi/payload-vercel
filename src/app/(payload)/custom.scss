@@ -77,3 +77,13 @@ tr td:nth-child(2) {
 .section-title {
   width: 50%;
 }
+
+// AI assistant
+
+.field-type:has(+ .ai-container) {
+  margin-bottom: 10px !important;
+}
+
+.ai-container {
+  margin-bottom: 20px;
+}
