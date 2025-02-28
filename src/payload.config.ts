@@ -18,6 +18,8 @@ import { Articles } from "./collections/articles";
 import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
 import { Contacts } from "./collections/contacts";
+import { TestFeature } from "./features/lexical/test-feature/feature.server";
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -32,7 +34,9 @@ export default buildConfig({
   },
   collections: [Users, Media, Articles, CollectionPage, News, Categories, Contacts],
   globals: [FrontPage, MainMenu, FooterMenu, Footer],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [...defaultFeatures, TestFeature()],
+  }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
