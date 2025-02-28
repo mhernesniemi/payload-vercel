@@ -24,7 +24,7 @@ export const defaultContentFields: Field[] = [
     type: "ui",
     admin: {
       components: {
-        Field: "@/components/TestComponent",
+        Field: "@/components/admin-ui/AIAssistant",
       },
     },
   },
