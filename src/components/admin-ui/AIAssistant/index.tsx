@@ -14,12 +14,22 @@ interface FieldProps {
 }
 
 const Field: React.FC<FieldProps> = ({ appliedTo }) => {
-  const { value, setValue } = useField<string>({ path: appliedTo });
+  const { value: title } = useField<string>({
+    path: "title",
+  });
+  const { value: description } = useField<string>({
+    path: "description",
+  });
+  const { value, setValue } = useField<string>({
+    path: appliedTo,
+  });
   const [prompt, setPrompt] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [originalText, setOriginalText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  console.log("originalText", originalText);
 
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -33,7 +43,7 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
         messages: [
           {
             role: "user",
-            content: `This is the prompt: "${prompt}"\n\n Apply it to the following text, give response so it can be used directly in the text field where it came from: "${value}". If the content is in Finnish, use correct Finnish grammar and punctuation.`,
+            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${value}". Use the same language as the "content" in the response, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system. If the text in "prompt" refers to "title" or "description", use the values of "title" and "description" in the response.`,
           },
         ],
       });
@@ -62,14 +72,30 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
           setIsFormVisible(!isFormVisible);
         }}
         className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
-        style={{ marginBottom: "0", marginTop: "0" }}
+        style={{
+          marginBottom: "0",
+          marginTop: "0",
+        }}
       >
         AI assistant
-        {isFormVisible && <span style={{ marginLeft: "8px" }}>✕</span>}
+        {isFormVisible && (
+          <span
+            style={{
+              marginLeft: "8px",
+            }}
+          >
+            ✕
+          </span>
+        )}
       </button>
 
       {isFormVisible && (
-        <div className="field-type textarea" style={{ padding: "0 20px" }}>
+        <div
+          className="field-type textarea"
+          style={{
+            padding: "0 20px",
+          }}
+        >
           <textarea
             ref={textareaRef}
             value={prompt}
@@ -87,12 +113,15 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
             <button
               onClick={handleGenerateContent}
               className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
-              style={{ marginTop: "12px", marginBottom: "10px" }}
+              style={{
+                marginTop: "12px",
+                marginBottom: "10px",
+              }}
               disabled={isLoading}
             >
               {isLoading ? "Generating..." : "Generate content"}
             </button>
-            {value !== originalText && (
+            {value && value !== originalText && (
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -101,7 +130,11 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
                   textareaRef.current?.focus();
                 }}
                 className="btn btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
-                style={{ marginTop: "12px", marginBottom: "10px", marginLeft: "10px" }}
+                style={{
+                  marginTop: "12px",
+                  marginBottom: "10px",
+                  marginLeft: "10px",
+                }}
               >
                 Restore original
               </button>
