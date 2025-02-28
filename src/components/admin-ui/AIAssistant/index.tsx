@@ -1,13 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
-import OpenAI from "openai";
 import { useField } from "@payloadcms/ui";
-
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+import { generateAdminContent } from "./actions";
 
 interface FieldProps {
   appliedTo: string;
@@ -33,18 +28,8 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        store: true,
-        messages: [
-          {
-            role: "user",
-            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${value}". Use the same language as in data sources, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system.`,
-          },
-        ],
-      });
+      const response = await generateAdminContent(prompt, title || "", description || "", value || "", appliedTo);
 
-      const response = completion.choices[0].message.content;
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");
         setValue(cleanedResponse);

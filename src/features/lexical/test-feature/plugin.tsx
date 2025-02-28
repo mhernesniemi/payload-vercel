@@ -12,12 +12,7 @@ import {
 import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
 import { useEffect, useState, useRef } from "react";
 import type { PluginComponent } from "@payloadcms/richtext-lexical";
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+import { generateContent } from "./actions";
 
 export const INSERT_TEST_COMMAND: LexicalCommand<void> = createCommand("INSERT_TEST_COMMAND");
 
@@ -84,18 +79,9 @@ export const TestPlugin: PluginComponent = () => {
     setIsLoading(true);
 
     try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        store: true,
-        messages: [
-          {
-            role: "user",
-            content: `First we define the data sources and based on that data we generate the response. 1. Prompt: "${prompt}". 2. Surrounding text: "${surroundingText}". 3. Selected text: "${selectedText}". Use the same language as in data sources, use correct grammar and punctuation for the language. Give the response in that form that can be used directly to replace "${selectedText}". Give only one answer. Do not include the old text in the response. The response should work together with the surrounding text: "${surroundingText}".`,
-          },
-        ],
-      });
+      // Käytetään palvelinpuolen toimintoa OpenAI-kutsun sijaan
+      const response = await generateContent(prompt, selectedText, surroundingText);
 
-      const response = completion.choices[0].message.content;
       if (response) {
         // Use editor.update() method to update the text
         editor.update(() => {
