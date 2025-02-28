@@ -10,7 +10,6 @@ const openai = new OpenAI({
 });
 
 const Field: React.FC = () => {
-  const [aiResponse, setAiResponse] = useState("");
   const { value, setValue } = useField<string>({ path: "title" });
   const [prompt, setPrompt] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -26,7 +25,7 @@ const Field: React.FC = () => {
         messages: [
           {
             role: "user",
-            content: `This is the prompt: "${prompt}"\n\n Apply it to the following text, give response so it can be used directly in the text field where it came from: "${value}"`,
+            content: `This is the prompt: "${prompt}"\n\n Apply it to the following text, give response so it can be used directly in the text field where it came from: "${value}". If the content is in Finnish, use correct Finnish grammar and punctuation.`,
           },
         ],
       });
@@ -34,7 +33,6 @@ const Field: React.FC = () => {
       const response = completion.choices[0].message.content;
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");
-        setAiResponse(cleanedResponse);
         setValue(cleanedResponse);
         console.log("AI Response:", cleanedResponse);
       }
@@ -58,35 +56,28 @@ const Field: React.FC = () => {
       </button>
 
       {isFormVisible && (
-        <>
-          <div className="field-type textarea" style={{ padding: "0 20px" }}>
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Write your prompt here..."
-              style={{
-                width: "100%",
-                minHeight: "50px",
-                padding: "10px",
-                marginTop: "20px",
-              }}
-            />
-            <div>
-              <button
-                onClick={handleGenerateContent}
-                className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
-                style={{ marginTop: "12px", marginBottom: "10px" }}
-              >
-                Generate content
-              </button>
-            </div>
+        <div className="field-type textarea" style={{ padding: "0 20px" }}>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Write your prompt here..."
+            style={{
+              width: "100%",
+              minHeight: "50px",
+              padding: "10px",
+              marginTop: "20px",
+            }}
+            autoFocus
+          />
+          <div>
+            <button
+              onClick={handleGenerateContent}
+              className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
+              style={{ marginTop: "12px", marginBottom: "10px" }}
+            >
+              Generate content
+            </button>
           </div>
-        </>
-      )}
-      {aiResponse && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>AI:n vastaus:</h3>
-          <pre style={{ whiteSpace: "pre-wrap" }}>{aiResponse}</pre>
         </div>
       )}
     </div>
