@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import OpenAI from "openai";
 import { useField } from "@payloadcms/ui";
 
@@ -14,6 +14,8 @@ const Field: React.FC = () => {
   const [prompt, setPrompt] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [originalText, setOriginalText] = useState<string>("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -50,6 +52,9 @@ const Field: React.FC = () => {
       <button
         onClick={(e) => {
           e.preventDefault();
+          if (!isFormVisible) {
+            setOriginalText(value || "");
+          }
           setIsFormVisible(!isFormVisible);
         }}
         className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
@@ -62,6 +67,7 @@ const Field: React.FC = () => {
       {isFormVisible && (
         <div className="field-type textarea" style={{ padding: "0 20px" }}>
           <textarea
+            ref={textareaRef}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Write your prompt here..."
@@ -82,6 +88,20 @@ const Field: React.FC = () => {
             >
               {isLoading ? "Generating..." : "Generate content"}
             </button>
+            {value !== originalText && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setValue(originalText);
+                  setPrompt("");
+                  textareaRef.current?.focus();
+                }}
+                className="btn btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
+                style={{ marginTop: "12px", marginBottom: "10px", marginLeft: "10px" }}
+              >
+                Restore original
+              </button>
+            )}
           </div>
         </div>
       )}
