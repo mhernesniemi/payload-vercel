@@ -4,10 +4,10 @@ export const TestFeature = createServerFeature({
   feature: {
     i18n: {
       en: {
-        label: "Test Feature",
+        label: "AI Assistant",
       },
     },
-    ClientFeature: "@/features/lexical/test-feature/feature.client#TestClientFeature",
+    ClientFeature: "src/features/lexical/test-feature/feature.client#TestClientFeature",
   },
   key: "testFeature",
 });
