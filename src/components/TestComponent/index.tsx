@@ -13,11 +13,13 @@ const Field: React.FC = () => {
   const { value, setValue } = useField<string>({ path: "title" });
   const [prompt, setPrompt] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!value) return;
 
+    setIsLoading(true);
     try {
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
@@ -38,6 +40,8 @@ const Field: React.FC = () => {
       }
     } catch (error) {
       console.error("Error generating content:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,8 +78,9 @@ const Field: React.FC = () => {
               onClick={handleGenerateContent}
               className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
               style={{ marginTop: "12px", marginBottom: "10px" }}
+              disabled={isLoading}
             >
-              Generate content
+              {isLoading ? "Generating..." : "Generate content"}
             </button>
           </div>
         </div>
