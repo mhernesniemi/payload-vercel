@@ -27,6 +27,7 @@ export const TestPlugin: PluginComponent = () => {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedText, setSelectedText] = useState("");
+  const [surroundingText, setSurroundingText] = useState("");
   const [selectionInfo, setSelectionInfo] = useState<{
     anchorKey: string;
     anchorOffset: number;
@@ -89,7 +90,7 @@ export const TestPlugin: PluginComponent = () => {
         messages: [
           {
             role: "user",
-            content: `${prompt}\n\nText: "${selectedText}"`,
+            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Surrounding text: "${surroundingText}". 3. Selected text: "${selectedText}". Use the same language as in data sources, use correct grammar and punctuation for the language. Give the response in that form that can be used directly to replace the selected text.`,
           },
         ],
       });
@@ -137,6 +138,21 @@ export const TestPlugin: PluginComponent = () => {
           if ($isRangeSelection(selection)) {
             const text = selection.getTextContent();
             setSelectedText(text);
+
+            // Get surrounding text (paragraph or parent node content)
+            try {
+              const anchorNode = selection.anchor.getNode();
+
+              // Get the parent paragraph or block
+              const parentNode = anchorNode.getParent() || anchorNode;
+              const fullText = parentNode.getTextContent();
+
+              // Set surrounding text (full paragraph)
+              setSurroundingText(fullText);
+            } catch (error) {
+              console.error("Error getting surrounding text:", error);
+              setSurroundingText("");
+            }
 
             // Save the selection so we can restore it later
             const anchor = selection.anchor;

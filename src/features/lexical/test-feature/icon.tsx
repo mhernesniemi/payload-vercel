@@ -3,5 +3,5 @@
 import React from "react";
 
 export const TestIcon: React.FC = () => {
-  return <span>🤖</span>;
+  return <span>🌀</span>;
 };
