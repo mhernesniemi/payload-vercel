@@ -90,7 +90,7 @@ export const TestPlugin: PluginComponent = () => {
         messages: [
           {
             role: "user",
-            content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Surrounding text: "${surroundingText}". 3. Selected text: "${selectedText}". Use the same language as in data sources, use correct grammar and punctuation for the language. Give the response in that form that can be used directly to replace the selected text.`,
+            content: `First we define the data sources and based on that data we generate the response. 1. Prompt: "${prompt}". 2. Surrounding text: "${surroundingText}". 3. Selected text: "${selectedText}". Use the same language as in data sources, use correct grammar and punctuation for the language. Give the response in that form that can be used directly to replace "${selectedText}". Give only one answer. Do not include the old text in the response. The response should work together with the surrounding text: "${surroundingText}".`,
           },
         ],
       });
