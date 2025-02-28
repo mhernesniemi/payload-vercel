@@ -11,10 +11,11 @@ const openai = new OpenAI({
 
 const Field: React.FC = () => {
   const [aiResponse, setAiResponse] = useState("");
-  const { value } = useField<string>({ path: "title" });
+  const { value, setValue } = useField<string>({ path: "title" });
   const [prompt, setPrompt] = useState("");
 
-  const handleGenerateContent = async () => {
+  const handleGenerateContent = async (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!value) return;
 
     try {
@@ -24,15 +25,17 @@ const Field: React.FC = () => {
         messages: [
           {
             role: "user",
-            content: `${prompt}\n\nTitle: ${value}`,
+            content: `This is the prompt: "${prompt}"\n\n Apply it to the following text, give response so it can be used directly in the text field where it came from: "${value}"`,
           },
         ],
       });
 
       const response = completion.choices[0].message.content;
       if (response) {
-        setAiResponse(response);
-        console.log("AI Response:", response);
+        const cleanedResponse = response.replace(/^"|"$/g, "");
+        setAiResponse(cleanedResponse);
+        setValue(cleanedResponse);
+        console.log("AI Response:", cleanedResponse);
       }
     } catch (error) {
       console.error("Error generating content:", error);
