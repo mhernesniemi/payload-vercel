@@ -9,13 +9,13 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-export default function TestComponent() {
+const Field: React.FC = () => {
   const [aiResponse, setAiResponse] = useState("");
-  const { value: title } = useField<string>({ path: "title" });
+  const { value } = useField<string>({ path: "title" });
   const [prompt, setPrompt] = useState("");
 
   const handleGenerateContent = async () => {
-    if (!title) return;
+    if (!value) return;
 
     try {
       const completion = await openai.chat.completions.create({
@@ -24,7 +24,7 @@ export default function TestComponent() {
         messages: [
           {
             role: "user",
-            content: `${prompt}\n\nTitle: ${title}`,
+            content: `${prompt}\n\nTitle: ${value}`,
           },
         ],
       });
@@ -70,4 +70,6 @@ export default function TestComponent() {
       )}
     </div>
   );
-}
+};
+
+export default Field;

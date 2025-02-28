@@ -27,7 +27,7 @@
     "@payloadcms/payload-cloud": "^3.24.0",
     "@payloadcms/plugin-seo": "^3.24.0",
     "@payloadcms/richtext-lexical": "^3.24.0",
-    "@payloadcms/ui": "^3.25.0",
+    "@payloadcms/ui": "^3.24.0",
     "@searchkit/api": "^4.13.0",
     "@searchkit/instantsearch-client": "^4.14.1",
     "cross-env": "^7.0.3",
