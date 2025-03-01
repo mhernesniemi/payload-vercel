@@ -1,7 +1,6 @@
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { Field } from "payload";
 
-// SEO plugin config
 export const seoConfig = seoPlugin({
   collections: ["articles", "news", "collection-page"],
   uploadsCollection: "media",
@@ -24,15 +23,23 @@ export const seoConfig = seoPlugin({
     }
     return "";
   },
+  fields: ({ defaultFields }) => {
+    return [
+      {
+        type: "collapsible",
+        label: "SEO",
+        admin: {
+          initCollapsed: true,
+        },
+        fields: defaultFields,
+      },
+    ];
+  },
 });
 
-// Collapsible SEO field group
 export const seoField: Field = {
   label: "SEO",
   type: "collapsible",
-  admin: {
-    initCollapsed: true,
-  },
   fields: [
     {
       name: "meta",
