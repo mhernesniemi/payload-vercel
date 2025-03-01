@@ -1,8 +1,8 @@
 "use client";
 
 import { createClientFeature } from "@payloadcms/richtext-lexical/client";
-import { INSERT_TEST_COMMAND, TestPlugin } from "./plugin";
-import { TestIcon } from "./icon";
+import { INSERT_AI_ASSISTANT_COMMAND, TestPlugin } from "./plugin";
+import { AIIcon } from "./icon";
 import { $isRangeSelection } from "@payloadcms/richtext-lexical/lexical";
 
 export const AIRichTextClientFeature = createClientFeature({
@@ -13,7 +13,7 @@ export const AIRichTextClientFeature = createClientFeature({
         type: "buttons",
         items: [
           {
-            ChildComponent: TestIcon,
+            ChildComponent: AIIcon,
             key: "aiRichTextFeature",
             label: ({ i18n }) => {
               return i18n.t("lexical:aiRichTextFeature:label");
@@ -22,7 +22,7 @@ export const AIRichTextClientFeature = createClientFeature({
               return $isRangeSelection(selection);
             },
             onSelect: ({ editor }) => {
-              editor.dispatchCommand(INSERT_TEST_COMMAND, undefined);
+              editor.dispatchCommand(INSERT_AI_ASSISTANT_COMMAND, undefined);
             },
           },
         ],
@@ -36,12 +36,12 @@ export const AIRichTextClientFeature = createClientFeature({
         label: "AI Tools",
         items: [
           {
-            Icon: TestIcon,
+            Icon: AIIcon,
             key: "aiAssistant",
             keywords: ["ai", "assistant"],
             label: "AI Assistant",
             onSelect: ({ editor }) => {
-              editor.dispatchCommand(INSERT_TEST_COMMAND, undefined);
+              editor.dispatchCommand(INSERT_AI_ASSISTANT_COMMAND, undefined);
             },
           },
         ],

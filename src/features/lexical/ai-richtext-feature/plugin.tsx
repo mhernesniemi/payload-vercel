@@ -14,7 +14,7 @@ import { useEffect, useState, useRef } from "react";
 import type { PluginComponent } from "@payloadcms/richtext-lexical";
 import { generateAdminContent } from "./actions";
 
-export const INSERT_TEST_COMMAND: LexicalCommand<void> = createCommand("INSERT_TEST_COMMAND");
+export const INSERT_AI_ASSISTANT_COMMAND: LexicalCommand<void> = createCommand("INSERT_AI_ASSISTANT_COMMAND");
 
 export const TestPlugin: PluginComponent = () => {
   const [editor] = useLexicalComposerContext();
@@ -115,7 +115,7 @@ export const TestPlugin: PluginComponent = () => {
 
   useEffect(() => {
     return editor.registerCommand(
-      INSERT_TEST_COMMAND,
+      INSERT_AI_ASSISTANT_COMMAND,
       () => {
         // Save the selected text and its position as soon as the command is triggered
         editor.read(() => {

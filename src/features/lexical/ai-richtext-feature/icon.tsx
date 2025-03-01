@@ -2,6 +2,6 @@
 
 import React from "react";
 
-export const TestIcon: React.FC = () => {
+export const AIIcon: React.FC = () => {
   return <span>🌀</span>;
 };
