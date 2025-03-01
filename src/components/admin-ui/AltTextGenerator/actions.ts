@@ -1,16 +1,7 @@
 "use server";
 
-import OpenAI from "openai";
-import { getPayload } from "payload";
-import config from "@payload-config";
 import { readFileSync } from "fs";
 import { join } from "path";
-
-function getOpenAIInstance() {
-  return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-}
 
 export async function generateImageAltText(imageId: string | undefined) {
   if (!imageId) {
@@ -18,6 +9,10 @@ export async function generateImageAltText(imageId: string | undefined) {
   }
 
   try {
+    // Dynamically import dependencies to avoid initialization issues
+    const { getPayload } = await import("payload");
+    const { default: config } = await import("@payload-config");
+
     // Get Payload client
     const payload = await getPayload({ config });
 
@@ -42,9 +37,25 @@ export async function generateImageAltText(imageId: string | undefined) {
     const base64Image = fileBuffer.toString("base64");
     const dataURI = `data:${image.mimeType};base64,${base64Image}`;
 
-    const openai = getOpenAIInstance();
+    // Handle OpenAI in a separate async function to avoid initialization issues
+    const altText = await generateAltTextWithOpenAI(dataURI);
+    return altText;
+  } catch (error) {
+    console.error("Error generating alt text:", error);
+    throw new Error("Failed to generate alt text");
+  }
+}
 
-    // Send the image to OpenAI for analysis
+// Separate function to handle OpenAI operations
+async function generateAltTextWithOpenAI(imageDataURI: string) {
+  try {
+    // Dynamically import OpenAI
+    const { default: OpenAI } = await import("openai");
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -57,7 +68,7 @@ export async function generateImageAltText(imageId: string | undefined) {
           role: "user",
           content: [
             { type: "text", text: "Please generate descriptive alt text for this image:" },
-            { type: "image_url", image_url: { url: dataURI } },
+            { type: "image_url", image_url: { url: imageDataURI } },
           ],
         },
       ],
@@ -65,7 +76,7 @@ export async function generateImageAltText(imageId: string | undefined) {
 
     return completion.choices[0].message.content;
   } catch (error) {
-    console.error("Error generating alt text:", error);
-    throw new Error("Failed to generate alt text");
+    console.error("Error in OpenAI processing:", error);
+    throw new Error("OpenAI processing failed");
   }
 }
