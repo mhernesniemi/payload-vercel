@@ -36,7 +36,6 @@ export const TestPlugin: PluginComponent = () => {
     container: {
       position: "absolute",
       zIndex: 10,
-      backgroundColor: "white",
       border: "1px solid #ccc",
       borderRadius: "4px",
       padding: "10px",
@@ -167,7 +166,7 @@ export const TestPlugin: PluginComponent = () => {
   if (!isFormVisible) return null;
 
   return (
-    <div style={styles.container as React.CSSProperties}>
+    <div style={styles.container as React.CSSProperties} className="ai-popup-container">
       {selectedText ? (
         <>
           <div style={{ marginBottom: "10px", fontSize: "14px", color: "#666" }}>
