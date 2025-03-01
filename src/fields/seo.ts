@@ -14,12 +14,12 @@ export const seoConfig = seoPlugin({
   generateURL: ({ doc, collectionSlug }) => {
     if (doc?.slug) {
       if (collectionSlug === "articles") {
-        return `/articles/${doc.slug}`;
+        return `${process.env.NEXT_PUBLIC_ROOT_URL}/articles/${doc.slug}`;
       }
       if (collectionSlug === "news") {
-        return `/news/${doc.slug}`;
+        return `${process.env.NEXT_PUBLIC_ROOT_URL}/news/${doc.slug}`;
       }
-      return `/${collectionSlug}/${doc.slug}`;
+      return `${process.env.NEXT_PUBLIC_ROOT_URL}/${collectionSlug}/${doc.slug}`;
     }
     return "";
   },
@@ -27,7 +27,7 @@ export const seoConfig = seoPlugin({
     return [
       {
         type: "collapsible",
-        label: "SEO",
+        label: "SEO fields",
         admin: {
           initCollapsed: true,
         },
