@@ -1,15 +1,39 @@
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { Field } from "payload";
+import { generateSeoDescription, generateSeoTitle } from "./actions/seoActions";
+
+let isGeneratingDescription = false;
 
 export const seoConfig = seoPlugin({
   collections: ["articles", "news", "collection-page"],
   uploadsCollection: "media",
-  generateTitle: ({ doc }) => {
+  generateTitle: async ({ doc }) => {
+    if (doc?.title.length > 60 || doc?.title.length < 50) {
+      const generatedTitle = await generateSeoTitle(doc?.title);
+      return generatedTitle;
+    }
     return doc?.title ? `${doc.title}` : "";
   },
-  generateDescription: ({ doc }) => {
-    if (doc?.excerpt) return doc.excerpt;
-    return "";
+  generateDescription: async ({ doc }) => {
+    if (isGeneratingDescription) {
+      return "Generating SEO description...";
+    }
+
+    try {
+      isGeneratingDescription = true;
+
+      const title = doc?.title || "";
+      const description = doc?.description || "";
+      const generatedDescription = await generateSeoDescription(title, description);
+      return generatedDescription;
+    } catch (error) {
+      console.error("Error generating SEO description:", error);
+      return "";
+    } finally {
+      // Make sure the loading state is reset
+      isGeneratingDescription = false;
+      console.log("SEO description generation completed");
+    }
   },
   generateURL: ({ doc, collectionSlug }) => {
     if (doc?.slug) {
