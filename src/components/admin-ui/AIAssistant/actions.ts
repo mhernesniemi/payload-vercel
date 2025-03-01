@@ -2,12 +2,22 @@
 
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIInstance() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
-export async function generateAdminContent(prompt: string, title: string, description: string, content: string, appliedTo: string) {
+export async function generateAdminContent(
+  prompt: string,
+  title: string,
+  description: string,
+  content: string,
+  appliedTo: string,
+) {
   try {
+    const openai = getOpenAIInstance();
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       store: true,

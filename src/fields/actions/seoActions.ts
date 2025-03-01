@@ -2,12 +2,16 @@
 
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIInstance() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export async function generateSeoDescription(title: string, description: string) {
   try {
+    const openai = getOpenAIInstance();
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       store: true,
@@ -28,6 +32,8 @@ export async function generateSeoDescription(title: string, description: string)
 
 export async function generateSeoTitle(title: string) {
   try {
+    const openai = getOpenAIInstance();
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       store: true,

@@ -2,19 +2,29 @@
 
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIInstance() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
-export async function generateContent(prompt: string, selectedText: string, surroundingText: string) {
+export async function generateAdminContent(
+  prompt: string,
+  title: string = "",
+  description: string = "",
+  content: string = "",
+  appliedTo: string = "",
+) {
   try {
+    const openai = getOpenAIInstance();
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       store: true,
       messages: [
         {
           role: "user",
-          content: `First we define the data sources and based on that data we generate the response. 1. Prompt: "${prompt}". 2. Surrounding text: "${surroundingText}". 3. Selected text: "${selectedText}". Use the same language as in data sources, use correct grammar and punctuation for the language. Give the response in that form that can be used directly to replace "${selectedText}". Give only one answer. Do not include the old text in the response. The response should work together with the surrounding text: "${surroundingText}".`,
+          content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${content}". Use the same language as in data sources, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system.`,
         },
       ],
     });

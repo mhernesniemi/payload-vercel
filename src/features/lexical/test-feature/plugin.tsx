@@ -12,7 +12,7 @@ import {
 import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
 import { useEffect, useState, useRef } from "react";
 import type { PluginComponent } from "@payloadcms/richtext-lexical";
-import { generateContent } from "./actions";
+import { generateAdminContent } from "./actions";
 
 export const INSERT_TEST_COMMAND: LexicalCommand<void> = createCommand("INSERT_TEST_COMMAND");
 
@@ -22,7 +22,7 @@ export const TestPlugin: PluginComponent = () => {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedText, setSelectedText] = useState("");
-  const [surroundingText, setSurroundingText] = useState("");
+  const [_surroundingText, setSurroundingText] = useState("");
   const [selectionInfo, setSelectionInfo] = useState<{
     anchorKey: string;
     anchorOffset: number;
@@ -78,8 +78,8 @@ export const TestPlugin: PluginComponent = () => {
     setIsLoading(true);
 
     try {
-      // Käytetään palvelinpuolen toimintoa OpenAI-kutsun sijaan
-      const response = await generateContent(prompt, selectedText, surroundingText);
+      // Käytetään palvelinpuolen toimintoa OpenAI-kutsun sijaan, muokattuna uudelle funktiolle
+      const response = await generateAdminContent(prompt, "", "", selectedText, "content");
 
       if (response) {
         // Use editor.update() method to update the text
@@ -170,7 +170,8 @@ export const TestPlugin: PluginComponent = () => {
       {selectedText ? (
         <>
           <div style={{ marginBottom: "10px", fontSize: "14px", color: "#666" }}>
-            <strong>Selected text:</strong> {selectedText.length > 50 ? `${selectedText.substring(0, 50)}...` : selectedText}
+            <strong>Selected text:</strong>{" "}
+            {selectedText.length > 50 ? `${selectedText.substring(0, 50)}...` : selectedText}
           </div>
           <textarea
             ref={textareaRef}
