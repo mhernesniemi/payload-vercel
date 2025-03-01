@@ -83,17 +83,20 @@ tr td:nth-child(2) {
 .field-type:has(+ .ai-container) {
   margin-bottom: 10px !important;
 }
-
 .ai-container {
   margin-bottom: 20px;
 }
-
 .plugin-seo__field + div {
   color: #666 !important;
 }
-
 .ai-popup-container {
   background-color: var(--theme-elevation-50);
+}
+.toolbar-popup__button-aiRichTextFeature {
+  background-color: transparent;
+  &:hover {
+    background-color: var(--theme-elevation-100);
+  }
 }
 
 // Media collection
