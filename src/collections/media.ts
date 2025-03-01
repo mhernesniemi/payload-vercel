@@ -15,11 +15,6 @@ export const Media: CollectionConfig = {
       required: true,
       localized: true,
     },
-    {
-      name: "alt en",
-      type: "text",
-      localized: true,
-    },
   ],
   upload: true,
 };
