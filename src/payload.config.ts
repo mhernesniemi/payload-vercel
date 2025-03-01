@@ -19,6 +19,7 @@ import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
 import { Contacts } from "./collections/contacts";
 import { TestFeature } from "./features/lexical/test-feature/feature.server";
+import { seoConfig } from "./fields/seo";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -53,8 +54,5 @@ export default buildConfig({
     // push: false,
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
-  ],
+  plugins: [payloadCloudPlugin(), seoConfig],
 });

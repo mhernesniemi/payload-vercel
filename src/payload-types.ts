@@ -208,6 +208,14 @@ export interface Article {
   categories?: (number | Category)[] | null;
   publishedDate?: string | null;
   collection?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -309,6 +317,14 @@ export interface News {
    * If checked, the post is displayed at the top of lists
    */
   sticky?: boolean | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -441,6 +457,13 @@ export interface ArticlesSelect<T extends boolean = true> {
   categories?: T;
   publishedDate?: T;
   collection?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -472,6 +495,13 @@ export interface NewsSelect<T extends boolean = true> {
   slug?: T;
   createdBy?: T;
   sticky?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
