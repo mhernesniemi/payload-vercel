@@ -5,18 +5,18 @@ import { INSERT_TEST_COMMAND, TestPlugin } from "./plugin";
 import { TestIcon } from "./icon";
 import { $isRangeSelection } from "@payloadcms/richtext-lexical/lexical";
 
-export const TestClientFeature = createClientFeature({
+export const AIRichTextClientFeature = createClientFeature({
   toolbarInline: {
     groups: [
       {
-        key: "testGroup",
+        key: "aiRichTextGroup",
         type: "buttons",
         items: [
           {
             ChildComponent: TestIcon,
-            key: "testFeature",
+            key: "aiRichTextFeature",
             label: ({ i18n }) => {
-              return i18n.t("lexical:testFeature:label");
+              return i18n.t("lexical:aiRichTextFeature:label");
             },
             isActive: ({ selection }) => {
               return $isRangeSelection(selection);

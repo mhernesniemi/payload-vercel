@@ -18,7 +18,7 @@ import { Articles } from "./collections/articles";
 import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
 import { Contacts } from "./collections/contacts";
-import { TestFeature } from "./features/lexical/test-feature/feature.server";
+import { AIRichTextFeature } from "./features/lexical/ai-richtext-feature/feature.server";
 import { seoConfig } from "./fields/seo";
 
 const filename = fileURLToPath(import.meta.url);
@@ -36,7 +36,7 @@ export default buildConfig({
   collections: [Users, Media, Articles, CollectionPage, News, Categories, Contacts],
   globals: [FrontPage, MainMenu, FooterMenu, Footer],
   editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [...defaultFeatures, TestFeature()],
+    features: ({ defaultFeatures }) => [...defaultFeatures, AIRichTextFeature()],
   }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
