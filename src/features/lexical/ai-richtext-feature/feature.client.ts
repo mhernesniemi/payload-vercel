@@ -29,5 +29,24 @@ export const AIRichTextClientFeature = createClientFeature({
       },
     ],
   },
+  slashMenu: {
+    groups: [
+      {
+        key: "aiTools",
+        label: "AI Tools",
+        items: [
+          {
+            Icon: TestIcon,
+            key: "aiAssistant",
+            keywords: ["ai", "assistant"],
+            label: "AI Assistant",
+            onSelect: ({ editor }) => {
+              editor.dispatchCommand(INSERT_TEST_COMMAND, undefined);
+            },
+          },
+        ],
+      },
+    ],
+  },
   plugins: [{ Component: TestPlugin, position: "normal" }],
 });
