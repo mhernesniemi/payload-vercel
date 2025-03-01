@@ -16,14 +16,14 @@ export const Media: CollectionConfig = {
       localized: true,
     },
     {
-      name: "titleAIAssistant",
+      name: "altTextGenerator",
       type: "ui",
       admin: {
         components: {
           Field: {
             path: "@/components/admin-ui/AltTextGenerator",
             clientProps: {
-              appliedTo: "alt",
+              path: "alt",
             },
           },
         },

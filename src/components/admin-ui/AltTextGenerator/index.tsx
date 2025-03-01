@@ -1,35 +1,35 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useField } from "@payloadcms/ui";
+import { useField, useDocumentInfo } from "@payloadcms/ui";
 import { generateImageAltText } from "./actions";
 
 interface FieldProps {
-  imageField: string;
+  path: string;
 }
 
-const Field: React.FC<FieldProps> = ({ imageField }) => {
+const Field: React.FC<FieldProps> = ({ path }) => {
   const { value, setValue } = useField<string>({
-    path: imageField,
+    path,
   });
-  const [prompt, setPrompt] = useState("");
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const { id: documentId } = useDocumentInfo();
   const [isLoading, setIsLoading] = useState(false);
-  const [originalText, setOriginalText] = useState<string>("");
+  const [originalText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleGenerateContent = async (e: React.MouseEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await generateImageAltText(imageField);
+      const imageId = documentId ? String(documentId) : undefined;
+      const response = await generateImageAltText(imageId);
 
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");
         setValue(cleanedResponse);
       }
     } catch (error) {
-      console.error("Error generating content:", error);
+      console.error("Error generating alt text:", error);
     } finally {
       setIsLoading(false);
     }
@@ -37,85 +37,36 @@ const Field: React.FC<FieldProps> = ({ imageField }) => {
 
   return (
     <div className="ai-container">
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          if (!isFormVisible) {
-            setOriginalText(value || "");
-          }
-          setIsFormVisible(!isFormVisible);
-        }}
-        className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
-        style={{
-          marginBottom: "0",
-          marginTop: "0",
-        }}
-      >
-        Generate alt text
-        {isFormVisible && (
-          <span
+      <div>
+        <button
+          onClick={handleGenerateContent}
+          className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
+          style={{
+            marginTop: "12px",
+            marginBottom: "10px",
+          }}
+          disabled={isLoading}
+        >
+          {isLoading ? "Generating..." : "Generate alt text"}
+        </button>
+        {value && value !== originalText && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setValue(originalText);
+              textareaRef.current?.focus();
+            }}
+            className="btn btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
             style={{
-              marginLeft: "8px",
+              marginTop: "12px",
+              marginBottom: "10px",
+              marginLeft: "10px",
             }}
           >
-            ✕
-          </span>
+            Restore original
+          </button>
         )}
-      </button>
-
-      {isFormVisible && (
-        <div
-          className="field-type textarea"
-          style={{
-            padding: "0 20px",
-          }}
-        >
-          <textarea
-            ref={textareaRef}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Write your prompt here..."
-            style={{
-              width: "100%",
-              minHeight: "50px",
-              padding: "10px",
-              marginTop: "20px",
-            }}
-            autoFocus
-          />
-          <div>
-            <button
-              onClick={handleGenerateContent}
-              className="btn save-draft btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
-              style={{
-                marginTop: "12px",
-                marginBottom: "10px",
-              }}
-              disabled={isLoading}
-            >
-              {isLoading ? "Generating..." : "Generate content"}
-            </button>
-            {value && value !== originalText && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setValue(originalText);
-                  setPrompt("");
-                  textareaRef.current?.focus();
-                }}
-                className="btn btn--icon-style-without-border btn--size-medium btn--withoutPopup btn--style-secondary btn--withoutPopup"
-                style={{
-                  marginTop: "12px",
-                  marginBottom: "10px",
-                  marginLeft: "10px",
-                }}
-              >
-                Restore original
-              </button>
-            )}
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
