@@ -51,7 +51,7 @@ const Field: React.FC<FieldProps> = ({ imageField }) => {
           marginTop: "0",
         }}
       >
-        AI assistant
+        Generate alt text
         {isFormVisible && (
           <span
             style={{

@@ -1,3 +1,4 @@
+import { default as default_4ad4cecd303257fc3fd89fc13516fcf2 } from '@/components/admin-ui/AltTextGenerator'
 import { default as default_dfcf532c3ae7f0a4505ed356c6b648f9 } from '@/components/admin-ui/AIAssistant'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -30,6 +31,7 @@ import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c08
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 
 export const importMap = {
+  "@/components/admin-ui/AltTextGenerator#default": default_4ad4cecd303257fc3fd89fc13516fcf2,
   "@/components/admin-ui/AIAssistant#default": default_dfcf532c3ae7f0a4505ed356c6b648f9,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

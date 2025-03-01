@@ -15,6 +15,20 @@ export const Media: CollectionConfig = {
       required: true,
       localized: true,
     },
+    {
+      name: "titleAIAssistant",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "@/components/admin-ui/AltTextGenerator",
+            clientProps: {
+              appliedTo: "alt",
+            },
+          },
+        },
+      },
+    },
   ],
   upload: true,
 };
