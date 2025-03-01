@@ -17,6 +17,10 @@ export async function generateSeoDescription(title: string, description: string)
       store: true,
       messages: [
         {
+          role: "system",
+          content: `You are a helpful assistant that generates content for a content management system. Don't use markdown formatting. Use formatting that is supported by the Lexical editor.`,
+        },
+        {
           role: "user",
           content: `Write a concise and compelling meta description (between 150–160 characters) that accurately summarizes the page content and encourages clicks by highlighting unique value. Avoid keyword stuffing and duplicate descriptions; instead, use natural, engaging language relevant to the user's intent. The following is the content of the page: Title: "${title}". Description: "${description}".`,
         },
@@ -38,6 +42,10 @@ export async function generateSeoTitle(title: string) {
       model: "gpt-4o-mini",
       store: true,
       messages: [
+        {
+          role: "system",
+          content: `You are a helpful assistant that generates content for a content management system. Don't use markdown formatting. Use formatting that is supported by the Lexical editor.`,
+        },
         {
           role: "user",
           content: `Write a meta title that is as close as possible to the original title of the page: "${title}". Keep the meta title between 50–60 characters.`,

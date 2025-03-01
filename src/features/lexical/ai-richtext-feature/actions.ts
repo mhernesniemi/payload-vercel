@@ -13,18 +13,47 @@ export async function generateAdminContent(
   title: string = "",
   description: string = "",
   content: string = "",
-  appliedTo: string = "",
+  fieldType: string = "content",
+  contextualContent: {
+    otherParagraphs?: string[];
+    pageTitle?: string;
+    pageDescription?: string;
+  } = {},
 ) {
   try {
     const openai = getOpenAIInstance();
+
+    // Prepare contextual content
+    const otherParagraphsText = contextualContent.otherParagraphs?.length
+      ? `Other paragraphs in the same field:\n${contextualContent.otherParagraphs.join("\n\n")}`
+      : "";
+
+    const pageTitleText =
+      contextualContent.pageTitle || title ? `Page title: "${contextualContent.pageTitle || title}"` : "";
+
+    const pageDescriptionText =
+      contextualContent.pageDescription || description
+        ? `Page description: "${contextualContent.pageDescription || description}"`
+        : "";
+
+    const contentText = content ? `Current content: "${content}"` : "";
+
+    // Build the full context
+    const fullContext = [prompt, contentText, otherParagraphsText, pageTitleText, pageDescriptionText]
+      .filter(Boolean)
+      .join("\n\n");
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       store: true,
       messages: [
         {
+          role: "system",
+          content: `You are a helpful assistant that generates content for a content management system. Don't use markdown formatting. Use formatting that is supported by the Lexical editor.`,
+        },
+        {
           role: "user",
-          content: `First we define the data sources and based on their data we generate the response. 1. Prompt: "${prompt}". 2. Title: "${title}". 3. Description: "${description}". 4. Content: "${content}". Use the same language as in data sources, use correct grammar and punctuation for the language. The response is used to fill the field "${appliedTo}" in a content management system.`,
+          content: `Apply the following prompt to generate content for the field "${fieldType}": ${fullContext}`,
         },
       ],
     });
