@@ -28,6 +28,7 @@ export const TestPlugin: PluginComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedText, setSelectedText] = useState("");
   const [_surroundingText, setSurroundingText] = useState("");
+  const [paragraphs, setParagraphs] = useState<string[]>([]);
   const [selectionInfo, setSelectionInfo] = useState<{
     anchorKey: string;
     anchorOffset: number;
@@ -98,7 +99,11 @@ export const TestPlugin: PluginComponent = () => {
       const content = hasSelection ? selectedText : "";
 
       // Using the title and description fields as context
-      const response = await generateAdminContent(prompt, title, description, content, "content", {});
+      const response = await generateAdminContent(prompt, title, description, content, "content", {
+        otherParagraphs: paragraphs.length > 0 ? paragraphs.filter((p) => p !== content) : undefined,
+        pageTitle: title,
+        pageDescription: description,
+      });
 
       if (response) {
         // Use editor.update() method to update the text
@@ -181,6 +186,45 @@ export const TestPlugin: PluginComponent = () => {
 
               // Set surrounding text (full paragraph)
               setSurroundingText(fullText);
+
+              // Collect all editor paragraphs for context
+              const allParagraphs: string[] = [];
+
+              // Use Lexical's own method to get all paragraphs
+              const rootElement = editor.getRootElement();
+
+              if (rootElement) {
+                // Get all DOM elements that are p-tags (paragraphs)
+                const paragraphElements = rootElement.querySelectorAll("p");
+
+                // Iterate through all found paragraph elements
+                paragraphElements.forEach((element) => {
+                  const text = element.textContent;
+                  // Ensure the text exists and is not the selected text
+                  if (text && text.trim() && text !== selectedText) {
+                    allParagraphs.push(text);
+                  }
+                });
+              }
+
+              // If the above didn't yield any results, try again with Lexical's tree structure
+              if (allParagraphs.length === 0) {
+                const rootNode = $isRootOrShadowRoot(parentNode.getParent())
+                  ? parentNode.getParent()
+                  : parentNode.getTopLevelElement()?.getParent();
+
+                if (rootNode) {
+                  rootNode.getChildren().forEach((node) => {
+                    const text = node.getTextContent();
+                    if (text.trim() && text !== selectedText) {
+                      allParagraphs.push(text);
+                    }
+                  });
+                }
+              }
+
+              console.log("Collected paragraphs:", allParagraphs);
+              setParagraphs(allParagraphs);
             } catch (error) {
               console.error("Error getting surrounding text:", error);
               setSurroundingText("");
@@ -202,6 +246,30 @@ export const TestPlugin: PluginComponent = () => {
             setSurroundingText("");
             setSelectionInfo(null);
             setHasSelection(false);
+
+            // Even without selection, collect all paragraph texts for context
+            try {
+              const allParagraphs: string[] = [];
+              const rootElement = editor.getRootElement();
+
+              if (rootElement) {
+                // Get all paragraph elements
+                const paragraphElements = rootElement.querySelectorAll("p");
+
+                paragraphElements.forEach((element) => {
+                  const text = element.textContent;
+                  if (text && text.trim()) {
+                    allParagraphs.push(text);
+                  }
+                });
+
+                console.log("Collected paragraphs (no selection):", allParagraphs);
+                setParagraphs(allParagraphs);
+              }
+            } catch (error) {
+              console.error("Error getting paragraphs without selection:", error);
+              setParagraphs([]);
+            }
           }
         });
 
@@ -242,6 +310,18 @@ export const TestPlugin: PluginComponent = () => {
               ? `${description.substring(0, 30)}...`
               : description
             : "Not available"}
+        </div>
+        <div>
+          Context paragraphs: {paragraphs.length} {paragraphs.length > 0 ? "paragraphs" : "paragraph"}
+          {paragraphs.length > 0 && (
+            <span className="paragraph-preview">
+              {paragraphs.length > 2
+                ? `(first: "${paragraphs[0].substring(0, 20)}...", last: "${paragraphs[paragraphs.length - 1].substring(0, 20)}...")`
+                : paragraphs.length === 1
+                  ? `"${paragraphs[0].substring(0, 30)}..."`
+                  : `"${paragraphs[0].substring(0, 15)}...", "${paragraphs[1].substring(0, 15)}..."`}
+            </span>
+          )}
         </div>
       </div>
 

@@ -28,6 +28,8 @@ export async function generateAdminContent(
       ? `Other paragraphs in the same field:\n${contextualContent.otherParagraphs.join("\n\n")}`
       : "";
 
+    console.log("otherParagraphs count:", contextualContent.otherParagraphs?.length || 0);
+
     const pageTitleText =
       contextualContent.pageTitle || title ? `Page title: "${contextualContent.pageTitle || title}"` : "";
 
@@ -42,6 +44,15 @@ export async function generateAdminContent(
     const fullContext = [prompt, contentText, otherParagraphsText, pageTitleText, pageDescriptionText]
       .filter(Boolean)
       .join("\n\n");
+
+    console.log("Full context length:", fullContext.length);
+    console.log("Context parts:", {
+      promptLength: prompt.length,
+      contentTextLength: contentText.length,
+      otherParagraphsTextLength: otherParagraphsText.length,
+      pageTitleTextLength: pageTitleText.length,
+      pageDescriptionTextLength: pageDescriptionText.length,
+    });
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
