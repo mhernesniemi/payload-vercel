@@ -95,3 +95,10 @@ tr td:nth-child(2) {
 .ai-popup-container {
   background-color: var(--theme-elevation-50);
 }
+
+// Media collection
+
+.collection-edit--media .thumbnail--size-medium {
+  width: 400px;
+  max-height: none;
+}
