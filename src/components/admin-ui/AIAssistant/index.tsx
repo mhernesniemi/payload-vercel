@@ -15,6 +15,9 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
   const { value: description } = useField<string>({
     path: "description",
   });
+  const { value: content } = useField<Record<string, unknown>>({
+    path: "content",
+  });
   const { value, setValue } = useField<string>({
     path: appliedTo,
   });
@@ -28,7 +31,9 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await generateAdminContent(prompt, title || "", description || "", value || "", appliedTo);
+      const contentString = content ? JSON.stringify(content) : "";
+
+      const response = await generateAdminContent(prompt, title || "", description || "", contentString, appliedTo);
 
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");
