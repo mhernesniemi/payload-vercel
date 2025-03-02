@@ -11,7 +11,8 @@ export const Media: CollectionConfig = {
       async ({ operation, result, req }) => {
         if (operation === "create") {
           try {
-            const altText = await generateImageAltText(result.id);
+            const locale = req.locale || process.env.DEFAULT_LOCALE || "en";
+            const altText = await generateImageAltText(result.id, locale);
 
             if (altText) {
               await req.payload.update({

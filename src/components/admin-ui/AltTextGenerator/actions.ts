@@ -3,7 +3,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-export async function generateImageAltText(imageId: string | undefined) {
+export async function generateImageAltText(imageId: string | undefined, locale?: string) {
   if (!imageId) {
     throw new Error("No image ID provided");
   }
@@ -37,7 +37,7 @@ export async function generateImageAltText(imageId: string | undefined) {
     const dataURI = `data:${image.mimeType};base64,${base64Image}`;
 
     // Handle OpenAI in a separate async function to avoid initialization issues
-    const altText = await generateAltTextWithOpenAI(dataURI);
+    const altText = await generateAltTextWithOpenAI(dataURI, locale);
     return altText;
   } catch (error) {
     console.error("Error generating alt text:", error);
@@ -45,7 +45,7 @@ export async function generateImageAltText(imageId: string | undefined) {
   }
 }
 
-async function generateAltTextWithOpenAI(imageDataURI: string) {
+async function generateAltTextWithOpenAI(imageDataURI: string, locale?: string) {
   try {
     // Dynamically import OpenAI to avoid initialization issues
     const { default: OpenAI } = await import("openai");
@@ -54,13 +54,15 @@ async function generateAltTextWithOpenAI(imageDataURI: string) {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
+    // Determine language instruction based on locale
+    const languageInstruction = locale ? `Generate the alt text in ${locale} language.` : "";
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content:
-            "You are an assistant that generates high-quality, descriptive alt text for images. Be concise but comprehensive.",
+          content: `You are an assistant that generates high-quality, descriptive alt text for images. Be concise but comprehensive. ${languageInstruction}`,
         },
         {
           role: "user",
