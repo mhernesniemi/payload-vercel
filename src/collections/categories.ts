@@ -1,11 +1,14 @@
 import { CollectionConfig } from "payload";
 import { slugField } from "@/fields/slug";
+
 export const Categories: CollectionConfig = {
   slug: "categories",
   admin: {
     group: "Taxonomy",
     useAsTitle: "label",
+    defaultColumns: ["label", "slug", "parent", "updatedAt"],
   },
+  defaultSort: "parent",
   fields: [
     {
       name: "label",
