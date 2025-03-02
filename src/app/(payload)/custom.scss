@@ -105,3 +105,16 @@ tr td:nth-child(2) {
   width: 400px;
   max-height: none;
 }
+
+.file .thumbnail--size-small img {
+  width: 100px !important;
+  height: 100px !important;
+  object-fit: cover;
+}
+.file .thumbnail--size-small {
+  width: 100px !important;
+  height: 100px !important;
+}
+.file__thumbnail {
+  max-width: none !important;
+}
