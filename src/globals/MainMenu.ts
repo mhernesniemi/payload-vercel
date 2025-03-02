@@ -15,6 +15,11 @@ export const MainMenu: GlobalConfig = {
       type: "array",
       required: true,
       localized: true,
+      admin: {
+        components: {
+          RowLabel: "@/components/admin-ui/MainMenuRow#MainMenuRow",
+        },
+      },
       fields: [
         {
           name: "label",
