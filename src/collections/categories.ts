@@ -12,6 +12,11 @@ export const Categories: CollectionConfig = {
       type: "text",
       required: true,
       localized: true,
+      admin: {
+        components: {
+          Cell: "@/components/admin-ui/CategoryCell#CategoryCell",
+        },
+      },
     },
     ...slugField("label"),
   ],
