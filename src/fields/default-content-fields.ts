@@ -12,6 +12,7 @@ import {
   videoEmbedBlock,
   quoteBlock,
 } from "@/blocks";
+import { slugField } from "./slug";
 
 export const defaultContentFields: Field[] = [
   {
@@ -87,39 +88,7 @@ export const defaultContentFields: Field[] = [
       },
     }),
   },
-  {
-    name: "slug",
-    type: "text",
-    required: true,
-    unique: true,
-    admin: {
-      position: "sidebar",
-      description: "The slug is automatically generated from the title if empty",
-    },
-    hooks: {
-      beforeValidate: [
-        ({
-          data,
-          value,
-        }: {
-          data?: {
-            title?: string;
-          };
-          value?: string;
-        }) => {
-          if (!value && data?.title) {
-            return data.title
-              .toLowerCase()
-              .replace(/ä/g, "a")
-              .replace(/ö/g, "o")
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/^-|-$/g, "");
-          }
-          return value;
-        },
-      ],
-    },
-  },
+  ...slugField(),
   {
     name: "createdBy",
     type: "relationship",
