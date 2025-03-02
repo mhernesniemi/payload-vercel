@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload";
-
+import { slugField } from "@/fields/slug";
 export const Categories: CollectionConfig = {
   slug: "categories",
   admin: {
@@ -13,25 +13,6 @@ export const Categories: CollectionConfig = {
       required: true,
       localized: true,
     },
-    {
-      name: "slug",
-      type: "text",
-      required: true,
-      unique: true,
-      admin: {
-        position: "sidebar",
-      },
-    },
-    {
-      name: "parent",
-      type: "relationship",
-      relationTo: "categories",
-      hasMany: false,
-      filterOptions: ({ id }) => ({
-        id: {
-          not_equals: id,
-        },
-      }),
-    },
+    ...slugField("label"),
   ],
 };

@@ -245,8 +245,10 @@ export interface Contact {
 export interface Category {
   id: number;
   label: string;
+  /**
+   * The slug is automatically generated from the label if empty
+   */
   slug: string;
-  parent?: (number | null) | Category;
   updatedAt: string;
   createdAt: string;
 }
@@ -513,7 +515,6 @@ export interface NewsSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   label?: T;
   slug?: T;
-  parent?: T;
   updatedAt?: T;
   createdAt?: T;
 }
