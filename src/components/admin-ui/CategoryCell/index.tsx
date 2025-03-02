@@ -8,7 +8,7 @@ export const CategoryCell: React.FC<DefaultCellComponentProps> = ({
   collectionSlug,
   link,
 }) => {
-  const url = `http://${process.env.NEXT_PUBLIC_SITE_URL}/admin/collections/${collectionSlug}/${rowData.id}`;
+  const url = `/admin/collections/${collectionSlug}/${rowData.id}`;
 
   const parentTitle = (rowData.breadcrumbs?.length > 1 && rowData.breadcrumbs[0].label) ?? null;
 
