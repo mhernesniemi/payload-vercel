@@ -249,6 +249,15 @@ export interface Category {
    * The slug is automatically generated from the label if empty
    */
   slug: string;
+  parent?: (number | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -515,6 +524,15 @@ export interface NewsSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   label?: T;
   slug?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

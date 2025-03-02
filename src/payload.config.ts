@@ -6,6 +6,7 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
+import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 
 import { FrontPage } from "./globals/FrontPage";
 import { MainMenu } from "./globals/MainMenu";
@@ -54,5 +55,12 @@ export default buildConfig({
     // push: false,
   }),
   sharp,
-  plugins: [payloadCloudPlugin(), seoConfig],
+  plugins: [
+    payloadCloudPlugin(),
+    seoConfig,
+    nestedDocsPlugin({
+      collections: ["categories"],
+      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
+    }),
+  ],
 });
