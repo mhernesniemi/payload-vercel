@@ -40,18 +40,10 @@ async function fetchFileByURL(url: string) {
 const getRandomDate = () => {
   const start = new Date(2023, 0, 1);
   const end = new Date();
-  return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
-  ).toISOString();
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toISOString();
 };
 
-export const seed = async ({
-  payload,
-  _req,
-}: {
-  payload: Payload;
-  _req?: PayloadRequest;
-}): Promise<void> => {
+export const seed = async ({ payload, _req }: { payload: Payload; _req?: PayloadRequest }): Promise<void> => {
   payload.logger.info("Seeding database...");
 
   // Clear collections
@@ -116,7 +108,6 @@ export const seed = async ({
       collection: "media",
       data: {
         alt: `Random image ${i}`,
-        "alt en": `Random image ${i}`,
         filename: imageFile.name,
       },
       file: imageFile,

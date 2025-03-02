@@ -18,6 +18,9 @@ import { Articles } from "./collections/articles";
 import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
 import { Contacts } from "./collections/contacts";
+import { AIRichTextFeature } from "./features/lexical/ai-richtext-feature/feature.server";
+import { seoConfig } from "./fields/seo";
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -32,7 +35,9 @@ export default buildConfig({
   },
   collections: [Users, Media, Articles, CollectionPage, News, Categories, Contacts],
   globals: [FrontPage, MainMenu, FooterMenu, Footer],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [...defaultFeatures, AIRichTextFeature()],
+  }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
@@ -49,8 +54,5 @@ export default buildConfig({
     // push: false,
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
-  ],
+  plugins: [payloadCloudPlugin(), seoConfig],
 });

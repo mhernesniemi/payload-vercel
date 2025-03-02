@@ -1,6 +1,7 @@
 import { Field } from "payload";
 import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { BlocksFeature } from "@payloadcms/richtext-lexical";
+import { AIRichTextFeature } from "@/features/lexical/ai-richtext-feature";
 import {
   mediaBlock,
   largeFeaturedPostBlock,
@@ -20,9 +21,37 @@ export const defaultContentFields: Field[] = [
     localized: true,
   },
   {
+    name: "titleAIAssistant",
+    type: "ui",
+    admin: {
+      components: {
+        Field: {
+          path: "@/components/admin-ui/AIAssistant",
+          clientProps: {
+            appliedTo: "title",
+          },
+        },
+      },
+    },
+  },
+  {
     name: "description",
     type: "textarea",
     localized: true,
+  },
+  {
+    name: "descriptionAIAssistant",
+    type: "ui",
+    admin: {
+      components: {
+        Field: {
+          path: "@/components/admin-ui/AIAssistant",
+          clientProps: {
+            appliedTo: "description",
+          },
+        },
+      },
+    },
   },
   {
     name: "image",
@@ -38,7 +67,10 @@ export const defaultContentFields: Field[] = [
       features: ({ defaultFeatures }) => {
         return [
           ...defaultFeatures,
-          HeadingFeature({ enabledHeadingSizes: ["h2", "h3"] }),
+          HeadingFeature({
+            enabledHeadingSizes: ["h2", "h3"],
+          }),
+          AIRichTextFeature(),
           BlocksFeature({
             blocks: [
               mediaBlock,
@@ -66,7 +98,15 @@ export const defaultContentFields: Field[] = [
     },
     hooks: {
       beforeValidate: [
-        ({ data, value }: { data?: { title?: string }; value?: string }) => {
+        ({
+          data,
+          value,
+        }: {
+          data?: {
+            title?: string;
+          };
+          value?: string;
+        }) => {
           if (!value && data?.title) {
             return data.title
               .toLowerCase()
