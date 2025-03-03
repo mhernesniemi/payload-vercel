@@ -1,13 +1,13 @@
 import {
-  largeFeaturedPostBlock,
-  smallFeaturedPostsWrapperBlock,
-  ctaBlock,
-  mediaBlock,
-  videoEmbedBlock,
-  linkListBlock,
   contactsBlock,
-  quoteBlock,
+  ctaBlock,
   heroBlock,
+  largeFeaturedPostBlock,
+  linkListBlock,
+  mediaBlock,
+  quoteBlock,
+  smallFeaturedPostsWrapperBlock,
+  videoEmbedBlock,
 } from "@/blocks";
 import { dynamicListBlock } from "@/blocks/dynamic-list";
 import { GlobalConfig } from "payload";

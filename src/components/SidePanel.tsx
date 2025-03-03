@@ -1,11 +1,10 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
-import { Fragment, useState } from "react";
-import React from "react";
 import { useTranslations } from "next-intl";
+import React, { Fragment, useState } from "react";
 
 interface MenuDialogProps {
   openLabel: React.ReactNode;

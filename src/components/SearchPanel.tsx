@@ -1,13 +1,13 @@
 "use client";
 
-import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
-import createClient from "@searchkit/instantsearch-client";
 import { Link, useRouter } from "@/i18n/routing";
-import SidePanel from "./SidePanel";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import createClient from "@searchkit/instantsearch-client";
+import { useTranslations } from "next-intl";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
+import SidePanel from "./SidePanel";
 
 const SearchContext = createContext<{
   query: string;

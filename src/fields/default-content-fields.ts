@@ -1,17 +1,16 @@
-import { Field } from "payload";
-import { HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
-import { BlocksFeature } from "@payloadcms/richtext-lexical";
-import { AIRichTextFeature } from "@/features/lexical/ai-richtext-feature";
 import {
-  mediaBlock,
-  largeFeaturedPostBlock,
-  smallFeaturedPostsWrapperBlock,
-  ctaBlock,
-  linkListBlock,
   contactsBlock,
-  videoEmbedBlock,
+  ctaBlock,
+  largeFeaturedPostBlock,
+  linkListBlock,
+  mediaBlock,
   quoteBlock,
+  smallFeaturedPostsWrapperBlock,
+  videoEmbedBlock,
 } from "@/blocks";
+import { AIRichTextFeature } from "@/features/lexical/ai-richtext-feature";
+import { BlocksFeature, HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
+import { Field } from "payload";
 import { slugField } from "./slug";
 
 export const defaultContentFields: Field[] = [

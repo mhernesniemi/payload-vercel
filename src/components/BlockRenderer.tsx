@@ -1,28 +1,27 @@
-import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
-import React from "react";
 import type {
+  ContactsBlock as ContactsBlockType,
   CTABlock as CTABlockType,
+  DynamicListBlock as DynamicListBlockType,
+  HeroBlock as HeroBlockType,
+  LargeFeaturedPostBlock as LargeFeaturedPostBlockType,
   LinkListBlock as LinkListBlockType,
   MediaBlock as MediaBlockType,
   QuoteBlock as QuoteBlockType,
-  VideoEmbedBlock as VideoEmbedBlockType,
-  LargeFeaturedPostBlock as LargeFeaturedPostBlockType,
   SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType,
-  ContactsBlock as ContactsBlockType,
-  HeroBlock as HeroBlockType,
-  DynamicListBlock as DynamicListBlockType,
+  VideoEmbedBlock as VideoEmbedBlockType,
 } from "@/payload-types";
+import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical";
+import { ContactsBlock } from "./blocks/ContactsBlock";
 import { CTABlock } from "./blocks/CTABlock";
+import DynamicListBlock from "./blocks/DynamicListBlock";
+import { HeroBlock } from "./blocks/HeroBlock";
+import { LargeFeaturedPostBlock } from "./blocks/LargeFeaturedPostBlock";
+import { LinkListBlock } from "./blocks/LinkListBlock";
 import { MediaBlock } from "./blocks/MediaBlock";
 import { QuoteBlock } from "./blocks/QuoteBlock";
-import { VideoEmbedBlock } from "./blocks/VideoEmbedBlock";
-import { ContactsBlock } from "./blocks/ContactsBlock";
-import { LinkListBlock } from "./blocks/LinkListBlock";
-import { LargeFeaturedPostBlock } from "./blocks/LargeFeaturedPostBlock";
 import SmallFeaturedPostsBlock from "./blocks/SmallFeaturedPostsBlock";
+import { VideoEmbedBlock } from "./blocks/VideoEmbedBlock";
 import { TextRenderer } from "./TextRenderer";
-import { HeroBlock } from "./blocks/HeroBlock";
-import DynamicListBlock from "./blocks/DynamicListBlock";
 type BaseBlockTypes =
   | CTABlockType
   | MediaBlockType

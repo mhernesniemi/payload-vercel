@@ -1,26 +1,26 @@
 // storage-adapter-import-placeholder
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
+import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
-import { fileURLToPath } from "url";
 import sharp from "sharp";
-import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
+import { fileURLToPath } from "url";
 
-import { FrontPage } from "./globals/FrontPage";
-import { MainMenu } from "./globals/MainMenu";
-import { CollectionPage } from "./collections/collection-page";
-import { FooterMenu } from "./globals/FooterMenu";
-import { Footer } from "./globals/Footer";
-import { Users } from "./collections/users";
-import { Media } from "./collections/media";
 import { Articles } from "./collections/articles";
-import { News } from "./collections/news";
 import { Categories } from "./collections/categories";
+import { CollectionPage } from "./collections/collection-page";
 import { Contacts } from "./collections/contacts";
+import { Media } from "./collections/media";
+import { News } from "./collections/news";
+import { Users } from "./collections/users";
 import { AIRichTextFeature } from "./features/lexical/ai-richtext-feature/feature.server";
 import { seoConfig } from "./fields/seo";
+import { Footer } from "./globals/Footer";
+import { FooterMenu } from "./globals/FooterMenu";
+import { FrontPage } from "./globals/FrontPage";
+import { MainMenu } from "./globals/MainMenu";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

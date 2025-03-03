@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { BlockRenderer, NodeTypes } from "@/components/BlockRenderer";
 import { Article } from "@/payload-types";
+import Image from "next/image";
 
 interface ArticleTemplateProps {
   article: Article;

@@ -1,4 +1,4 @@
-import { MenuItem, InternalLink, LinkType } from "../types/menu";
+import { InternalLink, LinkType, MenuItem } from "../types/menu";
 
 type ParsedLink = {
   linkUrl?: string;

@@ -7,7 +7,8 @@ export const AIRichTextFeature = createServerFeature({
         label: "AI Assistant",
       },
     },
-    ClientFeature: "src/features/lexical/ai-richtext-feature/feature.client#AIRichTextClientFeature",
+    ClientFeature:
+      "src/features/lexical/ai-richtext-feature/feature.client#AIRichTextClientFeature",
   },
   key: "aiRichTextFeature",
 });

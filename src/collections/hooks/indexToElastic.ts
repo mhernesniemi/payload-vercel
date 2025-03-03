@@ -1,9 +1,7 @@
-import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
-import { elasticClient } from "@/lib/elastic-utils";
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
+import { createIndexWithMappings, elasticClient, richTextToPlainText } from "@/lib/elastic-utils";
+import config from "@payload-config";
+import { CollectionAfterChangeHook, CollectionAfterDeleteHook, getPayload } from "payload";
 export const afterChangeHook: CollectionAfterChangeHook = async ({
   doc,
   operation,

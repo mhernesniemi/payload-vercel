@@ -1,7 +1,7 @@
 "use server";
 
-import { getPayload } from "payload";
 import { Article } from "@/payload-types";
+import { getPayload } from "payload";
 
 async function getConfig() {
   const { default: configPromise } = await import("@/payload.config");

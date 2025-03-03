@@ -1,6 +1,6 @@
 import { ContactsBlock as ContactsBlockType } from "@/payload-types";
-import Image from "next/image";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Heading from "../Heading";
 type Props = {
   block: ContactsBlockType;

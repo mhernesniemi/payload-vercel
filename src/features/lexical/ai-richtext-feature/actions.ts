@@ -31,7 +31,9 @@ export async function generateAdminContent(
     console.log("otherParagraphs count:", contextualContent.otherParagraphs?.length || 0);
 
     const pageTitleText =
-      contextualContent.pageTitle || title ? `Page title: "${contextualContent.pageTitle || title}"` : "";
+      contextualContent.pageTitle || title
+        ? `Page title: "${contextualContent.pageTitle || title}"`
+        : "";
 
     const pageDescriptionText =
       contextualContent.pageDescription || description
@@ -41,7 +43,13 @@ export async function generateAdminContent(
     const contentText = content ? `Current content: "${content}"` : "";
 
     // Build the full context
-    const fullContext = [prompt, contentText, otherParagraphsText, pageTitleText, pageDescriptionText]
+    const fullContext = [
+      prompt,
+      contentText,
+      otherParagraphsText,
+      pageTitleText,
+      pageDescriptionText,
+    ]
       .filter(Boolean)
       .join("\n\n");
 

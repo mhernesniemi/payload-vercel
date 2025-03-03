@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent } from "react";
-import { useTranslations } from "next-intl";
-import { signIn } from "next-auth/react";
-import { GoogleIcon } from "@/components/Icons";
-import Heading from "@/components/Heading";
-import { toast } from "sonner";
 import Button from "@/components/Button";
+import Heading from "@/components/Heading";
+import { GoogleIcon } from "@/components/Icons";
+import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();

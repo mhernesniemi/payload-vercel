@@ -1,7 +1,7 @@
-import { CTABlock as CTABlockType } from "@/payload-types";
-import Heading from "../Heading";
 import { parseLink } from "@/lib/parse-link";
+import { CTABlock as CTABlockType } from "@/payload-types";
 import Button from "../Button";
+import Heading from "../Heading";
 type Props = {
   block: CTABlockType;
 };

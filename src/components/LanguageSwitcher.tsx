@@ -1,9 +1,9 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react";
+import { CheckIcon, LanguageIcon } from "@heroicons/react/24/outline";
 import { useLocale, useTranslations } from "next-intl";
-import { Menu, MenuButton, Transition, MenuItems, MenuItem } from "@headlessui/react";
-import { LanguageIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 
 export default function LanguageSwitcher() {

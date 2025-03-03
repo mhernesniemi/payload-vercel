@@ -1,12 +1,12 @@
-export { mediaBlock } from "./media";
+export { contactsBlock } from "./contact-people";
+export { ctaBlock } from "./cta";
 export {
   largeFeaturedPostBlock,
   smallFeaturedPostBlock,
   smallFeaturedPostsWrapperBlock,
 } from "./featured-posts";
-export { ctaBlock } from "./cta";
-export { linkListBlock } from "./link-list";
-export { contactsBlock } from "./contact-people";
-export { videoEmbedBlock } from "./video-embed";
-export { quoteBlock } from "./quote";
 export { heroBlock } from "./hero";
+export { linkListBlock } from "./link-list";
+export { mediaBlock } from "./media";
+export { quoteBlock } from "./quote";
+export { videoEmbedBlock } from "./video-embed";

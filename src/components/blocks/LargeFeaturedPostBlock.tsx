@@ -1,6 +1,6 @@
+import { parseLink } from "@/lib/parse-link";
 import { LargeFeaturedPostBlock as LargeFeaturedPostBlockType } from "@/payload-types";
 import Image from "next/image";
-import { parseLink } from "@/lib/parse-link";
 import Button from "../Button";
 
 type Props = {

@@ -1,7 +1,7 @@
 "use client";
 
+import { useDocumentInfo, useField, useLocale } from "@payloadcms/ui";
 import { useState } from "react";
-import { useField, useDocumentInfo, useLocale } from "@payloadcms/ui";
 import { translateAltText } from "./actions";
 
 interface FieldProps {

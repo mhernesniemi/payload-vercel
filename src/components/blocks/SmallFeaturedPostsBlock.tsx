@@ -1,8 +1,8 @@
-import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType } from "@/payload-types";
-import Heading from "../Heading";
-import Card from "../Card";
 import { parseLink } from "@/lib/parse-link";
+import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType } from "@/payload-types";
 import { Fragment } from "react";
+import Card from "../Card";
+import Heading from "../Heading";
 
 type Props = {
   block: SmallFeaturedPostsWrapperBlockType;

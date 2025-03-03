@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { cookies } from "next/headers";
 import { getPayload } from "payload";
 import config from "../../../../payload.config";
-import { cookies } from "next/headers";
 
 const initializePayload = async () => {
   try {

@@ -1,7 +1,7 @@
-import { usePagination } from "react-instantsearch";
+import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { usePagination } from "react-instantsearch";
 
 export default function SearchPagination() {
   const { pages, currentRefinement, nbPages, isFirstPage, isLastPage, refine, createURL } =

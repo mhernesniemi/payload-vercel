@@ -1,5 +1,5 @@
-import { CollectionConfig } from "payload";
 import { defaultContentFields } from "@/fields/default-content-fields";
+import { CollectionConfig } from "payload";
 import { afterChangeHook, afterDeleteHook } from "./hooks/indexToElastic";
 
 export const Articles: CollectionConfig = {

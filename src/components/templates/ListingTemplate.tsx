@@ -1,10 +1,10 @@
+import { Link } from "@/i18n/routing";
+import { formatDateLong } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { Article } from "../../payload-types";
 import Container from "../Container";
 import Header from "../Header";
 import Heading from "../Heading";
-import { Article } from "../../payload-types";
-import { useTranslations } from "next-intl";
-import { formatDateLong } from "@/lib/utils";
-import { Link } from "@/i18n/routing";
 
 interface ListingTemplateProps {
   articles: Article[];

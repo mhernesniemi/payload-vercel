@@ -1,11 +1,11 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import { headers } from "next/headers";
-import { getPayload, SanitizedCollectionPermission } from "payload";
 import configPromise from "@payload-config";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import CreateArticle from "./create-article-temp";
+import { getPayload, SanitizedCollectionPermission } from "payload";
 import { fetchUserArticles } from "./actions";
+import CreateArticle from "./create-article-temp";
 
 export default async function CreateArticlePage() {
   const payload = await getPayload({

@@ -1,9 +1,9 @@
 "use client";
 
 import { createClientFeature } from "@payloadcms/richtext-lexical/client";
-import { INSERT_AI_ASSISTANT_COMMAND, TestPlugin } from "./plugin";
-import { AIIcon } from "./icon";
 import { $isRangeSelection } from "@payloadcms/richtext-lexical/lexical";
+import { AIIcon } from "./icon";
+import { INSERT_AI_ASSISTANT_COMMAND, TestPlugin } from "./plugin";
 
 export const AIRichTextClientFeature = createClientFeature({
   toolbarInline: {

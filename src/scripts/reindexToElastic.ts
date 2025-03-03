@@ -1,9 +1,8 @@
-import { getPayload } from "payload";
-import { elasticClient } from "@/lib/elastic-utils";
-import config from "@/payload.config";
-import { Article, CollectionPage, News } from "../payload-types";
-import { createIndexWithMappings, richTextToPlainText } from "@/lib/elastic-utils";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
+import { createIndexWithMappings, elasticClient, richTextToPlainText } from "@/lib/elastic-utils";
+import config from "@/payload.config";
+import { getPayload } from "payload";
+import { Article, CollectionPage, News } from "../payload-types";
 
 type IndexableDocument = Article | CollectionPage | News;
 

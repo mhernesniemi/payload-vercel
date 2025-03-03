@@ -1,5 +1,4 @@
-import { Block } from "payload";
-import { getPayload } from "payload";
+import { Block, getPayload } from "payload";
 
 type CollectionType = "articles" | "news" | "collection-pages";
 

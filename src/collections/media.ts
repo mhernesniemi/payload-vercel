@@ -1,5 +1,5 @@
-import type { CollectionConfig } from "payload";
 import { generateImageAltText } from "@/components/admin-ui/AltTextGenerator/actions";
+import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
   slug: "media",

@@ -1,13 +1,13 @@
 "use client";
 
-import { ChevronRightIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import SidePanel from "./SidePanel";
+import { Link } from "@/i18n/routing";
 import { parseLink } from "@/lib/parse-link";
 import { MenuItem as MainMenuItem } from "@/types/menu";
-import { Link } from "@/i18n/routing";
+import { Bars3Icon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import SidePanel from "./SidePanel";
 
 interface MenuItem {
   title: string;

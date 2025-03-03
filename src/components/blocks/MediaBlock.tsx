@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { MediaBlock as MediaBlockType } from "@/payload-types";
+import Image from "next/image";
 
 type Props = {
   block: MediaBlockType;

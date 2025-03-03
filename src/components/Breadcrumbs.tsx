@@ -44,15 +44,9 @@ export default function Breadcrumbs({ path = [] }: BreadcrumbsProps) {
         {path.map((pathItem, index) => {
           const isLast = index === path.length - 1;
           return (
-            <li
-              key={`${pathItem.url}-${pathItem.title}`}
-              className="flex gap-2"
-            >
+            <li key={`${pathItem.url}-${pathItem.title}`} className="flex gap-2">
               <span aria-hidden="true">/</span>
-              <Link
-                href={pathItem.url}
-                {...(isLast ? { "aria-current": "page" } : {})}
-              >
+              <Link href={pathItem.url} {...(isLast ? { "aria-current": "page" } : {})}>
                 {pathItem.title}
               </Link>
             </li>

@@ -1,13 +1,13 @@
+import { Footer } from "@/components/Footer";
+import { Toaster } from "@/components/Toaster";
+import { routing } from "@/i18n/routing";
+import { SITE_NAME } from "@/lib/constants";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { SITE_NAME } from "@/lib/constants";
-import { Toaster } from "@/components/Toaster";
-import { Footer } from "@/components/Footer";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

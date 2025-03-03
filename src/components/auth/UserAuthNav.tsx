@@ -1,8 +1,8 @@
-import { UserIcon } from "@heroicons/react/24/outline";
 import { Link } from "@/i18n/routing";
+import { UserIcon } from "@heroicons/react/24/outline";
+import configPromise from "@payload-config";
 import { headers } from "next/headers";
 import { getPayload } from "payload";
-import configPromise from "@payload-config";
 
 export default async function UserAuthNav() {
   const payload = await getPayload({

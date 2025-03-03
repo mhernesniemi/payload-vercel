@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
 import { useField } from "@payloadcms/ui";
+import { useRef, useState } from "react";
 import { generateAdminContent } from "./actions";
 
 interface FieldProps {
@@ -33,7 +33,13 @@ const Field: React.FC<FieldProps> = ({ appliedTo }) => {
     try {
       const contentString = content ? JSON.stringify(content) : "";
 
-      const response = await generateAdminContent(prompt, title || "", description || "", contentString, appliedTo);
+      const response = await generateAdminContent(
+        prompt,
+        title || "",
+        description || "",
+        contentString,
+        appliedTo,
+      );
 
       if (response) {
         const cleanedResponse = response.replace(/^"|"$/g, "");

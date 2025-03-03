@@ -1,5 +1,5 @@
-import { FrontPage } from "@/payload-types";
 import { BlockRenderer } from "@/components/BlockRenderer";
+import { FrontPage } from "@/payload-types";
 type FrontPageTemplateProps = {
   content: FrontPage;
 };

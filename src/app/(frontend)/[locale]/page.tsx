@@ -1,8 +1,8 @@
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-import FrontPageTemplate from "@/components/templates/FrontPageTemplate";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
+import FrontPageTemplate from "@/components/templates/FrontPageTemplate";
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 
 type Params = Promise<{ locale: "fi" | "en" }>;
 

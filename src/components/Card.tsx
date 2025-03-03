@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import Heading from "./Heading";
 import { Media } from "@/payload-types";
+import Image from "next/image";
+import Heading from "./Heading";
 
 export type CardProps = {
   image?: Media;

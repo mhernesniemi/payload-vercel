@@ -1,21 +1,21 @@
-import React, { Fragment } from "react";
+import { Link } from "@/i18n/routing";
 import {
   IS_BOLD,
+  IS_CODE,
   IS_ITALIC,
   IS_STRIKETHROUGH,
-  IS_UNDERLINE,
-  IS_CODE,
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
+  IS_UNDERLINE,
 } from "@/lib/node-format";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { SerializedTextNode } from "@payloadcms/richtext-lexical";
 import type {
   SerializedElementNode,
   SerializedLexicalNode,
 } from "@payloadcms/richtext-lexical/lexical";
+import { Fragment } from "react";
 import Heading from "./Heading";
-import { Link } from "@/i18n/routing";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 type HeadingNode = SerializedElementNode & {
   tag: "h1" | "h2" | "h3" | "h4";

@@ -1,6 +1,6 @@
 import configPromise from "@payload-config";
-import { getPayload } from "payload";
 import { getServerSession } from "next-auth";
+import { getPayload } from "payload";
 
 export default async function ProfilePage() {
   const session = await getServerSession();

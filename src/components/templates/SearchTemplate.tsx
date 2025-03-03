@@ -1,24 +1,24 @@
 "use client";
 
-import {
-  InstantSearch,
-  useSearchBox,
-  useStats,
-  useRefinementList,
-  useCurrentRefinements,
-  Configure,
-  Hits,
-} from "react-instantsearch";
-import createClient from "@searchkit/instantsearch-client";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ELASTIC_INDEX_NAME } from "@/lib/constants";
-import SearchFilter from "@/components/SearchFilter";
 import Heading from "@/components/Heading";
+import SearchFilter from "@/components/SearchFilter";
 import SearchHit from "@/components/SearchHit";
 import SearchPagination from "@/components/SearchPagination";
+import { ELASTIC_INDEX_NAME } from "@/lib/constants";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import createClient from "@searchkit/instantsearch-client";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import {
+  Configure,
+  Hits,
+  InstantSearch,
+  useCurrentRefinements,
+  useRefinementList,
+  useSearchBox,
+  useStats,
+} from "react-instantsearch";
 
 const searchClient = createClient({
   url: "/api/search",

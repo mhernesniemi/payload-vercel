@@ -1,7 +1,7 @@
-import { LinkListBlock as LinkListBlockType } from "@/payload-types";
 import { Link } from "@/i18n/routing";
 import { parseLink } from "@/lib/parse-link";
-import { ChevronRightIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import { LinkListBlock as LinkListBlockType } from "@/payload-types";
+import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import Heading from "../Heading";
 type Props = {
   block: LinkListBlockType;

@@ -1,7 +1,6 @@
-import React from "react";
 import { useInfiniteHits, UseInfiniteHitsProps } from "react-instantsearch";
-import SearchHit from "./SearchHit";
 import Button from "./Button";
+import SearchHit from "./SearchHit";
 
 interface Hit {
   id: string;

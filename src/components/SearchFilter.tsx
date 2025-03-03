@@ -1,4 +1,3 @@
-import { CheckIcon } from "@heroicons/react/24/outline";
 import {
   Listbox,
   ListboxButton,
@@ -6,10 +5,10 @@ import {
   ListboxOptions,
   Transition,
 } from "@headlessui/react";
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 import { useRefinementList } from "react-instantsearch";
-import { useTranslations } from "next-intl";
 
 interface CategoryFilterProps {
   attribute: string;

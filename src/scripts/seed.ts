@@ -1,8 +1,8 @@
+import path from "path";
 import type { CollectionSlug, Payload, PayloadRequest } from "payload";
 import { getPayload } from "payload";
-import config from "../payload.config";
-import path from "path";
 import { fileURLToPath } from "url";
+import config from "../payload.config";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,10 +40,18 @@ async function fetchFileByURL(url: string) {
 const getRandomDate = () => {
   const start = new Date(2023, 0, 1);
   const end = new Date();
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toISOString();
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
+  ).toISOString();
 };
 
-export const seed = async ({ payload, _req }: { payload: Payload; _req?: PayloadRequest }): Promise<void> => {
+export const seed = async ({
+  payload,
+  _req,
+}: {
+  payload: Payload;
+  _req?: PayloadRequest;
+}): Promise<void> => {
   payload.logger.info("Seeding database...");
 
   // Clear collections

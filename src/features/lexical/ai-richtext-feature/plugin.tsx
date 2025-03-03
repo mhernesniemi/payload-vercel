@@ -1,25 +1,27 @@
 "use client";
 
+import type { PluginComponent } from "@payloadcms/richtext-lexical";
 import type { LexicalCommand } from "@payloadcms/richtext-lexical/lexical";
 import {
-  createCommand,
-  COMMAND_PRIORITY_EDITOR,
-  $getSelection,
-  $isRangeSelection,
-  $createRangeSelection,
-  $setSelection,
-  $isRootOrShadowRoot,
-  $insertNodes,
   $createParagraphNode,
+  $createRangeSelection,
   $createTextNode,
+  $getSelection,
+  $insertNodes,
+  $isRangeSelection,
+  $isRootOrShadowRoot,
+  $setSelection,
+  COMMAND_PRIORITY_EDITOR,
+  createCommand,
 } from "@payloadcms/richtext-lexical/lexical";
 import { useLexicalComposerContext } from "@payloadcms/richtext-lexical/lexical/react/LexicalComposerContext";
-import { useEffect, useState, useRef } from "react";
-import type { PluginComponent } from "@payloadcms/richtext-lexical";
-import { generateAdminContent } from "./actions";
 import { useField } from "@payloadcms/ui";
+import { useEffect, useRef, useState } from "react";
+import { generateAdminContent } from "./actions";
 
-export const INSERT_AI_ASSISTANT_COMMAND: LexicalCommand<void> = createCommand("INSERT_AI_ASSISTANT_COMMAND");
+export const INSERT_AI_ASSISTANT_COMMAND: LexicalCommand<void> = createCommand(
+  "INSERT_AI_ASSISTANT_COMMAND",
+);
 
 export const TestPlugin: PluginComponent = () => {
   const [editor] = useLexicalComposerContext();
@@ -100,7 +102,8 @@ export const TestPlugin: PluginComponent = () => {
 
       // Using the title and description fields as context
       const response = await generateAdminContent(prompt, title, description, content, "content", {
-        otherParagraphs: paragraphs.length > 0 ? paragraphs.filter((p) => p !== content) : undefined,
+        otherParagraphs:
+          paragraphs.length > 0 ? paragraphs.filter((p) => p !== content) : undefined,
         pageTitle: title,
         pageDescription: description,
       });
@@ -282,7 +285,7 @@ export const TestPlugin: PluginComponent = () => {
       },
       COMMAND_PRIORITY_EDITOR,
     );
-  }, [editor]);
+  }, [editor]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isFormVisible) return null;
 
@@ -302,7 +305,10 @@ export const TestPlugin: PluginComponent = () => {
 
       <div style={styles.contextInfo as React.CSSProperties}>
         <strong>Context used:</strong>
-        <div>Title: {title ? (title.length > 30 ? `${title.substring(0, 30)}...` : title) : "Not available"}</div>
+        <div>
+          Title:{" "}
+          {title ? (title.length > 30 ? `${title.substring(0, 30)}...` : title) : "Not available"}
+        </div>
         <div>
           Description:{" "}
           {description
@@ -312,7 +318,8 @@ export const TestPlugin: PluginComponent = () => {
             : "Not available"}
         </div>
         <div>
-          Context paragraphs: {paragraphs.length} {paragraphs.length > 0 ? "paragraphs" : "paragraph"}
+          Context paragraphs: {paragraphs.length}{" "}
+          {paragraphs.length > 0 ? "paragraphs" : "paragraph"}
           {paragraphs.length > 0 && (
             <span className="paragraph-preview">
               {paragraphs.length > 2
@@ -333,7 +340,11 @@ export const TestPlugin: PluginComponent = () => {
         style={styles.textarea as React.CSSProperties}
       />
       <div>
-        <button onClick={handleGenerateContent} disabled={isLoading} style={styles.button as React.CSSProperties}>
+        <button
+          onClick={handleGenerateContent}
+          disabled={isLoading}
+          style={styles.button as React.CSSProperties}
+        >
           {isLoading ? "Generating..." : "Generate content"}
         </button>
         <button
