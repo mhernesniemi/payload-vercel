@@ -62,6 +62,7 @@ pnpm dev
 - `pnpm generate:importmap` - Generate import map
 - `pnpm reindex` - Reindex data to Elasticsearch
 - `pnpm seed` - Run database seeding script
+- `pnpm format` - Format all files with Prettier
 
 ## 📁 Project Structure
 
