@@ -16,7 +16,7 @@
     "prepare": "husky",
     "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToElastic.ts",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/seed.ts",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" --ignore-path src/payload-types.ts --ignore-path 'src/migrations/**'"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.0",
