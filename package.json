@@ -72,8 +72,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "prettier --write --ignore-path src/payload-types.ts",
-      "eslint --fix"
+      "prettier --write --ignore-path src/payload-types.ts --ignore-path migrations/",
+      "eslint --fix --ignore-pattern 'migrations/*'"
     ],
     "*.{json,css,md}": [
       "prettier --write"
