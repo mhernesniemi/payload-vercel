@@ -70,6 +70,8 @@ This document outlines the coding standards and naming conventions for the proje
 
 1. Imports
 
+   - Automatically sorted by prettier
+
 2. Types and interfaces
 
    - Component Props types should be defined separately as export type
