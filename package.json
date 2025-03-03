@@ -71,9 +71,9 @@
     "node": "^18.20.2 || >=20.9.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write --ignore-path src/payload-types.ts --ignore-path migrations/",
-      "eslint --fix --ignore-pattern 'migrations/*'"
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write --ignore-path src/payload-types.ts",
+      "eslint --fix --ignore-pattern 'src/migrations/**'"
     ],
     "*.{json,css,md}": [
       "prettier --write"
