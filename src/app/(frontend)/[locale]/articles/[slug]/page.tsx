@@ -2,6 +2,7 @@ import Container from "@/components/Container";
 import Header from "@/components/Header";
 import ArticleTemplate from "@/components/templates/ArticleTemplate";
 import { SITE_NAME } from "@/lib/constants";
+import { prepareOpenGraphImages } from "@/lib/utils";
 import configPromise from "@payload-config";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -50,10 +51,12 @@ export default async function ArticlePage(props: Props) {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const article = await getArticleBySlug(props);
-
   if (!article) return {};
+  const openGraphImages = prepareOpenGraphImages(article.meta?.image);
 
   return {
-    title: `${article.title} | ${SITE_NAME}`,
+    title: article.meta?.title || `${article.title} | ${SITE_NAME}`,
+    description: article.meta?.description || article.description,
+    openGraph: openGraphImages ? { images: openGraphImages } : undefined,
   };
 }

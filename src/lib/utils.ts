@@ -20,3 +20,10 @@ export function formatDateShort(date: string, locale: string) {
     day: "numeric",
   });
 }
+
+export function prepareOpenGraphImages(image: unknown): { url: string }[] | undefined {
+  if (image && typeof image === "object" && "url" in image && image.url) {
+    return [{ url: image.url as string }];
+  }
+  return undefined;
+}
