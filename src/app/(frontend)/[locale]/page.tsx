@@ -59,12 +59,11 @@ export default async function FrontPage(props: Props) {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { frontPage } = await getFrontPage(props);
-  if (!frontPage) return {};
-  const openGraphImages = prepareOpenGraphImages(frontPage.meta?.image);
+  const openGraphImages = prepareOpenGraphImages(frontPage?.meta?.image);
 
   return {
-    title: frontPage.meta?.title || SITE_NAME,
-    description: frontPage.meta?.description || undefined,
+    title: frontPage?.meta?.title || SITE_NAME,
+    description: frontPage?.meta?.description,
     openGraph: openGraphImages ? { images: openGraphImages } : undefined,
   };
 }
