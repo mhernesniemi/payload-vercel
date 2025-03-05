@@ -1,6 +1,8 @@
 import ErrorTemplate from "@/components/templates/ErrorTemplate";
 import { ListingTemplate } from "@/components/templates/ListingTemplate";
+import { SITE_NAME } from "@/lib/constants";
 import configPromise from "@payload-config";
+import { getTranslations } from "next-intl/server";
 
 import { getPayload } from "payload";
 type Params = Promise<{ locale: "fi" | "en" }>;
@@ -49,4 +51,12 @@ export default async function ArticlesPage({
     console.error("Error fetching articles:", error);
     return <ErrorTemplate error={error as Error} />;
   }
+}
+
+export async function generateMetadata() {
+  const t = await getTranslations("articles");
+
+  return {
+    title: `${t("title")} | ${SITE_NAME}`,
+  };
 }
