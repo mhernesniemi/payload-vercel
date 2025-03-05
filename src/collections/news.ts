@@ -7,6 +7,7 @@ export const News: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "Pages",
+    defaultColumns: ["title", "createdBy", "updatedAt", "createdAt"],
   },
   fields: defaultContentFields,
   hooks: {
