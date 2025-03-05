@@ -2,38 +2,69 @@ import Container from "@/components/Container";
 import Header from "@/components/Header";
 import ErrorTemplate from "@/components/templates/ErrorTemplate";
 import FrontPageTemplate from "@/components/templates/FrontPageTemplate";
+import { SITE_NAME } from "@/lib/constants";
+import { prepareOpenGraphImages } from "@/lib/utils";
 import configPromise from "@payload-config";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-type Params = Promise<{ locale: "fi" | "en" }>;
+type Props = {
+  params: Promise<{ locale: "fi" | "en"; slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export default async function Home({ params }: { params: Params }) {
+async function getFrontPage({ params, searchParams }: Props) {
   try {
     const { locale } = await params;
-    const payload = await getPayload({ config: configPromise });
+    const preview = (await searchParams).preview as string;
+    const previewMode = preview === process.env.PREVIEW_SECRET;
 
-    if (!payload) {
-      throw new Error("Could not establish a database connection");
-    }
+    const payload = await getPayload({
+      config: configPromise,
+    });
 
     const frontPage = await payload.findGlobal({
       slug: "front-page",
       locale: locale,
+      draft: previewMode,
     });
 
-    if (!frontPage) {
-      return notFound();
-    }
-
-    return (
-      <Container>
-        <Header />
-        <FrontPageTemplate content={frontPage} />
-      </Container>
-    );
+    return { frontPage: frontPage, error: null };
   } catch (error) {
-    console.error("Error loading the page:", error);
-    return <ErrorTemplate error={error as Error} />;
+    console.error("Error fetching front page:", error);
+    return { frontPage: null, error: error as Error };
   }
+}
+
+export default async function FrontPage(props: Props) {
+  const { frontPage, error } = await getFrontPage(props);
+
+  if (error) {
+    console.error("Error fetching front page:", error);
+    return <ErrorTemplate error={error} />;
+  }
+
+  if (!frontPage) {
+    notFound();
+  }
+
+  return (
+    <Container>
+      <Header />
+      <FrontPageTemplate content={frontPage} />
+    </Container>
+  );
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { frontPage } = await getFrontPage(props);
+  if (!frontPage) return {};
+  const openGraphImages = prepareOpenGraphImages(frontPage.meta?.image);
+
+  return {
+    title: frontPage.meta?.title || SITE_NAME,
+    description: frontPage.meta?.description || undefined,
+    openGraph: openGraphImages ? { images: openGraphImages } : undefined,
+  };
 }
