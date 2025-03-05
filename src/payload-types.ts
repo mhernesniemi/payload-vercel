@@ -601,6 +601,14 @@ export interface FrontPage {
     | QuoteBlock
     | DynamicListBlock
   )[];
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1023,6 +1031,13 @@ export interface FrontPageSelect<T extends boolean = true> {
         media?: T | MediaBlockSelect<T>;
         quote?: T | QuoteBlockSelect<T>;
         dynamicList?: T | DynamicListBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -6,6 +6,7 @@ let isGeneratingDescription = false;
 
 export const seoConfig = seoPlugin({
   collections: ["articles", "news", "collection-page"],
+  globals: ["front-page"],
   uploadsCollection: "media",
   generateTitle: async ({ doc }) => {
     if (doc?.title.length > 60 || doc?.title.length < 50) {
