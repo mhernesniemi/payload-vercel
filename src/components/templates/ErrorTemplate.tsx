@@ -3,7 +3,6 @@ import Container from "../Container";
 import Header from "../Header";
 
 export default async function ErrorTemplate({ error }: { error: Error }) {
-  // Sentry.captureException(error);
   const t = await getTranslations();
   return (
     <Container>
