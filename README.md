@@ -38,6 +38,10 @@ curl http://localhost:9200
 
 3. Copy the `.env.example` file as `.env` and fill in the required variables
 
+```bash
+cp .env.example .env
+```
+
 4. Install dependencies:
 
 ```bash
