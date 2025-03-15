@@ -1,0 +1,47 @@
+name: Deploy Next.js to UpCloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh root@${{ secrets.SERVER_IP }} << 'EOF'
+            cd /var/www/payload
+            
+            git pull origin main
+            
+            if [ ! -f .env ]; then
+              cp .env.example .env
+              sed -i 's/YOUR_SECRET_HERE/${{ secrets.PAYLOAD_SECRET }}/g' .env
+            fi
+            
+            export PNPM_HOME="$HOME/.local/share/pnpm"
+            export PATH="$PNPM_HOME:$PATH"
+            
+            pnpm install --frozen-lockfile
+            
+            rm -rf .next
+            
+            pnpm build
+            
+            pnpm payload migrate
+            
+            pm2 restart payload
+          EOF
