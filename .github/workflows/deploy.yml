@@ -36,9 +36,25 @@ jobs:
               cp .env.example .env
               sed -i 's/YOUR_SECRET_HERE/${{ secrets.PAYLOAD_SECRET }}/g' .env
             fi
+
+            # Load NVM and use Node.js
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 22 || nvm install 22
             
+            # Verify Node.js is available
+            node -v
+            npm -v
+            
+            # Continue with deployment
             export PNPM_HOME="$HOME/.local/share/pnpm"
             export PATH="$PNPM_HOME:$PATH"
+            
+            # Install pnpm if not available
+            if ! command -v pnpm &> /dev/null; then
+              echo "Installing pnpm..."
+              npm install -g pnpm
+            fi
             
             pnpm install --frozen-lockfile
             
@@ -47,6 +63,12 @@ jobs:
             pnpm build
             
             pnpm payload migrate
+            
+            # Install PM2 if not available
+            if ! command -v pm2 &> /dev/null; then
+              echo "Installing PM2..."
+              npm install -g pm2
+            fi
             
             pm2 restart payload
           EOF
