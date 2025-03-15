@@ -20,6 +20,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
+      - name: Load NVM & Use Node.js
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use 22
+          node -v  # Debug: Ensure Node.js is available
+
       - name: Deploy to Server
         run: |
           ssh root@${{ secrets.SERVER_IP }} << 'EOF'
