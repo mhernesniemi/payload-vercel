@@ -70,5 +70,5 @@ jobs:
               npm install -g pm2
             fi
             
-            pm2 restart payload
+            pm2 restart pnpm
           EOF
