@@ -11,7 +11,6 @@ export const Contacts: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
-      localized: true,
     },
     {
       name: "title",

@@ -8,10 +8,12 @@ export const largeFeaturedPostBlock: Block = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "text",
       type: "textarea",
+      localized: true,
     },
     {
       name: "image",
@@ -42,10 +44,12 @@ export const smallFeaturedPostBlock: Block = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "text",
       type: "textarea",
+      localized: true,
     },
     {
       name: "image",

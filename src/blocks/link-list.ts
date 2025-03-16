@@ -7,6 +7,7 @@ export const linkListBlock: Block = {
     {
       name: "links",
       type: "array",
+      localized: true,
       fields: [...linkFieldWithLabel],
     },
   ],

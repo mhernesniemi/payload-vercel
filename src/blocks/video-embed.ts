@@ -7,10 +7,12 @@ export const videoEmbedBlock: Block = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "description",
       type: "textarea",
+      localized: true,
     },
     {
       name: "youtubeId",

@@ -12,6 +12,7 @@ export const mediaBlock: Block = {
     {
       name: "caption",
       type: "text",
+      localized: true,
     },
   ],
   interfaceName: "MediaBlock",

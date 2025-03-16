@@ -27,11 +27,13 @@ export const FrontPage: GlobalConfig = {
       required: true,
       maxRows: 1,
       blocks: [heroBlock],
+      localized: true,
     },
     {
       name: "content",
       type: "blocks",
       required: true,
+      localized: true,
       blocks: [
         ctaBlock,
         largeFeaturedPostBlock,
