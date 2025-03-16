@@ -1,16 +1,5 @@
 import Client from "@searchkit/api";
-import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
-
-// Reading the certificate from the file
-const CA_CERT_PATH =
-  process.env.ELASTICSEARCH_CA_CERT_PATH || "/etc/elasticsearch/certs/http_ca.crt";
-let caCert;
-try {
-  caCert = fs.existsSync(CA_CERT_PATH) ? fs.readFileSync(CA_CERT_PATH) : undefined;
-} catch (error) {
-  console.error(`Error reading the certificate: ${error}`);
-}
 
 const apiConfig = {
   connection: {
@@ -19,10 +8,6 @@ const apiConfig = {
     auth: {
       username: process.env.ELASTICSEARCH_USERNAME || "elastic",
       password: process.env.ELASTICSEARCH_PASSWORD!,
-    },
-    ssl: {
-      ca: caCert, // Using the certificate from the file
-      rejectUnauthorized: true, // Ensuring the connection security
     },
   },
   search_settings: {
