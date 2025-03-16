@@ -7,21 +7,11 @@ import config from "../payload.config";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const NUMBER_OF_CONTACTS = 20;
-const NUMBER_OF_MEDIA = 20;
+const NUMBER_OF_CONTACTS = 10;
+const NUMBER_OF_MEDIA = 5;
 const NUMBER_OF_ARTICLES = 20;
-const NUMBER_OF_COLLECTION_PAGES = 20;
-const NUMBER_OF_NEWS = 20;
 
-const collections: CollectionSlug[] = [
-  "users",
-  "categories",
-  "media",
-  "contacts",
-  "articles",
-  "news",
-  "collection-pages",
-];
+const collections: CollectionSlug[] = ["users", "categories", "media", "contacts", "articles"];
 
 // Helper function to fetch files from URL
 async function fetchFileByURL(url: string) {
@@ -180,69 +170,6 @@ export const seed = async ({
     });
   }
 
-  payload.logger.info("— Creating news...");
-  for (let i = 0; i < NUMBER_OF_NEWS; i++) {
-    const post = posts[i + NUMBER_OF_ARTICLES];
-    await payload.create({
-      collection: "news",
-      data: {
-        title: post.title,
-        content: {
-          root: {
-            type: "root",
-            children: [
-              {
-                type: "paragraph",
-                children: [{ text: post.body, type: "text", version: 1 }],
-                direction: "ltr",
-                format: "",
-                indent: 0,
-                version: 1,
-              },
-            ],
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            version: 1,
-          },
-        },
-        slug: `news-${i + 1}`,
-        image: mediaItems[i].id,
-      },
-    });
-  }
-
-  payload.logger.info("— Creating collection pages...");
-  for (let i = 0; i < NUMBER_OF_COLLECTION_PAGES; i++) {
-    const post = posts[i + NUMBER_OF_ARTICLES + NUMBER_OF_NEWS];
-    await payload.create({
-      collection: "collection-pages",
-      data: {
-        title: `Collection ${i + 1}: ${post.title}`,
-        content: {
-          root: {
-            type: "root",
-            children: [
-              {
-                type: "paragraph",
-                children: [{ text: post.body, type: "text", version: 1 }],
-                direction: "ltr",
-                format: "",
-                indent: 0,
-                version: 1,
-              },
-            ],
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            version: 1,
-          },
-        },
-        slug: `collection-${i + 1}`,
-        image: mediaItems[i].id,
-      },
-    });
-  }
   payload.logger.info("— Creating front page...");
   await payload.updateGlobal({
     slug: "front-page",
@@ -250,8 +177,8 @@ export const seed = async ({
       hero: [
         {
           blockType: "hero",
-          title: "Welcome to Our Website",
-          description: "Discover our latest articles, news and collections",
+          title: "Hello there!",
+          description: "This is hero section",
           image: mediaItems[0].id,
           link: {
             label: "Browse Articles",
