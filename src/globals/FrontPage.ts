@@ -24,7 +24,6 @@ export const FrontPage: GlobalConfig = {
     {
       name: "hero",
       type: "blocks",
-      required: true,
       localized: true,
       maxRows: 1,
       blocks: [heroBlock],
@@ -32,7 +31,6 @@ export const FrontPage: GlobalConfig = {
     {
       name: "content",
       type: "blocks",
-      required: true,
       localized: true,
       blocks: [
         ctaBlock,

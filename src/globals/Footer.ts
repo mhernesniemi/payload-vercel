@@ -30,29 +30,21 @@ export const Footer: GlobalConfig = {
             {
               name: "facebook",
               type: "text",
-
-              localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "instagram",
               type: "text",
-
-              localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "linkedin",
               type: "text",
-
-              localized: true,
               admin: { description: "Link URL" },
             },
             {
               name: "youtube",
               type: "text",
-
-              localized: true,
               admin: { description: "Link URL" },
             },
           ],
@@ -63,12 +55,12 @@ export const Footer: GlobalConfig = {
       name: "contact",
       type: "group",
       fields: [
-        { name: "title", type: "text", localized: true },
-        { name: "address", type: "text", localized: true },
-        { name: "postalCode", type: "text", localized: true },
-        { name: "city", type: "text", localized: true },
-        { name: "phone", type: "text", localized: true },
-        { name: "email", type: "text", localized: true },
+        { name: "title", type: "text" },
+        { name: "address", type: "text" },
+        { name: "postalCode", type: "text" },
+        { name: "city", type: "text" },
+        { name: "phone", type: "text" },
+        { name: "email", type: "text" },
       ],
     },
     {

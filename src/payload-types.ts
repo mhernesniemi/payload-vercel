@@ -589,18 +589,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface FrontPage {
   id: number;
-  hero: HeroBlock[];
-  content: (
-    | CTABlock
-    | LargeFeaturedPostBlock
-    | SmallFeaturedPostsWrapperBlock
-    | LinkListBlock
-    | ContactsBlock
-    | VideoEmbedBlock
-    | MediaBlock
-    | QuoteBlock
-    | DynamicListBlock
-  )[];
+  hero?: HeroBlock[] | null;
+  content?:
+    | (
+        | CTABlock
+        | LargeFeaturedPostBlock
+        | SmallFeaturedPostsWrapperBlock
+        | LinkListBlock
+        | ContactsBlock
+        | VideoEmbedBlock
+        | MediaBlock
+        | QuoteBlock
+        | DynamicListBlock
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     description?: string | null;

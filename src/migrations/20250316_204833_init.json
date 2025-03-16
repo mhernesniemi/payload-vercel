@@ -2753,6 +2753,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "_locale": {
+          "name": "_locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "id": {
           "name": "id",
           "type": "text",
@@ -2837,6 +2844,13 @@
           "name": "front_page_blocks_hero_path_idx",
           "columns": [
             "_path"
+          ],
+          "isUnique": false
+        },
+        "front_page_blocks_hero_locale_idx": {
+          "name": "front_page_blocks_hero_locale_idx",
+          "columns": [
+            "_locale"
           ],
           "isUnique": false
         },
@@ -5605,44 +5619,6 @@
           "notNull": true,
           "autoincrement": false
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "footer_locales": {
-      "name": "footer_locales",
-      "columns": {
-        "general_title": {
-          "name": "general_title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "general_description": {
-          "name": "general_description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "general_social_facebook": {
           "name": "general_social_facebook",
           "type": "text",
@@ -5708,6 +5684,44 @@
         },
         "contact_email": {
           "name": "contact_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "footer_locales": {
+      "name": "footer_locales",
+      "columns": {
+        "general_title": {
+          "name": "general_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "general_description": {
+          "name": "general_description",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -5781,6 +5795,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "b23a5a75-5371-45bd-acbe-2a01ed328eb2",
+  "id": "de93758a-1a8a-46e9-a910-866f46e3a4bd",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

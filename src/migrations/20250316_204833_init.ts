@@ -385,6 +385,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`block_type\` text DEFAULT 'hero' NOT NULL,
   	\`title\` text NOT NULL,
@@ -401,12 +402,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_hero_order_idx\` ON \`front_page_blocks_hero\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_hero_parent_id_idx\` ON \`front_page_blocks_hero\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_hero_path_idx\` ON \`front_page_blocks_hero\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_hero_locale_idx\` ON \`front_page_blocks_hero\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_hero_image_idx\` ON \`front_page_blocks_hero\` (\`image_id\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_cta\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text NOT NULL,
+  	\`text\` text,
   	\`link_label\` text,
   	\`link_is_external\` integer,
   	\`link_external_url\` text,
@@ -417,20 +422,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_cta_order_idx\` ON \`front_page_blocks_cta\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_cta_parent_id_idx\` ON \`front_page_blocks_cta\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_cta_path_idx\` ON \`front_page_blocks_cta\` (\`_path\`);`)
-  await db.run(sql`CREATE TABLE \`front_page_blocks_cta_locales\` (
-  	\`title\` text NOT NULL,
-  	\`text\` text,
-  	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`_parent_id\` text NOT NULL,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page_blocks_cta\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE UNIQUE INDEX \`front_page_blocks_cta_locales_locale_parent_id_unique\` ON \`front_page_blocks_cta_locales\` (\`_locale\`,\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_cta_locale_idx\` ON \`front_page_blocks_cta\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_large_featured_post\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`title\` text NOT NULL,
   	\`text\` text,
@@ -447,11 +444,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_large_featured_post_order_idx\` ON \`front_page_blocks_large_featured_post\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_large_featured_post_parent_id_idx\` ON \`front_page_blocks_large_featured_post\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_large_featured_post_path_idx\` ON \`front_page_blocks_large_featured_post\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_large_featured_post_locale_idx\` ON \`front_page_blocks_large_featured_post\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_large_featured_post_image_idx\` ON \`front_page_blocks_large_featured_post\` (\`image_id\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_small_featured_post\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`title\` text NOT NULL,
   	\`text\` text,
@@ -466,11 +465,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_post_order_idx\` ON \`front_page_blocks_small_featured_post\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_post_parent_id_idx\` ON \`front_page_blocks_small_featured_post\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_post_path_idx\` ON \`front_page_blocks_small_featured_post\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_post_locale_idx\` ON \`front_page_blocks_small_featured_post\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_post_image_idx\` ON \`front_page_blocks_small_featured_post\` (\`image_id\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_small_featured_posts_wrapper\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`block_name\` text,
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page\`(\`id\`) ON UPDATE no action ON DELETE cascade
@@ -479,9 +480,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_posts_wrapper_order_idx\` ON \`front_page_blocks_small_featured_posts_wrapper\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_posts_wrapper_parent_id_idx\` ON \`front_page_blocks_small_featured_posts_wrapper\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_posts_wrapper_path_idx\` ON \`front_page_blocks_small_featured_posts_wrapper\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_small_featured_posts_wrapper_locale_idx\` ON \`front_page_blocks_small_featured_posts_wrapper\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_link_list_links\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`label\` text,
   	\`is_external\` integer,
@@ -491,10 +494,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   `)
   await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_links_order_idx\` ON \`front_page_blocks_link_list_links\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_links_parent_id_idx\` ON \`front_page_blocks_link_list_links\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_links_locale_idx\` ON \`front_page_blocks_link_list_links\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_link_list\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`block_name\` text,
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page\`(\`id\`) ON UPDATE no action ON DELETE cascade
@@ -503,10 +508,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_order_idx\` ON \`front_page_blocks_link_list\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_parent_id_idx\` ON \`front_page_blocks_link_list\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_path_idx\` ON \`front_page_blocks_link_list\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_link_list_locale_idx\` ON \`front_page_blocks_link_list\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_contacts\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`block_name\` text,
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page\`(\`id\`) ON UPDATE no action ON DELETE cascade
@@ -515,10 +522,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_contacts_order_idx\` ON \`front_page_blocks_contacts\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_contacts_parent_id_idx\` ON \`front_page_blocks_contacts\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_contacts_path_idx\` ON \`front_page_blocks_contacts\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_contacts_locale_idx\` ON \`front_page_blocks_contacts\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_video_embed\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`title\` text NOT NULL,
   	\`description\` text,
@@ -530,10 +539,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_video_embed_order_idx\` ON \`front_page_blocks_video_embed\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_video_embed_parent_id_idx\` ON \`front_page_blocks_video_embed\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_video_embed_path_idx\` ON \`front_page_blocks_video_embed\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_video_embed_locale_idx\` ON \`front_page_blocks_video_embed\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_media\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`media_id\` integer NOT NULL,
   	\`caption\` text,
@@ -545,12 +556,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_media_order_idx\` ON \`front_page_blocks_media\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_media_parent_id_idx\` ON \`front_page_blocks_media\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_media_path_idx\` ON \`front_page_blocks_media\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_media_locale_idx\` ON \`front_page_blocks_media\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_media_media_idx\` ON \`front_page_blocks_media\` (\`media_id\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_quote\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
+  	\`quote\` text NOT NULL,
+  	\`author\` text,
+  	\`title\` text,
   	\`image_id\` integer,
   	\`block_name\` text,
   	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
@@ -560,41 +576,36 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_quote_order_idx\` ON \`front_page_blocks_quote\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_quote_parent_id_idx\` ON \`front_page_blocks_quote\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_quote_path_idx\` ON \`front_page_blocks_quote\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_quote_locale_idx\` ON \`front_page_blocks_quote\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_quote_image_idx\` ON \`front_page_blocks_quote\` (\`image_id\`);`)
-  await db.run(sql`CREATE TABLE \`front_page_blocks_quote_locales\` (
-  	\`quote\` text NOT NULL,
-  	\`author\` text,
-  	\`title\` text,
-  	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`_parent_id\` text NOT NULL,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page_blocks_quote\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE UNIQUE INDEX \`front_page_blocks_quote_locales_locale_parent_id_unique\` ON \`front_page_blocks_quote_locales\` (\`_locale\`,\`_parent_id\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_dynamic_list_collections\` (
   	\`order\` integer NOT NULL,
   	\`parent_id\` text NOT NULL,
   	\`value\` text,
+  	\`locale\` text NOT NULL,
   	\`id\` integer PRIMARY KEY NOT NULL,
   	FOREIGN KEY (\`parent_id\`) REFERENCES \`front_page_blocks_dynamic_list\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_collections_order_idx\` ON \`front_page_blocks_dynamic_list_collections\` (\`order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_collections_parent_idx\` ON \`front_page_blocks_dynamic_list_collections\` (\`parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_collections_locale_idx\` ON \`front_page_blocks_dynamic_list_collections\` (\`locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_dynamic_list_items\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`front_page_blocks_dynamic_list\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_items_order_idx\` ON \`front_page_blocks_dynamic_list_items\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_items_parent_id_idx\` ON \`front_page_blocks_dynamic_list_items\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_items_locale_idx\` ON \`front_page_blocks_dynamic_list_items\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page_blocks_dynamic_list\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`sort_by\` text DEFAULT 'createdAt' NOT NULL,
   	\`sort_order\` text DEFAULT 'desc' NOT NULL,
@@ -606,6 +617,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_order_idx\` ON \`front_page_blocks_dynamic_list\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_parent_id_idx\` ON \`front_page_blocks_dynamic_list\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_path_idx\` ON \`front_page_blocks_dynamic_list\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_blocks_dynamic_list_locale_idx\` ON \`front_page_blocks_dynamic_list\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`front_page\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`updated_at\` text,
@@ -630,6 +642,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`order\` integer,
   	\`parent_id\` integer NOT NULL,
   	\`path\` text NOT NULL,
+  	\`locale\` text,
   	\`articles_id\` integer,
   	\`collection_pages_id\` integer,
   	\`news_id\` integer,
@@ -644,10 +657,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`front_page_rels_order_idx\` ON \`front_page_rels\` (\`order\`);`)
   await db.run(sql`CREATE INDEX \`front_page_rels_parent_idx\` ON \`front_page_rels\` (\`parent_id\`);`)
   await db.run(sql`CREATE INDEX \`front_page_rels_path_idx\` ON \`front_page_rels\` (\`path\`);`)
-  await db.run(sql`CREATE INDEX \`front_page_rels_articles_id_idx\` ON \`front_page_rels\` (\`articles_id\`);`)
-  await db.run(sql`CREATE INDEX \`front_page_rels_collection_pages_id_idx\` ON \`front_page_rels\` (\`collection_pages_id\`);`)
-  await db.run(sql`CREATE INDEX \`front_page_rels_news_id_idx\` ON \`front_page_rels\` (\`news_id\`);`)
-  await db.run(sql`CREATE INDEX \`front_page_rels_contacts_id_idx\` ON \`front_page_rels\` (\`contacts_id\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_rels_locale_idx\` ON \`front_page_rels\` (\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_rels_articles_id_idx\` ON \`front_page_rels\` (\`articles_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_rels_collection_pages_id_idx\` ON \`front_page_rels\` (\`collection_pages_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_rels_news_id_idx\` ON \`front_page_rels\` (\`news_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`front_page_rels_contacts_id_idx\` ON \`front_page_rels\` (\`contacts_id\`,\`locale\`);`)
   await db.run(sql`CREATE TABLE \`main_menu_items_children_grandchildren\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` text NOT NULL,
@@ -779,13 +793,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`footer_menu_rels_news_id_idx\` ON \`footer_menu_rels\` (\`news_id\`,\`locale\`);`)
   await db.run(sql`CREATE TABLE \`footer\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`updated_at\` text,
-  	\`created_at\` text
-  );
-  `)
-  await db.run(sql`CREATE TABLE \`footer_locales\` (
-  	\`general_title\` text,
-  	\`general_description\` text,
   	\`general_social_facebook\` text,
   	\`general_social_instagram\` text,
   	\`general_social_linkedin\` text,
@@ -796,6 +803,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`contact_city\` text,
   	\`contact_phone\` text,
   	\`contact_email\` text,
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
+  await db.run(sql`CREATE TABLE \`footer_locales\` (
+  	\`general_title\` text,
+  	\`general_description\` text,
   	\`copyright\` text,
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`_locale\` text NOT NULL,
@@ -833,7 +847,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`payload_migrations\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_hero\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_cta\`;`)
-  await db.run(sql`DROP TABLE \`front_page_blocks_cta_locales\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_large_featured_post\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_small_featured_post\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_small_featured_posts_wrapper\`;`)
@@ -843,7 +856,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`front_page_blocks_video_embed\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_media\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_quote\`;`)
-  await db.run(sql`DROP TABLE \`front_page_blocks_quote_locales\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_dynamic_list_collections\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_dynamic_list_items\`;`)
   await db.run(sql`DROP TABLE \`front_page_blocks_dynamic_list\`;`)
