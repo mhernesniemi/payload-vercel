@@ -14,7 +14,7 @@ export default function Card({ image, title, text, href }: CardProps) {
   if (!href || !title) return null;
 
   return (
-    <li className="relative overflow-hidden rounded-lg bg-stone-800 transition-all duration-300 hover:ring-1 hover:ring-amber-500">
+    <div className="relative overflow-hidden rounded-lg bg-stone-800 transition-all duration-300 hover:ring-1 hover:ring-amber-500">
       {image?.url && (
         <div className="relative h-64 w-full">
           <Image src={image.url} alt={image.alt || title || ""} fill className="object-cover" />
@@ -29,6 +29,6 @@ export default function Card({ image, title, text, href }: CardProps) {
         </Link>
         {text && <p className="mb-4 line-clamp-2 text-stone-300">{text}</p>}
       </div>
-    </li>
+    </div>
   );
 }

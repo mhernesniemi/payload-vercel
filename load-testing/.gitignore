@@ -1,0 +1,5 @@
+__pycache__/
+venv/
+urls.json
+sitemap.xml
+.env
