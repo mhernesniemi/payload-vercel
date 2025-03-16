@@ -60,9 +60,10 @@ jobs:
             
             rm -rf .next
             
-            pnpm build
-            
+            # Run migrations before build
             pnpm payload migrate
+            
+            pnpm build
             
             pnpm reindex
             
