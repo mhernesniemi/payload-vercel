@@ -7,17 +7,14 @@ export const quoteBlock: Block = {
       name: "quote",
       type: "textarea",
       required: true,
-      localized: true,
     },
     {
       name: "author",
       type: "text",
-      localized: true,
     },
     {
       name: "title",
       type: "text",
-      localized: true,
       admin: {
         description: "Author's title or role",
       },

@@ -21,14 +21,12 @@ export const heroBlock: Block = {
       name: "title",
       type: "text",
       required: true,
-      localized: true,
       label: "Title",
     },
     {
       name: "description",
       type: "textarea",
       required: true,
-      localized: true,
       label: "Description",
     },
     {

@@ -12,12 +12,10 @@ export const ctaBlock: Block = {
       name: "title",
       type: "text",
       required: true,
-      localized: true,
     },
     {
       name: "text",
       type: "textarea",
-      localized: true,
     },
     {
       name: "link",
