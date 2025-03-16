@@ -48,7 +48,13 @@ cp .env.example .env
 pnpm i
 ```
 
-5. Start the development environment:
+5. Run migrations:
+
+```bash
+pnpm payload migrate:fresh
+```
+
+6. Start the development environment:
 
 ```bash
 pnpm dev
