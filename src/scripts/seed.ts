@@ -1,3 +1,4 @@
+import OpenAI from "openai";
 import path from "path";
 import type { CollectionSlug, Payload, PayloadRequest } from "payload";
 import { getPayload } from "payload";
@@ -12,6 +13,60 @@ const NUMBER_OF_MEDIA = 5;
 const NUMBER_OF_ARTICLES = 20;
 
 const collections: CollectionSlug[] = ["users", "categories", "media", "contacts", "articles"];
+
+function getOpenAIInstance() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
+
+// Helper function to generate article content using OpenAI
+async function generateArticleContent(category: string) {
+  try {
+    const openai = getOpenAIInstance();
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a content generator for a news website. Generate compelling article titles and content paragraphs that are informative and engaging.",
+        },
+        {
+          role: "user",
+          content: `Generate an article about the topic "${category}". Provide the response in JSON format with the following structure: { "title": "article title", "content": "two paragraphs of content" }`,
+        },
+      ],
+    });
+
+    const responseContent = completion.choices[0].message.content;
+    if (!responseContent) {
+      throw new Error("No content generated");
+    }
+
+    try {
+      return JSON.parse(responseContent);
+    } catch (error) {
+      console.error("Error parsing OpenAI response:", error);
+      // Fallback jos JSON-jäsennys epäonnistuu
+      const titleMatch = responseContent.match(/"title":\s*"([^"]+)"/);
+      const contentMatch = responseContent.match(/"content":\s*"([^"]+)"/);
+
+      return {
+        title: titleMatch ? titleMatch[1] : `Article about ${category}`,
+        content: contentMatch ? contentMatch[1] : `This is an article about ${category}.`,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating article content:", error);
+    // Fallback if OpenAI call fails
+    return {
+      title: `Article about ${category}`,
+      content: `This is an article about ${category}. The content provides information and insights on the topic.`,
+    };
+  }
+}
 
 // Helper function to fetch files from URL
 async function fetchFileByURL(url: string) {
@@ -125,29 +180,27 @@ export const seed = async ({
         phone: user.phone,
         categories: [categories[i % categories.length].id],
         order: i + 1,
-        image: mediaItems[i].id,
+        image: mediaItems[i % NUMBER_OF_MEDIA].id,
       },
     });
   }
 
   payload.logger.info("— Creating articles...");
-  const postsResponse = await fetch("https://dummyjson.com/posts?limit=100");
-  const postsData = await postsResponse.json();
-  const posts = postsData.posts;
-
   for (let i = 0; i < NUMBER_OF_ARTICLES; i++) {
-    const post = posts[i];
+    const category = categories[i % categories.length];
+    const generatedContent = await generateArticleContent(category.label);
+
     await payload.create({
       collection: "articles",
       data: {
-        title: post.title,
+        title: generatedContent.title,
         content: {
           root: {
             type: "root",
             children: [
               {
                 type: "paragraph",
-                children: [{ text: post.body, type: "text", version: 1 }],
+                children: [{ text: generatedContent.content, type: "text", version: 1 }],
                 direction: "ltr",
                 format: "",
                 indent: 0,
@@ -161,11 +214,11 @@ export const seed = async ({
           },
         },
         author: adminUser.id,
-        categories: [categories[i % categories.length].id],
+        categories: [category.id],
         publishedDate: getRandomDate(),
         slug: `article-${i + 1}`,
         _status: "published",
-        image: mediaItems[i].id,
+        image: mediaItems[i % NUMBER_OF_MEDIA].id,
       },
     });
   }
@@ -249,7 +302,7 @@ export const seed = async ({
         },
         {
           blockType: "media",
-          media: mediaItems[5].id,
+          media: mediaItems[5 % NUMBER_OF_MEDIA].id,
           caption:
             "We are dedicated to bringing you the most relevant and engaging content across various fields including technology, business, and science.",
         },
@@ -286,7 +339,11 @@ export const seed = async ({
         },
         {
           blockType: "contacts",
-          contacts: [mediaItems[7].id, mediaItems[8].id, mediaItems[9].id],
+          contacts: [
+            mediaItems[7 % NUMBER_OF_MEDIA].id,
+            mediaItems[8 % NUMBER_OF_MEDIA].id,
+            mediaItems[9 % NUMBER_OF_MEDIA].id,
+          ],
         },
       ],
     },
