@@ -42,11 +42,17 @@ export default async function Header() {
         <div className="hidden lg:flex-1 xl:block">
           <MainMenu items={mainMenu.items as MenuItem[]} />
         </div>
-        <div className="flex items-center justify-end gap-8 lg:w-[300px]">
-          <UserAuthNav />
-          <SearchSidePanel />
-          <LanguageSwitcher />
-        </div>
+        <ul className="flex items-center justify-end gap-8 lg:w-[300px]">
+          <li>
+            <UserAuthNav />
+          </li>
+          <li>
+            <SearchSidePanel />
+          </li>
+          <li>
+            <LanguageSwitcher />
+          </li>
+        </ul>
       </div>
     </header>
   );
