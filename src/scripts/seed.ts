@@ -180,8 +180,6 @@ export const seed = async ({
         title: user.company.title,
         email: user.email,
         phone: user.phone,
-        categories: [categories[i % categories.length].id],
-        order: i + 1,
         image: mediaItems[i % NUMBER_OF_MEDIA].id,
       },
     });
