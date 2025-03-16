@@ -10,7 +10,7 @@ export function ContactsBlock({ block }: Props) {
   return (
     <div className="my-24">
       {block.blockName && (
-        <Heading level="h2" size="md" className="mb-6">
+        <Heading level="h2" size="md">
           {block.blockName}
         </Heading>
       )}

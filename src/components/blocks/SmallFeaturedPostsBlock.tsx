@@ -1,6 +1,5 @@
 import { parseLink } from "@/lib/parse-link";
 import { SmallFeaturedPostsWrapperBlock as SmallFeaturedPostsWrapperBlockType } from "@/payload-types";
-import { Fragment } from "react";
 import Card from "../Card";
 import Heading from "../Heading";
 
@@ -12,7 +11,7 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
   return (
     <div className="my-24 w-full">
       {block.blockName && (
-        <Heading level="h2" size="md" className="mb-6">
+        <Heading level="h2" size="md">
           {block.blockName}
         </Heading>
       )}
@@ -21,15 +20,13 @@ export default function SmallFeaturedPostsBlock({ block }: Props) {
           const { linkUrl } = parseLink(post.link);
           if (linkUrl) {
             return (
-              <Fragment key={post.id}>
-                <Card
-                  key={post.id}
-                  image={typeof post.image === "object" ? post.image : undefined}
-                  title={post.title}
-                  text={post.text}
-                  href={linkUrl}
-                />
-              </Fragment>
+              <Card
+                key={post.id}
+                image={typeof post.image === "object" ? post.image : undefined}
+                title={post.title}
+                text={post.text}
+                href={linkUrl}
+              />
             );
           }
           return null;

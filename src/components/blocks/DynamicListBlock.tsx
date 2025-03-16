@@ -26,7 +26,7 @@ export default function DynamicListBlock({ block }: Props) {
   return (
     <div className="my-24 w-full">
       {block.blockName && (
-        <Heading level="h2" size="md" className="mb-6">
+        <Heading level="h2" size="md">
           {block.blockName}
         </Heading>
       )}
