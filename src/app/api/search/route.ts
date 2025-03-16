@@ -9,6 +9,10 @@ const apiConfig = {
       username: process.env.ELASTICSEARCH_USERNAME!,
       password: process.env.ELASTICSEARCH_PASSWORD!,
     },
+    ssl: {
+      ca: process.env.ELASTICSEARCH_CA_CERT,
+      rejectUnauthorized: false, // Unsafe for production
+    },
   },
   search_settings: {
     search_attributes: [
