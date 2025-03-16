@@ -11,10 +11,19 @@ const reindexToElastic = async () => {
     const payload = await getPayload({ config });
 
     // Delete existing index if it exists
-    const indexExists = await elasticClient.indices.exists({ index: ELASTIC_INDEX_NAME });
-    if (indexExists) {
-      console.log(`Deleting existing index ${ELASTIC_INDEX_NAME}...`);
-      await elasticClient.indices.delete({ index: ELASTIC_INDEX_NAME });
+    try {
+      const indexExists = await elasticClient.indices.exists({ index: ELASTIC_INDEX_NAME });
+      if (indexExists) {
+        console.log(`Deleting existing index ${ELASTIC_INDEX_NAME}...`);
+        await elasticClient.indices.delete({ index: ELASTIC_INDEX_NAME });
+        console.log(`Successfully deleted index ${ELASTIC_INDEX_NAME}`);
+      } else {
+        console.log(`Index ${ELASTIC_INDEX_NAME} does not exist, no need to delete.`);
+      }
+    } catch (_error) {
+      console.log(
+        `Warning: Failed to delete index ${ELASTIC_INDEX_NAME}, it may not exist. Continuing with creation.`,
+      );
     }
 
     // Create new index with mappings
