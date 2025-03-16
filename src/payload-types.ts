@@ -233,8 +233,6 @@ export interface Contact {
   email: string;
   phone?: string | null;
   image?: (number | null) | Media;
-  categories?: (number | Category)[] | null;
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -546,8 +544,6 @@ export interface ContactsSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
   image?: T;
-  categories?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -11,7 +11,6 @@ export const Contacts: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
-      localized: true,
     },
     {
       name: "title",
@@ -31,22 +30,6 @@ export const Contacts: CollectionConfig = {
       name: "image",
       type: "upload",
       relationTo: "media",
-    },
-    {
-      name: "categories",
-      type: "relationship",
-      relationTo: "categories",
-      hasMany: true,
-      admin: {
-        position: "sidebar",
-      },
-    },
-    {
-      name: "order",
-      type: "number",
-      admin: {
-        position: "sidebar",
-      },
     },
   ],
 };
