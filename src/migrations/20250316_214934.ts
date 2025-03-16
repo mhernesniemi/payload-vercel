@@ -1,8 +1,8 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-sqlite'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.run(sql`DROP TABLE \`contacts_rels\`;`)
-  await db.run(sql`ALTER TABLE \`contacts\` ADD \`name\` text NOT NULL;`)
+  await db.run(sql`DROP TABLE IF EXISTS \`contacts_rels\`;`)
+  await db.run(sql`ALTER TABLE \`contacts\` ADD \`name\` text NOT NULL DEFAULT '';`)
   await db.run(sql`ALTER TABLE \`contacts\` DROP COLUMN \`order\`;`)
   await db.run(sql`ALTER TABLE \`contacts_locales\` DROP COLUMN \`name\`;`)
 }
