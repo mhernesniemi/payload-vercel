@@ -191,7 +191,7 @@ export const seed = async ({
         {
           blockType: "cta",
           title: "Get Started",
-          text: "Check out our latest content and stay up to date with our news.",
+          text: "This is CTA component. It is used to promote a specific action or offer.",
           link: {
             label: "View News",
             isExternal: true,
@@ -201,7 +201,7 @@ export const seed = async ({
         {
           blockType: "largeFeaturedPost",
           title: "Featured Article",
-          text: "Read our most popular article",
+          text: "This is large featured post component. It is used to promote a specific article.",
           image: mediaItems[1].id,
           link: {
             label: "Read here",
