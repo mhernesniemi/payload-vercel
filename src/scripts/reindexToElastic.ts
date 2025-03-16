@@ -44,16 +44,30 @@ const reindexToElastic = async () => {
       for (const doc of docs.docs as IndexableDocument[]) {
         // Fetch category labels if the document has categories
         const categoryLabels = await Promise.all(
-          "categories" in doc && doc.categories
-            ? (doc.categories as number[]).map(async (categoryId) => {
-                const category = await payload.findByID({
-                  collection: "categories",
-                  id: categoryId,
-                });
-                return category?.label;
+          "categories" in doc && doc.categories && Array.isArray(doc.categories)
+            ? doc.categories.map(async (categoryId: number | { id: number }) => {
+                // Ensure categoryId is a number or can be converted to number
+                const id =
+                  typeof categoryId === "object" && categoryId !== null
+                    ? categoryId.id
+                    : Number(categoryId);
+
+                try {
+                  const category = await payload.findByID({
+                    collection: "categories",
+                    id,
+                  });
+                  return category?.label || null;
+                } catch (error) {
+                  console.error(`Error fetching category ${id}:`, error);
+                  return null;
+                }
               })
             : [],
         );
+
+        // Filter out null values from categoryLabels
+        const validCategoryLabels = categoryLabels.filter((label) => label !== null);
 
         // Index document
         await elasticClient.index({
@@ -65,7 +79,7 @@ const reindexToElastic = async () => {
             content: doc.content ? richTextToPlainText(doc.content) : null,
             slug: doc.slug,
             publishedDate: "publishedDate" in doc ? doc.publishedDate : null,
-            categories: categoryLabels,
+            categories: validCategoryLabels,
             collection: collectionSlug,
           },
           refresh: true,

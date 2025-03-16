@@ -16,14 +16,30 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
 
       // Fetch category labels
       const categoryLabels = await Promise.all(
-        doc.categories?.map(async (categoryId: number) => {
-          const category = await payload.findByID({
-            collection: "categories",
-            id: categoryId,
-          });
-          return category?.label;
-        }) || [],
+        doc.categories && Array.isArray(doc.categories)
+          ? doc.categories.map(async (categoryId: number | { id: number }) => {
+              // Ensure categoryId is a number or can be converted to number
+              const id =
+                typeof categoryId === "object" && categoryId !== null
+                  ? categoryId.id
+                  : Number(categoryId);
+
+              try {
+                const category = await payload.findByID({
+                  collection: "categories",
+                  id,
+                });
+                return category?.label || null;
+              } catch (error) {
+                console.error(`Error fetching category ${id}:`, error);
+                return null;
+              }
+            })
+          : [],
       );
+
+      // Filter out null values from categoryLabels
+      const validCategoryLabels = categoryLabels.filter((label) => label !== null);
 
       await elasticClient.index({
         index: ELASTIC_INDEX_NAME,
@@ -34,7 +50,7 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
           content: doc.content ? richTextToPlainText(doc.content) : null,
           slug: doc.slug,
           publishedDate: doc.publishedDate,
-          categories: categoryLabels,
+          categories: validCategoryLabels,
           collection: collection.slug,
         },
         refresh: true,
