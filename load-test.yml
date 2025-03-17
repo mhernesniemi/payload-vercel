@@ -1,0 +1,102 @@
+config:
+  target: "https://payload.torppadiy.com/fi"
+  phases:
+    - duration: 60
+      arrivalRate: 1
+      rampTo: 5
+      name: "Warm up phase"
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 10
+      name: "Ramp up load"
+    - duration: 30
+      arrivalRate: 10
+      rampTo: 30
+      name: "Spike phase"
+  defaults:
+    headers:
+      User-Agent: "Artillery Load Test"
+  # Useful plugins for monitoring metrics and performance requirements
+  plugins:
+    ensure: {}
+    apdex: {}
+    metrics-by-endpoint: {}
+  # Apdex threshold (milliseconds)
+  apdex:
+    threshold: 100
+  # Ensure response times stay within these limits
+  ensure:
+    thresholds:
+      - http.response_time.p99: 100
+      - http.response_time.p95: 75
+
+scenarios:
+  - name: "Visit pages"
+    flow:
+      - get:
+          url: "/"
+      - think: 3
+      - get:
+          url: "/articles"
+      - think: 2
+      - get:
+          url: "/articles/article-8"
+
+  - name: "Browse articles"
+    flow:
+      - get:
+          url: "/articles"
+      - think: 5
+      - get:
+          url: "/articles/article-1"
+      - think: 3
+      - get:
+          url: "/articles/article-2"
+      - think: 4
+      - get:
+          url: "/articles"
+
+  - name: "Search functionality"
+    flow:
+      - get:
+          url: "/"
+      - think: 2
+      - get:
+          url: "/search?q=test"
+      - think: 3
+      - get:
+          url: "/search?q=article"
+      - think: 2
+      - get:
+          url: "/"
+
+  - name: "Mixed user journey"
+    flow:
+      - get:
+          url: "/"
+      - think: 3
+      - get:
+          url: "/articles"
+      - think: 4
+      - get:
+          url: "/search?q=featured"
+      - think: 2
+      - get:
+          url: "/articles/article-5"
+      - think: 5
+      - get:
+          url: "/auth-example"
+      - think: 3
+
+  - name: "Repeated browsing"
+    flow:
+      - loop:
+          - get:
+              url: "/"
+          - think: 1
+          - get:
+              url: "/articles"
+          - think: 2
+          - get:
+              url: "/articles/article-3"
+        count: 10

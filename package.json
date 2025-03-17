@@ -17,7 +17,8 @@
     "prepare": "husky",
     "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToElastic.ts",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/seed.ts",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
+    "load-test": "artillery run load-test.yml"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.0",
@@ -34,6 +35,7 @@
     "@payloadcms/ui": "^3.24.0",
     "@searchkit/api": "^4.13.0",
     "@searchkit/instantsearch-client": "^4.14.1",
+    "artillery": "^2.0.22",
     "cross-env": "^7.0.3",
     "graphql": "^16.10.0",
     "husky": "^9.1.7",
