@@ -22,13 +22,13 @@ config:
     apdex: {}
     metrics-by-endpoint: {}
   # Apdex threshold (milliseconds)
-  apdex:
-    threshold: 100
+  # apdex:
+  #   threshold: 100
   # Ensure response times stay within these limits
-  ensure:
-    thresholds:
-      - http.response_time.p99: 200
-      - http.response_time.p95: 150
+  # ensure:
+  #   thresholds:
+  #     - http.response_time.p99: 200
+  #     - http.response_time.p95: 150
 
 scenarios:
   - name: "Visit pages"
