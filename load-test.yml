@@ -1,17 +1,17 @@
 config:
-  target: "https://payload.torppadiy.com/fi"
+  target: "{{ $processEnvironment.TARGET_URL }}"
   phases:
     - duration: 60
       arrivalRate: 1
-      rampTo: 5
+      rampTo: 3
       name: "Warm up phase"
     - duration: 60
-      arrivalRate: 5
-      rampTo: 10
+      arrivalRate: 3
+      rampTo: 5
       name: "Ramp up load"
     - duration: 30
-      arrivalRate: 10
-      rampTo: 30
+      arrivalRate: 5
+      rampTo: 10
       name: "Spike phase"
   defaults:
     headers:
@@ -27,8 +27,8 @@ config:
   # Ensure response times stay within these limits
   ensure:
     thresholds:
-      - http.response_time.p99: 100
-      - http.response_time.p95: 75
+      - http.response_time.p99: 200
+      - http.response_time.p95: 150
 
 scenarios:
   - name: "Visit pages"

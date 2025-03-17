@@ -14,9 +14,9 @@ export function VideoEmbedBlock({ block }: Props) {
           {block.blockName}
         </Heading>
       )}
-      <div className="relative overflow-hidden rounded-xl shadow-xl ring-1 ring-stone-800 aspect-video">
-        <YouTubeEmbed videoid={block.youtubeId} playlabel={block.title || "Toista video"} />
-      </div>
+
+      <YouTubeEmbed videoid={block.youtubeId} playlabel={block.title || "Toista video"} />
+
       {block.description && (
         <p className="mt-4 leading-relaxed text-stone-300">{block.description}</p>
       )}
