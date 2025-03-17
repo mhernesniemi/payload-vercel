@@ -9,16 +9,17 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-export const dynamic = "force-dynamic";
+type Props = {
+  params: Promise<{ locale: "fi" | "en"; slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [];
-}
-
-async function getArticleBySlug() {
+async function getArticleBySlug({ params, searchParams }: Props) {
   try {
+    const { slug, locale } = await params;
+    const preview = (await searchParams).preview as string;
+    const previewMode = preview === process.env.PREVIEW_SECRET;
+
     const payload = await getPayload({
       config: configPromise,
     });
@@ -26,9 +27,10 @@ async function getArticleBySlug() {
     const result = await payload.find({
       collection: "articles",
       where: {
-        slug: { equals: "article-8" },
+        slug: { equals: slug },
       },
-      locale: "fi",
+      locale: locale,
+      draft: previewMode,
     });
 
     return { article: result.docs[0], error: null };
@@ -38,8 +40,8 @@ async function getArticleBySlug() {
   }
 }
 
-export default async function ArticlePage() {
-  const { article, error } = await getArticleBySlug();
+export default async function ArticlePage(props: Props) {
+  const { article, error } = await getArticleBySlug(props);
 
   if (error) {
     console.error("Error fetching article:", error);
@@ -58,8 +60,8 @@ export default async function ArticlePage() {
   );
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { article } = await getArticleBySlug();
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { article } = await getArticleBySlug(props);
   const openGraphImages = prepareOpenGraphImages(article?.meta?.image);
 
   return {

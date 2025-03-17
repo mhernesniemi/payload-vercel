@@ -3,19 +3,21 @@ import { ListingTemplate } from "@/components/templates/ListingTemplate";
 import { SITE_NAME } from "@/lib/constants";
 import configPromise from "@payload-config";
 import { getTranslations } from "next-intl/server";
+
 import { getPayload } from "payload";
+type Params = Promise<{ locale: "fi" | "en" }>;
 
-export const dynamic = "force-dynamic";
-
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [];
-}
-
-export default async function ArticlesPage() {
+export default async function ArticlesPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   try {
-    const currentPage = 1;
+    const { locale } = await params;
+    const searchParamsResolved = await searchParams;
+    const currentPage = Number(searchParamsResolved.page) || 1;
     const perPage = 40;
 
     const payload = await getPayload({
@@ -29,7 +31,7 @@ export default async function ArticlesPage() {
     } = await payload.find({
       collection: "articles",
       sort: "-publishedDate",
-      locale: "fi",
+      locale: locale,
       draft: false,
       limit: perPage,
       page: currentPage,
@@ -42,7 +44,7 @@ export default async function ArticlesPage() {
         totalDocs={totalDocs}
         totalPages={totalPages}
         currentPage={currentPage}
-        locale="fi"
+        locale={locale}
       />
     );
   } catch (error) {

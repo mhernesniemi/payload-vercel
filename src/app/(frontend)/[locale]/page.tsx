@@ -10,23 +10,25 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-export const dynamic = "force-dynamic";
+type Props = {
+  params: Promise<{ locale: "fi" | "en" }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [];
-}
-
-async function getFrontPage() {
+async function getFrontPage({ params, searchParams }: Props) {
   try {
+    const { locale } = await params;
+    const preview = (await searchParams).preview as string;
+    const previewMode = preview === process.env.PREVIEW_SECRET;
+
     const payload = await getPayload({
       config: configPromise,
     });
 
     const frontPage = await payload.findGlobal({
       slug: "front-page",
-      locale: "fi",
+      locale: locale,
+      draft: previewMode,
     });
 
     return { frontPage: frontPage, error: null };
@@ -37,8 +39,8 @@ async function getFrontPage() {
   }
 }
 
-export default async function FrontPage() {
-  const { frontPage, error } = await getFrontPage();
+export default async function FrontPage(props: Props) {
+  const { frontPage, error } = await getFrontPage(props);
 
   if (error) {
     return <ErrorTemplate error={error} />;
@@ -55,9 +57,9 @@ export default async function FrontPage() {
   );
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
   try {
-    const { frontPage } = await getFrontPage();
+    const { frontPage } = await getFrontPage(props);
     const openGraphImages = prepareOpenGraphImages(frontPage?.meta?.image);
 
     return {
