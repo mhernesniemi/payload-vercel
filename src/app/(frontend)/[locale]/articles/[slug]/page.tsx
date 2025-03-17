@@ -9,17 +9,16 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-type Props = {
-  params: Promise<{ locale: "fi" | "en"; slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
+export const dynamic = "force-dynamic";
 
-async function getArticleBySlug({ params, searchParams }: Props) {
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return [];
+}
+
+async function getArticleBySlug() {
   try {
-    const { slug, locale } = await params;
-    const preview = (await searchParams).preview as string;
-    const previewMode = preview === process.env.PREVIEW_SECRET;
-
     const payload = await getPayload({
       config: configPromise,
     });
@@ -27,10 +26,9 @@ async function getArticleBySlug({ params, searchParams }: Props) {
     const result = await payload.find({
       collection: "articles",
       where: {
-        slug: { equals: slug },
+        slug: { equals: "article-8" },
       },
-      locale: locale,
-      draft: previewMode,
+      locale: "fi",
     });
 
     return { article: result.docs[0], error: null };
@@ -40,8 +38,8 @@ async function getArticleBySlug({ params, searchParams }: Props) {
   }
 }
 
-export default async function ArticlePage(props: Props) {
-  const { article, error } = await getArticleBySlug(props);
+export default async function ArticlePage() {
+  const { article, error } = await getArticleBySlug();
 
   if (error) {
     console.error("Error fetching article:", error);
@@ -60,8 +58,8 @@ export default async function ArticlePage(props: Props) {
   );
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { article } = await getArticleBySlug(props);
+export async function generateMetadata(): Promise<Metadata> {
+  const { article } = await getArticleBySlug();
   const openGraphImages = prepareOpenGraphImages(article?.meta?.image);
 
   return {
