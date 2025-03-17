@@ -84,9 +84,6 @@ scenarios:
       - get:
           url: "/articles/article-5"
       - think: 5
-      - get:
-          url: "/auth-example"
-      - think: 3
 
   - name: "Repeated browsing"
     flow:
