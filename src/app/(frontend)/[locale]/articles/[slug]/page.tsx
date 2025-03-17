@@ -14,6 +14,12 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return [];
+}
+
 async function getArticleBySlug({ params, searchParams }: Props) {
   try {
     const { slug, locale } = await params;

@@ -2,6 +2,12 @@ import configPromise from "@payload-config";
 import { getServerSession } from "next-auth";
 import { getPayload } from "payload";
 
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return [];
+}
+
 export default async function ProfilePage() {
   const session = await getServerSession();
 
