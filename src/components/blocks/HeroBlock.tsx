@@ -23,7 +23,7 @@ export function HeroBlock({ block }: HeroProps) {
           </div>
         )}
       </div>
-      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+      <div className="relative mx-auto max-w-4xl px-4 text-center">
         <Heading level="h1" size="xl" className="mb-6 text-white">
           {title}
         </Heading>
