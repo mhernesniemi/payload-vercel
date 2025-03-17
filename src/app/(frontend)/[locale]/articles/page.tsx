@@ -7,12 +7,6 @@ import { getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
 type Params = Promise<{ locale: "fi" | "en" }>;
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [];
-}
-
 export default async function ArticlesPage({
   params,
   searchParams,

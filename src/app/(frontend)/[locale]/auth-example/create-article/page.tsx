@@ -7,12 +7,6 @@ import { getPayload, SanitizedCollectionPermission } from "payload";
 import { fetchUserArticles } from "./actions";
 import CreateArticle from "./create-article-temp";
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [];
-}
-
 export default async function CreateArticlePage() {
   const payload = await getPayload({
     config: configPromise,
