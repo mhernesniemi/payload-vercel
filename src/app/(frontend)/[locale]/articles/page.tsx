@@ -3,8 +3,8 @@ import { ListingTemplate } from "@/components/templates/ListingTemplate";
 import { SITE_NAME } from "@/lib/constants";
 import configPromise from "@payload-config";
 import { getTranslations } from "next-intl/server";
-
 import { getPayload } from "payload";
+
 type Params = Promise<{ locale: "fi" | "en" }>;
 
 export default async function ArticlesPage({

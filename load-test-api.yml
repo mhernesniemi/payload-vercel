@@ -15,8 +15,7 @@ config:
       name: "Spike phase"
   defaults:
     headers:
-      User-Agent: "Artillery Load Test"
-    followRedirect: true
+      User-Agent: "Artillery API Load Test"
   # Useful plugins for monitoring metrics and performance requirements
   plugins:
     ensure: {}
@@ -32,55 +31,38 @@ config:
   #     - http.response_time.p95: 150
 
 scenarios:
-  - name: "Browse articles"
+  - name: "API Article Endpoints"
     flow:
       - get:
-          url: "/fi/articles"
-      - think: 5
-      - get:
-          url: "/fi/articles/article-1"
-      - think: 3
-      - get:
-          url: "/fi/articles/article-2"
-      - think: 4
-      - get:
-          url: "/fi"
-
-  - name: "Search functionality"
-    flow:
-      - get:
-          url: "/fi"
+          url: "/api/articles/21?depth=1&draft=false&locale=fi"
       - think: 2
       - get:
-          url: "/fi/search"
-      - think: 3
-      - get:
-          url: "/fi"
+          url: "/api/articles?depth=0&limit=20&locale=fi"
 
-  - name: "Mixed user journey"
+  - name: "API Content Testing"
     flow:
       - get:
-          url: "/fi"
-      - think: 3
-      - get:
-          url: "/fi/articles"
-      - think: 4
-      - get:
-          url: "/fi/search"
+          url: "/api/globals/front-page?depth=1&draft=false&locale=fi"
       - think: 2
       - get:
-          url: "/fi/articles/article-5"
-      - think: 5
+          url: "/api/globals/main-menu?depth=1&draft=false&locale=fi"
+      - think: 2
+      - get:
+          url: "/api/globals/footer?depth=1&draft=false&locale=fi"
+      - think: 2
+      - get:
+          url: "/api/globals/footer-menu?depth=1&draft=false&locale=fi"
 
-  - name: "Repeated browsing"
+  - name: "API Performance Testing"
     flow:
       - loop:
           - get:
-              url: "/fi"
+              url: "/api/articles/21?depth=1&draft=false&locale=fi"
           - think: 1
           - get:
-              url: "/fi/articles"
-          - think: 2
+              url: "/api/articles?depth=0&limit=20&locale=fi"
+          - think: 1
           - get:
-              url: "/fi/articles/article-3"
-        count: 10
+              url: "/api/globals/main-menu?depth=1&draft=false&locale=fi"
+          - think: 1
+        count: 5
