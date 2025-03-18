@@ -3,15 +3,15 @@ config:
   phases:
     - duration: 60
       arrivalRate: 1
-      rampTo: 3
+      rampTo: 5
       name: "Warm up phase"
     - duration: 60
-      arrivalRate: 3
-      rampTo: 5
-      name: "Ramp up load"
-    - duration: 30
       arrivalRate: 5
       rampTo: 10
+      name: "Ramp up load"
+    - duration: 30
+      arrivalRate: 10
+      rampTo: 20
       name: "Spike phase"
   defaults:
     headers:
