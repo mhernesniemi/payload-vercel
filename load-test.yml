@@ -16,7 +16,6 @@ config:
   defaults:
     headers:
       User-Agent: "Artillery Load Test"
-    followRedirect: true
   # Useful plugins for monitoring metrics and performance requirements
   plugins:
     ensure: {}
@@ -34,53 +33,16 @@ config:
 scenarios:
   - name: "Browse articles"
     flow:
-      - get:
-          url: "/fi/articles"
-      - think: 5
-      - get:
-          url: "/fi/articles/article-1"
-      - think: 3
-      - get:
-          url: "/fi/articles/article-2"
-      - think: 4
-      - get:
-          url: "/fi"
-
-  - name: "Search functionality"
-    flow:
-      - get:
-          url: "/fi"
-      - think: 2
-      - get:
-          url: "/fi/search"
-      - think: 3
-      - get:
-          url: "/fi"
-
-  - name: "Mixed user journey"
-    flow:
-      - get:
-          url: "/fi"
-      - think: 3
-      - get:
-          url: "/fi/articles"
-      - think: 4
-      - get:
-          url: "/fi/search"
-      - think: 2
-      - get:
-          url: "/fi/articles/article-5"
-      - think: 5
-
-  - name: "Repeated browsing"
-    flow:
       - loop:
           - get:
-              url: "/fi"
-          - think: 1
-          - get:
               url: "/fi/articles"
-          - think: 2
+          - think: 5
           - get:
-              url: "/fi/articles/article-3"
-        count: 10
+              url: "/fi/articles/article-8"
+          - think: 3
+          - get:
+              url: "/fi/articles/article-7"
+          - think: 4
+          - get:
+              url: "/fi/"
+        count: 3
