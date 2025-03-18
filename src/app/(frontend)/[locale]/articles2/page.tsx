@@ -8,8 +8,8 @@ import { getPayload } from "payload";
 type Params = Promise<{ locale: "fi" | "en" }>;
 type LocaleType = "fi" | "en" | "all" | undefined;
 
-// The page cache is invalidated every 60 seconds
-export const revalidate = 60;
+// The page cache is invalidated every 5 minutes
+export const revalidate = 300;
 
 // Allows dynamic path parameters that are not generated statically
 export const dynamicParams = true;
