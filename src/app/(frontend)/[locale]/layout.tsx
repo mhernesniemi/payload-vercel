@@ -24,8 +24,6 @@ export const metadata: Metadata = {
   title: SITE_NAME,
 };
 
-export const revalidate = 60;
-
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
 
