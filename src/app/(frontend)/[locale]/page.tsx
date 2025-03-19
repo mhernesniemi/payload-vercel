@@ -10,16 +10,18 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
+export const dynamic = "force-static";
+export const revalidate = 3600; // Revalidate at most once per hour
+
 type Props = {
   params: Promise<{ locale: "fi" | "en" }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-async function getFrontPage({ params, searchParams }: Props) {
+async function getFrontPage({ params }: Props) {
   try {
     const { locale } = await params;
-    const preview = (await searchParams).preview as string;
-    const previewMode = preview === process.env.PREVIEW_SECRET;
+    const isDraftMode = false; // Simplified for performance - no draft mode in static rendering
 
     const payload = await getPayload({
       config: configPromise,
@@ -28,7 +30,7 @@ async function getFrontPage({ params, searchParams }: Props) {
     const frontPage = await payload.findGlobal({
       slug: "front-page",
       locale: locale,
-      draft: previewMode,
+      draft: isDraftMode,
     });
 
     return { frontPage: frontPage, error: null };

@@ -9,16 +9,18 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
+export const dynamic = "force-static";
+export const revalidate = 3600; // Revalidate at most once per hour
+
 type Props = {
   params: Promise<{ locale: "fi" | "en"; slug: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-async function getArticleBySlug({ params, searchParams }: Props) {
+async function getArticleBySlug({ params }: Props) {
   try {
     const { slug, locale } = await params;
-    const preview = (await searchParams).preview as string;
-    const previewMode = preview === process.env.PREVIEW_SECRET;
+    const isDraftMode = false; // Simplified for performance - no draft mode in static rendering
 
     const payload = await getPayload({
       config: configPromise,
@@ -30,7 +32,7 @@ async function getArticleBySlug({ params, searchParams }: Props) {
         slug: { equals: slug },
       },
       locale: locale,
-      draft: previewMode,
+      draft: isDraftMode,
     });
 
     return { article: result.docs[0], error: null };
