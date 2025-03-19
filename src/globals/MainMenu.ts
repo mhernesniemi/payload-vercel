@@ -2,7 +2,7 @@ import { linkFieldWithLabel } from "@/fields/link";
 import { revalidatePath } from "next/cache";
 import { GlobalAfterChangeHook, GlobalConfig } from "payload";
 
-const revalidateMenu: GlobalAfterChangeHook = async () => {
+const revalidateMainMenuHook: GlobalAfterChangeHook = async () => {
   revalidatePath("/", "layout"); // Revalidating all data
 };
 
@@ -97,6 +97,6 @@ export const MainMenu: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateMenu],
+    afterChange: [revalidateMainMenuHook],
   },
 };

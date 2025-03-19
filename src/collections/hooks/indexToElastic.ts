@@ -2,7 +2,8 @@ import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import { createIndexWithMappings, elasticClient, richTextToPlainText } from "@/lib/elastic-utils";
 import config from "@payload-config";
 import { CollectionAfterChangeHook, CollectionAfterDeleteHook, getPayload } from "payload";
-export const afterChangeHook: CollectionAfterChangeHook = async ({
+
+export const indexToElasticHook: CollectionAfterChangeHook = async ({
   doc,
   operation,
   collection,
@@ -58,12 +59,12 @@ export const afterChangeHook: CollectionAfterChangeHook = async ({
       console.log(`Document ${doc.id} indexed in ${ELASTIC_INDEX_NAME}`);
     }
   } catch (error) {
-    console.error(`Error in afterChangeHook for ${doc.id}:`, error);
+    console.error(`Error in indexToElasticHook for ${doc.id}:`, error);
   }
   return doc;
 };
 
-export const afterDeleteHook: CollectionAfterDeleteHook = async ({ doc, collection }) => {
+export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc, collection }) => {
   try {
     const exists = await elasticClient.indices.exists({ index: collection.slug });
     if (exists) {
@@ -75,7 +76,7 @@ export const afterDeleteHook: CollectionAfterDeleteHook = async ({ doc, collecti
       console.log(`Document ${doc.id} deleted from ${ELASTIC_INDEX_NAME}`);
     }
   } catch (error) {
-    console.error(`Error in afterDeleteHook for ${doc.id}:`, error);
+    console.error(`Error in removeFromElasticHook for ${doc.id}:`, error);
   }
   return doc;
 };

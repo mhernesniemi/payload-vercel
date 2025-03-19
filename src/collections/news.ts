@@ -1,6 +1,14 @@
 import { defaultContentFields } from "@/fields/default-content-fields";
-import { CollectionConfig } from "payload";
-import { afterChangeHook, afterDeleteHook } from "./hooks/indexToElastic";
+import { revalidatePath } from "next/cache";
+import { CollectionAfterChangeHook, CollectionConfig } from "payload";
+import { indexToElasticHook, removeFromElasticHook } from "./hooks/indexToElastic";
+
+const revalidateNewsHook: CollectionAfterChangeHook = async ({ doc, operation }) => {
+  if (operation === "create" || operation === "update" || operation === "delete") {
+    revalidatePath(`/fi/news/${doc.slug}`);
+    revalidatePath(`/en/news/${doc.slug}`);
+  }
+};
 
 export const News: CollectionConfig = {
   slug: "news",
@@ -11,7 +19,7 @@ export const News: CollectionConfig = {
   },
   fields: defaultContentFields,
   hooks: {
-    afterChange: [afterChangeHook],
-    afterDelete: [afterDeleteHook],
+    afterChange: [indexToElasticHook, revalidateNewsHook],
+    afterDelete: [removeFromElasticHook],
   },
 };

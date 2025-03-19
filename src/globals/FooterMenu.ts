@@ -1,5 +1,10 @@
 import { linkFieldWithLabel } from "@/fields/link";
-import { GlobalConfig } from "payload";
+import { revalidatePath } from "next/cache";
+import { GlobalAfterChangeHook, GlobalConfig } from "payload";
+
+const revalidateFooterMenuHook: GlobalAfterChangeHook = async () => {
+  revalidatePath("/", "layout"); // Revalidating all data
+};
 
 export const FooterMenu: GlobalConfig = {
   slug: "footer-menu",
@@ -18,6 +23,7 @@ export const FooterMenu: GlobalConfig = {
       fields: [
         {
           name: "label",
+          label: "Title",
           type: "text",
           required: true,
           localized: true,
@@ -36,4 +42,7 @@ export const FooterMenu: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateFooterMenuHook],
+  },
 };

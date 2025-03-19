@@ -1,7 +1,7 @@
 import { defaultContentFields } from "@/fields/default-content-fields";
 import { revalidatePath } from "next/cache";
 import { CollectionAfterChangeHook, CollectionConfig } from "payload";
-import { afterChangeHook, afterDeleteHook } from "./hooks/indexToElastic";
+import { indexToElasticHook, removeFromElasticHook } from "./hooks/indexToElastic";
 
 const revalidateArticleHook: CollectionAfterChangeHook = async ({ doc, operation }) => {
   if (operation === "create" || operation === "update" || operation === "delete") {
@@ -66,7 +66,7 @@ export const Articles: CollectionConfig = {
     drafts: true,
   },
   hooks: {
-    afterChange: [afterChangeHook, revalidateArticleHook],
-    afterDelete: [afterDeleteHook],
+    afterChange: [indexToElasticHook, revalidateArticleHook],
+    afterDelete: [removeFromElasticHook],
   },
 };

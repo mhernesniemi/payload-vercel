@@ -20,7 +20,7 @@ export default function LanguageSwitcher() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <MenuButton
-        className="group inline-flex items-center justify-center gap-2 p-2"
+        className="group inline-flex items-center justify-center gap-2 py-2"
         aria-label={t("switchLanguage")}
       >
         <LanguageIcon className="h-5 w-5 group-hover:text-amber-500" aria-hidden="true" />
