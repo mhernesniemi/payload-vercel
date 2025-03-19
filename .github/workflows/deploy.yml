@@ -60,12 +60,12 @@ jobs:
             
             pnpm install --frozen-lockfile
             
-            rm -rf .next
+            # rm -rf .next
             
             # Run migrations before build
             pnpm payload migrate
             
-            pnpm build
+            pnpm build:prod
             
             pnpm reindex
             
