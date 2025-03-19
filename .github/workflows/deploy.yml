@@ -3,7 +3,7 @@ name: Deploy Next.js to UpCloud
 on:
   push:
     branches:
-      - main
+      - isr
 
 jobs:
   deploy:
@@ -30,7 +30,8 @@ jobs:
           ssh root@${{ secrets.SERVER_IP }} << 'EOF'
             cd /var/www/payload
             
-            git pull origin main
+            git checkout isr
+            git pull origin isr
             
             if [ ! -f .env ]; then
               cp .env.example .env
