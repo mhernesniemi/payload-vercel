@@ -30,6 +30,7 @@ jobs:
           ssh root@${{ secrets.SERVER_IP }} << 'EOF'
             cd /var/www/payload
             
+            git fetch origin
             git checkout isr
             git pull origin isr
             
