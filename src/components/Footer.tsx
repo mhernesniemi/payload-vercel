@@ -1,3 +1,4 @@
+import { Link } from "@/i18n/routing";
 import { parseLink } from "@/lib/parse-link";
 import configPromise from "@payload-config";
 import { getTranslations } from "next-intl/server";
@@ -14,7 +15,7 @@ export async function Footer() {
   const [footerMenu, footer] = await Promise.all([
     payload.findGlobal({
       slug: "footer-menu",
-      depth: 0,
+      depth: 1,
     }),
     payload.findGlobal({
       slug: "footer",
@@ -38,46 +39,46 @@ export async function Footer() {
             <ul className="flex gap-4">
               {footer.general?.social?.facebook && (
                 <li>
-                  <a
+                  <Link
                     href={footer.general.social.facebook}
                     className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">Facebook</span>
                     <FacebookIcon />
-                  </a>
+                  </Link>
                 </li>
               )}
               {footer.general?.social?.instagram && (
                 <li>
-                  <a
+                  <Link
                     href={footer.general.social.instagram}
                     className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">Instagram</span>
                     <InstagramIcon />
-                  </a>
+                  </Link>
                 </li>
               )}
               {footer.general?.social?.linkedin && (
                 <li>
-                  <a
+                  <Link
                     href={footer.general.social.linkedin}
                     className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <LinkedInIcon />
-                  </a>
+                  </Link>
                 </li>
               )}
               {footer.general?.social?.youtube && (
                 <li>
-                  <a
+                  <Link
                     href={footer.general.social.youtube}
                     className="block text-stone-400 hover:text-white"
                   >
                     <span className="sr-only">YouTube</span>
                     <YoutubeIcon />
-                  </a>
+                  </Link>
                 </li>
               )}
             </ul>
@@ -101,9 +102,9 @@ export async function Footer() {
                       if (linkUrl) {
                         return (
                           <li key={index}>
-                            <a href={linkUrl} className="hover:text-white">
+                            <Link href={linkUrl} className="hover:text-white">
                               {linkLabel}
-                            </a>
+                            </Link>
                           </li>
                         );
                       }

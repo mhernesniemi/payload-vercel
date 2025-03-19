@@ -20,8 +20,8 @@ export function parseExternalUrl(link?: string | null) {
 
 export function parseUrl(link?: LinkType | null) {
   if (!link) return undefined;
-  if (link.internalUrl) return parseInternalUrl(link.internalUrl);
-  if (link.externalUrl) return parseExternalUrl(link.externalUrl);
+  if (link.internalUrl && !link.isExternal) return parseInternalUrl(link.internalUrl);
+  if (link.externalUrl && link.isExternal) return parseExternalUrl(link.externalUrl);
 }
 
 export function parseLabel(link?: LinkType | null) {
