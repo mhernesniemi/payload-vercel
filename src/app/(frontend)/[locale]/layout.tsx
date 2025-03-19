@@ -38,9 +38,9 @@ export default async function RootLayout({ children, params }: Props) {
       <body className={`${inter.className} flex min-h-screen flex-col bg-stone-900 text-white`}>
         <NextIntlClientProvider messages={messages}>
           <div className="flex-grow">{children}</div>
+          <Footer />
+          <Toaster />
         </NextIntlClientProvider>
-        <Footer />
-        <Toaster />
       </body>
     </html>
   );

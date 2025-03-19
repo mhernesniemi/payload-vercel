@@ -400,7 +400,6 @@ export const seed = async ({
                 {
                   label: "Technology",
                   link: {
-                    label: "Technology",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -408,7 +407,6 @@ export const seed = async ({
                 {
                   label: "Business",
                   link: {
-                    label: "Business",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -416,7 +414,6 @@ export const seed = async ({
                 {
                   label: "Science",
                   link: {
-                    label: "Science",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -428,9 +425,8 @@ export const seed = async ({
               addLinks: true,
               grandchildren: [
                 {
-                  label: "Retail  ",
+                  label: "Retail",
                   link: {
-                    label: "Retail",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -438,7 +434,6 @@ export const seed = async ({
                 {
                   label: "Wholesale",
                   link: {
-                    label: "Wholesale",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -446,7 +441,6 @@ export const seed = async ({
                 {
                   label: "Distribution",
                   link: {
-                    label: "Distribution",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -460,7 +454,6 @@ export const seed = async ({
                 {
                   label: "Consulting",
                   link: {
-                    label: "Consulting",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -468,7 +461,6 @@ export const seed = async ({
                 {
                   label: "Training",
                   link: {
-                    label: "Training",
                     isExternal: true,
                     externalUrl: "#",
                   },
@@ -480,7 +472,6 @@ export const seed = async ({
         {
           label: "News",
           link: {
-            label: "News",
             isExternal: true,
             externalUrl: "#",
           },
@@ -488,7 +479,6 @@ export const seed = async ({
         {
           label: "Contact",
           link: {
-            label: "Contact",
             isExternal: true,
             externalUrl: "#",
           },
@@ -496,7 +486,6 @@ export const seed = async ({
         {
           label: "Blog",
           link: {
-            label: "Read our blog",
             isExternal: true,
             externalUrl: "#",
           },
