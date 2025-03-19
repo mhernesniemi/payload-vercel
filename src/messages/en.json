@@ -57,6 +57,7 @@
     "nextPage": "Next page"
   },
   "auth": {
+    "user": "User",
     "signIn": "Sign in",
     "email": "Email",
     "password": "Password",

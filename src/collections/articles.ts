@@ -1,6 +1,14 @@
 import { defaultContentFields } from "@/fields/default-content-fields";
-import { CollectionConfig } from "payload";
+import { revalidatePath } from "next/cache";
+import { CollectionAfterChangeHook, CollectionConfig } from "payload";
 import { afterChangeHook, afterDeleteHook } from "./hooks/indexToElastic";
+
+const revalidateArticleHook: CollectionAfterChangeHook = async ({ doc, operation }) => {
+  if (operation === "create" || operation === "update" || operation === "delete") {
+    revalidatePath(`/fi/articles/${doc.slug}`);
+    revalidatePath(`/en/articles/${doc.slug}`);
+  }
+};
 
 export const Articles: CollectionConfig = {
   slug: "articles",
@@ -58,7 +66,7 @@ export const Articles: CollectionConfig = {
     drafts: true,
   },
   hooks: {
-    afterChange: [afterChangeHook],
+    afterChange: [afterChangeHook, revalidateArticleHook],
     afterDelete: [afterDeleteHook],
   },
 };

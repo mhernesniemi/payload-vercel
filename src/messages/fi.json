@@ -57,6 +57,7 @@
     "nextPage": "Seuraava sivu"
   },
   "auth": {
+    "user": "Käyttäjä",
     "signIn": "Kirjaudu sisään",
     "email": "Sähköposti",
     "password": "Salasana",
