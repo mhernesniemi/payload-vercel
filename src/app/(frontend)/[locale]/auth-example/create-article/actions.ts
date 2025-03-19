@@ -39,7 +39,12 @@ export async function createArticle(title: string, userId: number) {
     collection: "articles",
     data: {
       title,
-      slug: title.toLowerCase().replace(/ /g, "-"),
+      slug: title
+        .toLowerCase()
+        .replace(/ä/g, "a")
+        .replace(/ö/g, "o")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, ""),
       _status: "published",
     },
     user: {
