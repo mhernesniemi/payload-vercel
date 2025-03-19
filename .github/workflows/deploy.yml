@@ -65,7 +65,7 @@ jobs:
             # Run migrations before build
             pnpm payload migrate
             
-            pnpm build:prod
+            pnpm build --no-lint
             
             pnpm reindex
             

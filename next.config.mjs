@@ -6,7 +6,6 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
-  swcMinify: true,
   compress: true,
   images: { unoptimized: false },
 };
