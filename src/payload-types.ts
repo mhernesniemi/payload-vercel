@@ -860,7 +860,6 @@ export interface MainMenu {
     label: string;
     addLinks?: boolean | null;
     link?: {
-      label?: string | null;
       isExternal?: boolean | null;
       internalUrl?:
         | ({
@@ -882,7 +881,6 @@ export interface MainMenu {
           label: string;
           addLinks?: boolean | null;
           link?: {
-            label?: string | null;
             isExternal?: boolean | null;
             internalUrl?:
               | ({
@@ -903,7 +901,6 @@ export interface MainMenu {
             | {
                 label: string;
                 link?: {
-                  label?: string | null;
                   isExternal?: boolean | null;
                   internalUrl?:
                     | ({
@@ -1217,7 +1214,6 @@ export interface MainMenuSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              label?: T;
               isExternal?: T;
               internalUrl?: T;
               externalUrl?: T;
@@ -1230,7 +1226,6 @@ export interface MainMenuSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    label?: T;
                     isExternal?: T;
                     internalUrl?: T;
                     externalUrl?: T;
@@ -1242,7 +1237,6 @@ export interface MainMenuSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
-                          label?: T;
                           isExternal?: T;
                           internalUrl?: T;
                           externalUrl?: T;

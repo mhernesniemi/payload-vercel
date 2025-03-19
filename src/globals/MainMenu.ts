@@ -1,4 +1,4 @@
-import { linkFieldWithLabel } from "@/fields/link";
+import { linkField } from "@/fields/link";
 import { revalidatePath } from "next/cache";
 import { GlobalAfterChangeHook, GlobalConfig } from "payload";
 
@@ -40,7 +40,7 @@ export const MainMenu: GlobalConfig = {
         {
           name: "link",
           type: "group",
-          fields: linkFieldWithLabel,
+          fields: linkField,
           admin: {
             condition: (_, siblingData) => !siblingData.addLinks,
           },
@@ -66,7 +66,7 @@ export const MainMenu: GlobalConfig = {
             {
               name: "link",
               type: "group",
-              fields: linkFieldWithLabel,
+              fields: linkField,
               admin: {
                 condition: (_, siblingData) => !siblingData.addLinks,
               },
@@ -87,7 +87,7 @@ export const MainMenu: GlobalConfig = {
                 {
                   name: "link",
                   type: "group",
-                  fields: linkFieldWithLabel,
+                  fields: linkField,
                 },
               ],
             },

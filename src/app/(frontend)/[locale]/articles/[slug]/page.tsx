@@ -10,7 +10,6 @@ import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
 export const dynamic = "force-static";
-export const revalidate = 3600; // Revalidate at most once per hour
 
 type Props = {
   params: Promise<{ locale: "fi" | "en"; slug: string }>;

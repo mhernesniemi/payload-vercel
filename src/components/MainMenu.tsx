@@ -16,10 +16,10 @@ interface MainMenuProps {
 
 export function MainMenu({ items }: MainMenuProps) {
   const renderMenuItem = (item: MenuItem) => {
-    const hasChildren = item.children && item.children.length > 0;
     const { linkUrl } = parseMenuLinks(item);
 
-    if (hasChildren) {
+    // If the root level link has children, render a popover
+    if (item.addLinks) {
       return (
         <li key={item.id}>
           <Popover className="relative px-3 py-2">
@@ -64,8 +64,9 @@ export function MainMenu({ items }: MainMenuProps) {
                         : undefined
                     }
                   >
+                    {/* Children with grandchildren */}
                     {item.children
-                      ?.filter((child) => child.grandchildren && child.grandchildren.length > 0)
+                      ?.filter((child) => child.addLinks)
                       .map((child) => (
                         <li key={child.id} className="bg-stone-800">
                           <h3 className="mb-3 text-sm font-medium leading-snug tracking-wide text-stone-400">
@@ -92,25 +93,22 @@ export function MainMenu({ items }: MainMenuProps) {
                         </li>
                       ))}
 
-                    {item.children?.some((child) => !child.grandchildren?.length) && (
-                      <>
-                        {item.children
-                          .filter((child) => !child.grandchildren?.length)
-                          .map((child) => {
-                            const { linkUrl } = parseMenuLinks(child);
-                            return (
-                              <li key={child.id} className="bg-stone-800">
-                                <Link
-                                  href={linkUrl ?? ""}
-                                  className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
-                                >
-                                  {child.label}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                      </>
-                    )}
+                    {/* Children without grandchildren */}
+                    {item.children
+                      ?.filter((child) => !child.addLinks)
+                      .map((child) => {
+                        const { linkUrl } = parseMenuLinks(child);
+                        return (
+                          <li key={child.id} className="bg-stone-800">
+                            <Link
+                              href={linkUrl ?? ""}
+                              className="inline-block leading-snug transition duration-150 ease-in-out hover:text-amber-500"
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
                   </div>
                 </ul>
               </PopoverPanel>
@@ -120,7 +118,8 @@ export function MainMenu({ items }: MainMenuProps) {
       );
     }
 
-    if (linkUrl) {
+    // If the root level link has no children, render a link
+    if (linkUrl && !item.addLinks) {
       return (
         <li key={item.id}>
           <Link
