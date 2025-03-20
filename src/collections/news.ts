@@ -17,7 +17,18 @@ export const News: CollectionConfig = {
     group: "Pages",
     defaultColumns: ["title", "createdBy", "updatedAt", "createdAt"],
   },
-  fields: defaultContentFields,
+  fields: [
+    ...defaultContentFields,
+    {
+      name: "collection",
+      type: "text",
+      defaultValue: "news",
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
+  ],
   hooks: {
     afterChange: [indexToElasticHook, revalidateNewsHook],
     afterDelete: [removeFromElasticHook],

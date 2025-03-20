@@ -1,8 +1,6 @@
 import { DynamicListBlock as DynamicListBlockType, Media } from "@/payload-types";
-import { Fragment } from "react";
 import Card from "../Card";
 import Heading from "../Heading";
-
 type Props = {
   block: DynamicListBlockType;
 };
@@ -34,9 +32,12 @@ export default function DynamicListBlock({ block }: Props) {
         {items?.map((item, index) => {
           if (!item || typeof item === "number") return null;
           return (
-            <Fragment key={item.slug + index}>
-              <Card title={item.title} href={item.slug} image={getImageData(item)} />
-            </Fragment>
+            <Card
+              title={item.title}
+              href={`/${item.collection}/${item.slug}`}
+              image={getImageData(item)}
+              key={item.slug + index}
+            />
           );
         })}
       </ul>

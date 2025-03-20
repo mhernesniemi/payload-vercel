@@ -17,7 +17,18 @@ export const CollectionPage: CollectionConfig = {
     group: "Pages",
     defaultColumns: ["title", "createdBy", "updatedAt", "createdAt"],
   },
-  fields: defaultContentFields,
+  fields: [
+    ...defaultContentFields,
+    {
+      name: "collection",
+      type: "text",
+      defaultValue: "collection-pages",
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
+  ],
   hooks: {
     afterChange: [indexToElasticHook, revalidateCollectionPageHook],
     afterDelete: [removeFromElasticHook],
