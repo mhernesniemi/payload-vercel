@@ -292,6 +292,7 @@ export interface CollectionPage {
    * If checked, the post is displayed at the top of lists
    */
   sticky?: boolean | null;
+  collection?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -328,6 +329,7 @@ export interface News {
    * If checked, the post is displayed at the top of lists
    */
   sticky?: boolean | null;
+  collection?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -490,6 +492,7 @@ export interface CollectionPagesSelect<T extends boolean = true> {
   slug?: T;
   createdBy?: T;
   sticky?: T;
+  collection?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -505,6 +508,7 @@ export interface NewsSelect<T extends boolean = true> {
   slug?: T;
   createdBy?: T;
   sticky?: T;
+  collection?: T;
   meta?:
     | T
     | {
