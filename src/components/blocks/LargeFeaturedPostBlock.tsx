@@ -13,7 +13,7 @@ export function LargeFeaturedPostBlock({ block }: Props) {
     <div className="my-24 w-full text-center">
       <div className="overflow-hidden rounded-xl bg-stone-800">
         {typeof block.image === "object" && block.image.url && (
-          <div className="relative h-[400px] w-full">
+          <div className="relative w-full aspect-[16/9]">
             <Image
               src={block.image.url}
               alt={block.image.alt || block.title || ""}

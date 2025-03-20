@@ -3,7 +3,7 @@ name: Deploy Next.js to UpCloud
 on:
   push:
     branches:
-      - isr
+      - main
 
 jobs:
   deploy:
@@ -34,10 +34,10 @@ jobs:
             cd /var/www/payload
             
             git fetch origin
-            git checkout isr
+            git checkout main
             
             # Store the exit code of git pull
-            if ! git pull origin isr; then
+            if ! git pull origin main; then
               echo "Git pull failed!"
               exit 1
             fi

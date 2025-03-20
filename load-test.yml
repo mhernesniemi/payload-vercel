@@ -35,14 +35,11 @@ scenarios:
     flow:
       - loop:
           - get:
-              url: "/fi/articles"
-          - think: 5
-          - get:
-              url: "/fi/articles/article-8"
+              url: "/fi/articles/article-2"
           - think: 3
           - get:
-              url: "/fi/articles/article-7"
+              url: "/fi/articles/article-3"
           - think: 4
           - get:
-              url: "/fi/"
+              url: "/fi"
         count: 3
