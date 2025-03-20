@@ -681,10 +681,6 @@ export interface LargeFeaturedPostBlock {
   title: string;
   text?: string | null;
   image: number | Media;
-  /**
-   * YouTube video URL
-   */
-  video?: string | null;
   link?: {
     label?: string | null;
     isExternal?: boolean | null;
@@ -1088,7 +1084,6 @@ export interface LargeFeaturedPostBlockSelect<T extends boolean = true> {
   title?: T;
   text?: T;
   image?: T;
-  video?: T;
   link?:
     | T
     | {

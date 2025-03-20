@@ -20,13 +20,6 @@ export const largeFeaturedPostBlock: Block = {
       required: true,
     },
     {
-      name: "video",
-      type: "text",
-      admin: {
-        description: "YouTube video URL",
-      },
-    },
-    {
       name: "link",
       type: "group",
       fields: [...linkFieldWithLabel],

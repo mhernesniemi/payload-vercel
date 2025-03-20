@@ -2,6 +2,7 @@ import { parseLink } from "@/lib/parse-link";
 import { LargeFeaturedPostBlock as LargeFeaturedPostBlockType } from "@/payload-types";
 import Image from "next/image";
 import Button from "../Button";
+import Heading from "../Heading";
 
 type Props = {
   block: LargeFeaturedPostBlockType;
@@ -10,10 +11,10 @@ type Props = {
 export function LargeFeaturedPostBlock({ block }: Props) {
   const { linkUrl, linkLabel } = parseLink(block.link);
   return (
-    <div className="my-24 w-full text-center">
-      <div className="overflow-hidden rounded-xl bg-stone-800">
+    <div className="my-24 text-center">
+      <div className="overflow-hidden rounded-xl bg-stone-800 grid sm:grid-cols-2 items-center">
         {typeof block.image === "object" && block.image.url && (
-          <div className="relative w-full aspect-[16/9]">
+          <div className="relative w-full aspect-video sm:aspect-square">
             <Image
               src={block.image.url}
               alt={block.image.alt || block.title || ""}
@@ -24,10 +25,12 @@ export function LargeFeaturedPostBlock({ block }: Props) {
           </div>
         )}
         <div className="p-8">
-          <h2 className="mb-4 text-3xl font-bold text-stone-100">{block.title}</h2>
+          <Heading level="h2" size="lg">
+            {block.title}
+          </Heading>
           <p className="text-lg leading-relaxed text-stone-300">{block.text}</p>
           {linkUrl && (
-            <div className="mt-6 flex justify-center">
+            <div className="mt-14 flex justify-center">
               <Button href={linkUrl} style="secondary">
                 {linkLabel || "Read more"}
               </Button>
