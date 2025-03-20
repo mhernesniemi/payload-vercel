@@ -349,7 +349,6 @@ export const seed = async ({
         },
         {
           blockType: "videoEmbed",
-          title: "Stay Connected",
           youtubeId: "dQw4w9WgXcQ",
           description:
             "Follow us on social media and subscribe to our newsletter to stay updated with the latest content.",
