@@ -80,7 +80,10 @@ export const dynamicListBlock: Block = {
               (siblingData.collections as CollectionType[]).map(async (collection) => {
                 const response = await payload.find({
                   collection: collection,
-                  sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
+                  sort:
+                    siblingData.sortOrder === "desc"
+                      ? `-${siblingData.sortBy}`
+                      : siblingData.sortBy,
                   limit: Math.ceil(siblingData.limit * siblingData.collections.length),
                   depth: 0,
                   draft: false,
