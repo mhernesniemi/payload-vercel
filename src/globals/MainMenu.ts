@@ -1,5 +1,10 @@
-import { linkFieldWithLabel } from "@/fields/link";
-import { GlobalConfig } from "payload";
+import { linkField } from "@/fields/link";
+import { revalidatePath } from "next/cache";
+import { GlobalAfterChangeHook, GlobalConfig } from "payload";
+
+const revalidateMainMenuHook: GlobalAfterChangeHook = async () => {
+  revalidatePath("/", "layout"); // Revalidating all data
+};
 
 export const MainMenu: GlobalConfig = {
   slug: "main-menu",
@@ -35,7 +40,7 @@ export const MainMenu: GlobalConfig = {
         {
           name: "link",
           type: "group",
-          fields: linkFieldWithLabel,
+          fields: linkField,
           admin: {
             condition: (_, siblingData) => !siblingData.addLinks,
           },
@@ -61,7 +66,7 @@ export const MainMenu: GlobalConfig = {
             {
               name: "link",
               type: "group",
-              fields: linkFieldWithLabel,
+              fields: linkField,
               admin: {
                 condition: (_, siblingData) => !siblingData.addLinks,
               },
@@ -82,7 +87,7 @@ export const MainMenu: GlobalConfig = {
                 {
                   name: "link",
                   type: "group",
-                  fields: linkFieldWithLabel,
+                  fields: linkField,
                 },
               ],
             },
@@ -91,4 +96,7 @@ export const MainMenu: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateMainMenuHook],
+  },
 };

@@ -292,6 +292,7 @@ export interface CollectionPage {
    * If checked, the post is displayed at the top of lists
    */
   sticky?: boolean | null;
+  collection?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -328,6 +329,7 @@ export interface News {
    * If checked, the post is displayed at the top of lists
    */
   sticky?: boolean | null;
+  collection?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -490,6 +492,7 @@ export interface CollectionPagesSelect<T extends boolean = true> {
   slug?: T;
   createdBy?: T;
   sticky?: T;
+  collection?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -505,6 +508,7 @@ export interface NewsSelect<T extends boolean = true> {
   slug?: T;
   createdBy?: T;
   sticky?: T;
+  collection?: T;
   meta?:
     | T
     | {
@@ -860,7 +864,6 @@ export interface MainMenu {
     label: string;
     addLinks?: boolean | null;
     link?: {
-      label?: string | null;
       isExternal?: boolean | null;
       internalUrl?:
         | ({
@@ -882,7 +885,6 @@ export interface MainMenu {
           label: string;
           addLinks?: boolean | null;
           link?: {
-            label?: string | null;
             isExternal?: boolean | null;
             internalUrl?:
               | ({
@@ -903,7 +905,6 @@ export interface MainMenu {
             | {
                 label: string;
                 link?: {
-                  label?: string | null;
                   isExternal?: boolean | null;
                   internalUrl?:
                     | ({
@@ -1217,7 +1218,6 @@ export interface MainMenuSelect<T extends boolean = true> {
         link?:
           | T
           | {
-              label?: T;
               isExternal?: T;
               internalUrl?: T;
               externalUrl?: T;
@@ -1230,7 +1230,6 @@ export interface MainMenuSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
-                    label?: T;
                     isExternal?: T;
                     internalUrl?: T;
                     externalUrl?: T;
@@ -1242,7 +1241,6 @@ export interface MainMenuSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
-                          label?: T;
                           isExternal?: T;
                           internalUrl?: T;
                           externalUrl?: T;

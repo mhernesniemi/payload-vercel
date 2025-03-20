@@ -78,15 +78,51 @@ export const dynamicListBlock: Block = {
             // Get all the results from the collections
             const results = await Promise.all(
               (siblingData.collections as CollectionType[]).map(async (collection) => {
-                const response = await payload.find({
+                // First fetch sticky items
+                const stickyResponse = await payload.find({
                   collection: collection,
-                  sort: `${siblingData.sortBy}${siblingData.sortOrder === "desc" ? "-desc" : ""}`,
-                  limit: Math.ceil(siblingData.limit * siblingData.collections.length),
+                  where: {
+                    sticky: {
+                      equals: true,
+                    },
+                  },
+                  sort:
+                    siblingData.sortOrder === "desc"
+                      ? `-${siblingData.sortBy}`
+                      : siblingData.sortBy,
                   depth: 0,
                   draft: false,
                 });
 
-                return response.docs.map((doc) => ({
+                // Then fetch non-sticky items
+                const nonStickyResponse = await payload.find({
+                  collection: collection,
+                  where: {
+                    or: [
+                      {
+                        sticky: {
+                          exists: false,
+                        },
+                      },
+                      {
+                        sticky: {
+                          equals: false,
+                        },
+                      },
+                    ],
+                  },
+                  sort:
+                    siblingData.sortOrder === "desc"
+                      ? `-${siblingData.sortBy}`
+                      : siblingData.sortBy,
+                  limit: siblingData.limit,
+                  depth: 0,
+                  draft: false,
+                });
+
+                const allDocs = [...stickyResponse.docs, ...nonStickyResponse.docs];
+
+                return allDocs.map((doc) => ({
                   reference: {
                     relationTo: collection,
                     value: doc.id,

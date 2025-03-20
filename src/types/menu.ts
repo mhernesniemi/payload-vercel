@@ -20,4 +20,5 @@ export type MenuItem = {
   children?: MenuItem[];
   grandchildren?: MenuItem[];
   id: string;
+  addLinks: boolean;
 };
