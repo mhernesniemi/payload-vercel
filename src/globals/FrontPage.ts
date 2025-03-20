@@ -14,6 +14,7 @@ import { revalidatePath } from "next/cache";
 import { GlobalAfterChangeHook, GlobalConfig } from "payload";
 
 const revalidateFrontPageHook: GlobalAfterChangeHook = async () => {
+  revalidatePath("/");
   revalidatePath("/fi");
   revalidatePath("/en");
 };

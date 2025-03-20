@@ -10,8 +10,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-export const dynamic = "force-static";
-export const revalidate = 60; // This is needed for dynamic components to update
+export const revalidate = 5;
 
 type Props = {
   params: Promise<{ locale: "fi" | "en" }>;
