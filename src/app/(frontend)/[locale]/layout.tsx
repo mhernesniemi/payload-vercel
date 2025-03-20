@@ -4,7 +4,7 @@ import { routing } from "@/i18n/routing";
 import { SITE_NAME } from "@/lib/constants";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import "./globals.css";
@@ -24,12 +24,19 @@ export const metadata: Metadata = {
   title: SITE_NAME,
 };
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
 
   if (!routing.locales.includes(locale)) {
     notFound();
   }
+
+  // Enable static rendering
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 
