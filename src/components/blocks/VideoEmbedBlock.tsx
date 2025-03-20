@@ -1,5 +1,6 @@
 import { VideoEmbedBlock as VideoEmbedBlockType } from "@/payload-types";
 import { YouTubeEmbed } from "@next/third-parties/google";
+import { useTranslations } from "next-intl";
 import Heading from "../Heading";
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 };
 
 export function VideoEmbedBlock({ block }: Props) {
+  const t = useTranslations("blocks.videoEmbed");
   return (
     <div className="my-24">
       {block.blockName && (
@@ -14,12 +16,19 @@ export function VideoEmbedBlock({ block }: Props) {
           {block.blockName}
         </Heading>
       )}
-
-      <YouTubeEmbed videoid={block.youtubeId} playlabel={block.title || "Toista video"} />
-
-      {block.description && (
-        <p className="mt-4 leading-relaxed text-stone-300">{block.description}</p>
-      )}
+      <figure className="mx-auto max-w-[720px]">
+        <div className="relative aspect-video w-full">
+          <YouTubeEmbed
+            videoid={block.youtubeId}
+            playlabel={`${t("watchVideo")}: ${block.alt ? `${block.alt}` : ""}`}
+          />
+        </div>
+        {block.description && (
+          <figcaption className="mt-4 text-center text-sm italic text-stone-400">
+            {block.description}
+          </figcaption>
+        )}
+      </figure>
     </div>
   );
 }

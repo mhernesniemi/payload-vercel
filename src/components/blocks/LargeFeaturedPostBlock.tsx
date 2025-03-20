@@ -12,9 +12,9 @@ export function LargeFeaturedPostBlock({ block }: Props) {
   const { linkUrl, linkLabel } = parseLink(block.link);
   return (
     <div className="my-24 text-center">
-      <div className="overflow-hidden rounded-xl bg-stone-800 grid sm:grid-cols-2 items-center">
+      <div className="grid items-center overflow-hidden rounded-xl bg-stone-800 sm:grid-cols-2">
         {typeof block.image === "object" && block.image.url && (
-          <div className="relative w-full aspect-video sm:aspect-square">
+          <div className="relative aspect-video w-full sm:aspect-square">
             <Image
               src={block.image.url}
               alt={block.image.alt || block.title || ""}

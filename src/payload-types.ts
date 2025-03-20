@@ -782,9 +782,12 @@ export interface ContactsBlock {
  * via the `definition` "VideoEmbedBlock".
  */
 export interface VideoEmbedBlock {
-  title: string;
-  description?: string | null;
   youtubeId: string;
+  alt?: string | null;
+  /**
+   * This will be displayed as a caption for the video
+   */
+  description?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'videoEmbed';
@@ -1154,9 +1157,9 @@ export interface ContactsBlockSelect<T extends boolean = true> {
  * via the `definition` "VideoEmbedBlock_select".
  */
 export interface VideoEmbedBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
   youtubeId?: T;
+  alt?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }
