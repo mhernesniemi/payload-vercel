@@ -10,8 +10,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-export const revalidate = 5;
-
 type Props = {
   params: Promise<{ locale: "fi" | "en" }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
