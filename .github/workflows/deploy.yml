@@ -28,15 +28,18 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh root@${{ secrets.SERVER_IP }} << 'EOF'
+            # Exit on any error
+            set -e
+            
             cd /var/www/payload
             
             git fetch origin
             git checkout isr
-            git pull origin isr
             
-            if [ ! -f .env ]; then
-              cp .env.example .env
-              sed -i 's/YOUR_SECRET_HERE/${{ secrets.PAYLOAD_SECRET }}/g' .env
+            # Store the exit code of git pull
+            if ! git pull origin isr; then
+              echo "Git pull failed!"
+              exit 1
             fi
 
             # Load NVM and use Node.js
@@ -45,8 +48,10 @@ jobs:
             nvm use 22 || nvm install 22
             
             # Verify Node.js is available
-            node -v
-            npm -v
+            if ! node -v || ! npm -v; then
+              echo "Node.js or npm not available!"
+              exit 1
+            fi
             
             # Continue with deployment
             export PNPM_HOME="$HOME/.local/share/pnpm"
@@ -60,12 +65,14 @@ jobs:
             
             pnpm install --frozen-lockfile
             
-            # rm -rf .next
-            
             # Run migrations before build
             pnpm payload migrate
             
-            pnpm build --no-lint
+            # Store the exit code of build
+            if ! pnpm build --no-lint; then
+              echo "Next.js build failed!"
+              exit 1
+            fi
             
             pnpm reindex
             
