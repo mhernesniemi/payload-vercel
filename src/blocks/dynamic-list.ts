@@ -98,9 +98,18 @@ export const dynamicListBlock: Block = {
                 const nonStickyResponse = await payload.find({
                   collection: collection,
                   where: {
-                    sticky: {
-                      exists: false,
-                    },
+                    or: [
+                      {
+                        sticky: {
+                          exists: false,
+                        },
+                      },
+                      {
+                        sticky: {
+                          equals: false,
+                        },
+                      },
+                    ],
                   },
                   sort:
                     siblingData.sortOrder === "desc"
