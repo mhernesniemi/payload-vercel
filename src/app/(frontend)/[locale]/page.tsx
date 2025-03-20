@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
 export const dynamic = "force-static";
+export const revalidate = 60; // This is needed for dynamic components to update
 
 type Props = {
   params: Promise<{ locale: "fi" | "en" }>;
