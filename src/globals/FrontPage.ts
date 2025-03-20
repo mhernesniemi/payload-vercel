@@ -10,7 +10,13 @@ import {
   videoEmbedBlock,
 } from "@/blocks";
 import { dynamicListBlock } from "@/blocks/dynamic-list";
-import { GlobalConfig } from "payload";
+import { revalidatePath } from "next/cache";
+import { GlobalAfterChangeHook, GlobalConfig } from "payload";
+
+const revalidateFrontPageHook: GlobalAfterChangeHook = async () => {
+  revalidatePath("/fi");
+  revalidatePath("/en");
+};
 
 export const FrontPage: GlobalConfig = {
   slug: "front-page",
@@ -45,4 +51,7 @@ export const FrontPage: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateFrontPageHook],
+  },
 };
