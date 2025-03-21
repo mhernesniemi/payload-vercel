@@ -2,7 +2,6 @@
 
 import { Link, useRouter } from "@/i18n/routing";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
 import { useLocale, useTranslations } from "next-intl";
@@ -76,14 +75,37 @@ function SearchStats() {
   );
 }
 
+function CustomHits() {
+  const { items } = useHits<Hit>();
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="search-results">
+      {items.map((hit: Hit) => (
+        <Link
+          key={hit.slug}
+          href={`/articles/${hit.slug}`}
+          className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
+        >
+          <div className="mb-4 flex items-center justify-between gap-1 rounded-lg p-4 hover:bg-stone-700">
+            <h2 className="text-lg font-bold">{hit.title}</h2>
+            <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement>(null);
   const { setSearchQuery } = useContext(SearchContext);
   const t = useTranslations("search");
   const router = useRouter();
-  const [selectedHit, setSelectedHit] = useState<Hit | null>(null);
-  const { items } = useHits<Hit>();
 
   useEffect(() => {
     // Focus the search box when the side panel is opened
@@ -97,63 +119,33 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
     setSearchQuery(query);
   }, [query, setSearchQuery]);
 
-  const handleSelectHit = (hit: Hit) => {
-    setSelectedHit(hit);
-    if (hit) {
-      router.push(`/articles/${hit.slug}`);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/search${query ? `?q=${encodeURIComponent(query)}` : ""}`);
     }
   };
 
   return (
     <div className="relative mt-2">
-      <Combobox value={selectedHit} onChange={handleSelectHit}>
-        <div className="relative">
-          <ComboboxInput
-            ref={inputRef}
-            as="input"
-            displayValue={() => query}
-            onChange={(e) => refine(e.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="search-panel-input w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-amber-500 focus:outline-none"
-          />
-          {query && (
-            <button
-              onClick={() => refine("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white"
-              aria-label={t("clearSearch")}
-              tabIndex={-1}
-            >
-              <XMarkIcon className="h-5 w-5 stroke-2" />
-            </button>
-          )}
-        </div>
-
-        {items && items.length > 0 && (
-          <ComboboxOptions
-            className="mt-6"
-            anchor="bottom"
-            unmount={false}
-            static={true}
-            style={{
-              width: "var(--input-width)",
-              maxWidth: "var(--input-width)",
-            }}
-          >
-            {items.map((hit: Hit) => (
-              <ComboboxOption
-                key={hit.slug}
-                value={hit}
-                className="group cursor-default outline-none data-[focus]:outline-none"
-              >
-                <div className="mb-4 flex cursor-pointer items-center justify-between gap-1 rounded-lg p-4 group-data-[focus]:bg-stone-700">
-                  <h2 className="text-lg font-bold">{hit.title}</h2>
-                  <div className="text-xs uppercase text-stone-400">{hit.collection}</div>
-                </div>
-              </ComboboxOption>
-            ))}
-          </ComboboxOptions>
-        )}
-      </Combobox>
+      <input
+        ref={inputRef}
+        type="text"
+        value={query}
+        onChange={(e) => refine(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={t("searchPlaceholder")}
+        className="search-panel-input w-full rounded-lg border border-stone-700 bg-stone-900 px-4 py-3 text-white placeholder-stone-400 focus:border-amber-500 focus:outline-none"
+      />
+      {query && (
+        <button
+          onClick={() => refine("")}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white"
+          aria-label={t("clearSearch")}
+          tabIndex={-1}
+        >
+          <XMarkIcon className="h-5 w-5 stroke-2" />
+        </button>
+      )}
     </div>
   );
 }
@@ -194,6 +186,7 @@ export default function SearchSidePanel() {
               <CustomSearchBox inSidePanel={true} />
             </div>
             <SearchStats />
+            <CustomHits />
           </InstantSearch>
         </div>
       </SidePanel>
