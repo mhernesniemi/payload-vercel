@@ -10,19 +10,19 @@ import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 import { useRefinementList } from "react-instantsearch";
 
-interface CategoryFilterProps {
+interface SearchFilterProps {
   attribute: string;
   operator: "or" | "and";
   placeholder?: string;
   title: string;
 }
 
-export default function CategoryFilter({
+export default function SearchFilter({
   attribute = "categories",
   operator = "or",
   placeholder,
   title,
-}: CategoryFilterProps) {
+}: SearchFilterProps) {
   const { items, refine } = useRefinementList({
     attribute: attribute,
     operator: operator,
@@ -30,7 +30,9 @@ export default function CategoryFilter({
   const t = useTranslations("search");
   const defaultPlaceholder = t("select");
 
-  const selectedItems = items.filter((item) => item.isRefined);
+  // Sort items alphabetically by label to maintain consistent order
+  const sortedItems = [...items].sort((a, b) => a.label.localeCompare(b.label));
+  const selectedItems = sortedItems.filter((item) => item.isRefined);
 
   return (
     <div className="space-y-4">
@@ -66,10 +68,10 @@ export default function CategoryFilter({
             leaveTo="opacity-0"
           >
             <ListboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border border-stone-700 bg-stone-900 py-1 text-base shadow-lg focus:outline-none">
-              {items.length === 0 ? (
+              {sortedItems.length === 0 ? (
                 <div className="px-4 py-2 text-stone-400">{t("no_options")}</div>
               ) : (
-                items.map((item) => (
+                sortedItems.map((item) => (
                   <ListboxOption
                     key={item.value}
                     value={item}
