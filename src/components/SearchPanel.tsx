@@ -8,6 +8,16 @@ import { useLocale, useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
 import SidePanel from "./SidePanel";
+interface Hit {
+  title: string;
+  slug: string;
+  collection?: string;
+}
+interface SearchRequest {
+  params?: {
+    query?: string;
+  };
+}
 
 const SearchContext = createContext<{
   query: string;
@@ -26,21 +36,16 @@ function SearchContextProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-interface SearchRequest {
-  params?: {
-    query?: string;
-  };
-}
-
 const searchClient = {
   ...createClient({
     url: "/api/search",
   }),
+
+  // If no search query, return empty results
   search(requests: SearchRequest[]) {
     const shouldSearch = requests.some(
       (request: SearchRequest) => request.params?.query && request.params.query.length > 0,
     );
-
     if (!shouldSearch) {
       return Promise.resolve({
         results: requests.map(() => ({
@@ -57,12 +62,6 @@ const searchClient = {
   },
 };
 
-interface Hit {
-  title: string;
-  slug: string;
-  collection?: string;
-}
-
 // Only used for screen readers
 function SearchStats() {
   const { nbHits } = useStats();
@@ -76,7 +75,6 @@ function SearchStats() {
 }
 
 function Hit({ hit }: { hit: Hit }) {
-  console.log("hit", hit);
   return (
     <Link
       href={`/articles/${hit.slug}`}
@@ -105,6 +103,7 @@ function CustomHits() {
   }, [nbHits]);
 
   useEffect(() => {
+    // Handle keyboard navigation between hits
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
 
@@ -160,6 +159,7 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const router = useRouter();
 
   useEffect(() => {
+    // Focus the search box when the side panel is opened
     if (inSidePanel && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.click();
