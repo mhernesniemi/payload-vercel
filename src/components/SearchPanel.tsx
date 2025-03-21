@@ -140,8 +140,12 @@ function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
             }}
           >
             {items.map((hit: Hit) => (
-              <ComboboxOption key={hit.slug} value={hit} className="outline-none">
-                <div className="mb-4 flex items-center justify-between gap-1 rounded-lg border-2 border-stone-700 p-4 data-[focus]:border-amber-500">
+              <ComboboxOption
+                key={hit.slug}
+                value={hit}
+                className="group cursor-default outline-none data-[focus]:outline-none"
+              >
+                <div className="mb-4 flex cursor-pointer items-center justify-between gap-1 rounded-lg p-4 group-data-[focus]:bg-stone-700">
                   <h2 className="text-lg font-bold">{hit.title}</h2>
                   <div className="text-xs uppercase text-stone-400">{hit.collection}</div>
                 </div>
