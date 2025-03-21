@@ -15,7 +15,7 @@ const apiConfig = {
       { field: "title", weight: 3 },
       { field: "slug", weight: 2 },
     ],
-    result_attributes: ["title", "slug", "categories"],
+    result_attributes: ["title", "slug", "categories", "collection"],
     facet_attributes: [
       {
         attribute: "categories",

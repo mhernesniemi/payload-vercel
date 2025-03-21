@@ -60,6 +60,7 @@ const searchClient = {
 interface Hit {
   title: string;
   slug: string;
+  collection?: string;
 }
 
 // Only used for screen readers
@@ -75,14 +76,15 @@ function SearchStats() {
 }
 
 function Hit({ hit }: { hit: Hit }) {
+  console.log("hit", hit);
   return (
     <Link
       href={`/articles/${hit.slug}`}
       className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
     >
-      <div className="mb-4 rounded-lg bg-stone-800 p-4">
-        <h2 className="text-xl font-bold">{hit.title}</h2>
-        <div className="mt-4 text-sm">Slug: {hit.slug} </div>
+      <div className="mb-4 flex items-center justify-between gap-1 rounded-lg border-2 border-stone-700 p-4">
+        <h2 className="text-lg font-bold">{hit.title}</h2>
+        <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
       </div>
     </Link>
   );
