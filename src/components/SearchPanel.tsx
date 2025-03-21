@@ -6,7 +6,7 @@ import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
 import { useLocale, useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
+import { InstantSearch, useHits, useSearchBox, useStats } from "react-instantsearch";
 import SidePanel from "./SidePanel";
 
 interface Hit {
@@ -86,6 +86,22 @@ function Hit({ hit }: { hit: Hit }) {
         <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
       </div>
     </Link>
+  );
+}
+
+function CustomHits() {
+  const { items } = useHits<Hit>();
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="search-results">
+      {items.map((hit: Hit) => (
+        <Hit key={hit.slug} hit={hit} />
+      ))}
+    </div>
   );
 }
 
@@ -175,7 +191,7 @@ export default function SearchSidePanel() {
               <CustomSearchBox inSidePanel={true} />
             </div>
             <SearchStats />
-            <Hits hitComponent={Hit} />
+            <CustomHits />
           </InstantSearch>
         </div>
       </SidePanel>
