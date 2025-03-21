@@ -77,6 +77,6 @@ export const richTextToPlainText = (content: RichTextContent): string => {
 };
 
 export const getLanguageIndexName = (locale: string): string => {
-  const lang = locale === "fi" ? "fi" : "en"; // Default to english if not finnish
+  const lang = locale === "fi" ? "fi" : "en";
   return `${ELASTIC_INDEX_NAME}_${lang}`;
 };

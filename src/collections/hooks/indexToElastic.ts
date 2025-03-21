@@ -11,11 +11,12 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
   doc,
   operation,
   collection,
+  req,
 }) => {
   try {
     if (operation === "create" || operation === "update") {
       // Determine document language (assuming there's a locale field in the document)
-      const locale = doc.locale || "fi";
+      const locale = req.locale || "fi";
       const indexName = getLanguageIndexName(locale);
 
       // Create index for this language if it doesn't exist
