@@ -29,6 +29,7 @@ export const createIndexWithMappings = async (indexName: string = ELASTIC_INDEX_
                 },
               },
               collection: { type: "keyword" },
+              locale: { type: "keyword" },
             },
           },
         },
@@ -73,4 +74,9 @@ export const richTextToPlainText = (content: RichTextContent): string => {
     })
     .filter(Boolean)
     .join("\n");
+};
+
+export const getLanguageIndexName = (locale: string): string => {
+  const lang = locale === "fi" ? "fi" : "en"; // Default to english if not finnish
+  return `${ELASTIC_INDEX_NAME}_${lang}`;
 };

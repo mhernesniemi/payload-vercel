@@ -1,5 +1,9 @@
-import { ELASTIC_INDEX_NAME } from "@/lib/constants";
-import { createIndexWithMappings, elasticClient, richTextToPlainText } from "@/lib/elastic-utils";
+import {
+  createIndexWithMappings,
+  elasticClient,
+  getLanguageIndexName,
+  richTextToPlainText,
+} from "@/lib/elastic-utils";
 import config from "@payload-config";
 import { CollectionAfterChangeHook, CollectionAfterDeleteHook, getPayload } from "payload";
 
@@ -10,7 +14,12 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
 }) => {
   try {
     if (operation === "create" || operation === "update") {
-      const indexCreated = await createIndexWithMappings();
+      // Determine document language (assuming there's a locale field in the document)
+      const locale = doc.locale || "fi";
+      const indexName = getLanguageIndexName(locale);
+
+      // Create index for this language if it doesn't exist
+      const indexCreated = await createIndexWithMappings(indexName);
       if (!indexCreated) return doc;
 
       const payload = await getPayload({ config });
@@ -43,7 +52,7 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
       const validCategoryLabels = categoryLabels.filter((label) => label !== null);
 
       await elasticClient.index({
-        index: ELASTIC_INDEX_NAME,
+        index: indexName,
         id: doc.id,
         body: {
           id: doc.id,
@@ -53,10 +62,11 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
           publishedDate: doc.publishedDate,
           categories: validCategoryLabels,
           collection: collection.slug,
+          locale: locale,
         },
         refresh: true,
       });
-      console.log(`Document ${doc.id} indexed in ${ELASTIC_INDEX_NAME}`);
+      console.log(`Document ${doc.id} indexed in ${indexName}`);
     }
   } catch (error) {
     console.error(`Error in indexToElasticHook for ${doc.id}:`, error);
@@ -64,16 +74,19 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
   return doc;
 };
 
-export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc, collection }) => {
+export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc }) => {
   try {
-    const exists = await elasticClient.indices.exists({ index: collection.slug });
+    const locale = doc.locale || "fi";
+    const indexName = getLanguageIndexName(locale);
+
+    const exists = await elasticClient.indices.exists({ index: indexName });
     if (exists) {
       await elasticClient.delete({
-        index: ELASTIC_INDEX_NAME,
+        index: indexName,
         id: doc.id,
         refresh: true,
       });
-      console.log(`Document ${doc.id} deleted from ${ELASTIC_INDEX_NAME}`);
+      console.log(`Document ${doc.id} deleted from ${indexName}`);
     }
   } catch (error) {
     console.error(`Error in removeFromElasticHook for ${doc.id}:`, error);

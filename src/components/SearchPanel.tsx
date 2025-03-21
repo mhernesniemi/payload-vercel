@@ -4,7 +4,7 @@ import { Link, useRouter } from "@/i18n/routing";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Hits, InstantSearch, useSearchBox, useStats } from "react-instantsearch";
 import SidePanel from "./SidePanel";
@@ -154,6 +154,7 @@ function AdvancedSearchLink() {
 
 export default function SearchSidePanel() {
   const t = useTranslations("search");
+  const locale = useLocale();
   return (
     <SearchContextProvider>
       <SidePanel
@@ -167,7 +168,7 @@ export default function SearchSidePanel() {
         footer={<AdvancedSearchLink />}
       >
         <div className="flex flex-col gap-2">
-          <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME}>
+          <InstantSearch searchClient={searchClient} indexName={`${ELASTIC_INDEX_NAME}_${locale}`}>
             <div className="sticky top-0 z-10 bg-stone-800 pb-2 pt-4">
               <CustomSearchBox inSidePanel={true} />
             </div>

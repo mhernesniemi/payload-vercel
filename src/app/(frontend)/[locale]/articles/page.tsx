@@ -24,25 +24,28 @@ export default async function ArticlesPage({
       config: configPromise,
     });
 
-    const {
-      docs: articles,
-      totalPages,
-      totalDocs,
-    } = await payload.find({
+    const articles = await payload.find({
       collection: "articles",
       sort: "-publishedDate",
       locale: locale,
+      fallbackLocale: false,
       draft: false,
       limit: perPage,
       page: currentPage,
       depth: 0,
+      where: {
+        title: {
+          exists: true,
+          not_equals: "",
+        },
+      },
     });
 
     return (
       <ListingTemplate
-        articles={articles}
-        totalDocs={totalDocs}
-        totalPages={totalPages}
+        articles={articles.docs}
+        totalDocs={articles.totalDocs}
+        totalPages={articles.totalPages}
         currentPage={currentPage}
         locale={locale}
       />
