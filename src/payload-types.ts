@@ -680,7 +680,7 @@ export interface CTABlock {
 export interface LargeFeaturedPostBlock {
   title: string;
   text?: string | null;
-  image: number | Media;
+  image?: (number | null) | Media;
   link?: {
     label?: string | null;
     isExternal?: boolean | null;
@@ -828,6 +828,7 @@ export interface QuoteBlock {
  */
 export interface DynamicListBlock {
   collections: ('articles' | 'news' | 'collection-pages' | 'contacts')[];
+  language: 'fi' | 'en';
   sortBy: 'createdAt' | 'updatedAt' | 'publishedDate';
   sortOrder: 'asc' | 'desc';
   limit: number;
@@ -1191,6 +1192,7 @@ export interface QuoteBlockSelect<T extends boolean = true> {
  */
 export interface DynamicListBlockSelect<T extends boolean = true> {
   collections?: T;
+  language?: T;
   sortBy?: T;
   sortOrder?: T;
   limit?: T;
