@@ -45,7 +45,13 @@ async function generateArticleContent(category: string, language: "fi" | "en" = 
     }
 
     try {
-      return JSON.parse(responseContent);
+      // Clean the response content from possible markdown formatting
+      const cleanedContent = responseContent
+        .replace(/```json\s*/g, "")
+        .replace(/```\s*/g, "")
+        .trim();
+
+      return JSON.parse(cleanedContent);
     } catch (error) {
       console.error("Error parsing OpenAI response:", error);
       // Fallback jos JSON-jäsennys epäonnistuu
@@ -186,77 +192,87 @@ export const seed = async ({
   }
 
   payload.logger.info("— Creating articles...");
-  for (let i = 0; i < NUMBER_OF_ARTICLES; i++) {
-    const category = categories[i % categories.length];
+  try {
+    for (let i = 0; i < NUMBER_OF_ARTICLES; i++) {
+      const category = categories[i % categories.length];
 
-    // Generate content in Finnish (default locale)
-    const fiContent = await generateArticleContent(category.label, "fi");
+      // Generate content in Finnish (default locale)
+      const fiContent = await generateArticleContent(category.label, "fi");
 
-    // Create article with Finnish content (default locale)
-    const article = await payload.create({
-      collection: "articles",
-      data: {
-        title: fiContent.title,
-        content: {
-          root: {
-            type: "root",
-            children: [
-              {
-                type: "paragraph",
-                children: [{ text: fiContent.content, type: "text", version: 1 }],
+      try {
+        // Create article with Finnish content (default locale)
+        const article = await payload.create({
+          collection: "articles",
+          data: {
+            title: fiContent.title,
+            content: {
+              root: {
+                type: "root",
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [{ text: fiContent.content, type: "text", version: 1 }],
+                    direction: "ltr",
+                    format: "",
+                    indent: 0,
+                    version: 1,
+                  },
+                ],
                 direction: "ltr",
                 format: "",
                 indent: 0,
                 version: 1,
               },
-            ],
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            version: 1,
+            },
+            author: adminUser.id,
+            categories: [category.id],
+            publishedDate: getRandomDate(),
+            slug: `article-${i + 1}`,
+            _status: "published",
+            image: mediaItems[i % NUMBER_OF_MEDIA].id,
           },
-        },
-        author: adminUser.id,
-        categories: [category.id],
-        publishedDate: getRandomDate(),
-        slug: `article-${i + 1}`,
-        _status: "published",
-        image: mediaItems[i % NUMBER_OF_MEDIA].id,
-      },
-    });
+        });
 
-    // Generate content in English
-    const enContent = await generateArticleContent(category.label, "en");
+        // Generate content in English
+        const enContent = await generateArticleContent(category.label, "en");
 
-    // Update the article with English content
-    await payload.update({
-      collection: "articles",
-      id: article.id,
-      locale: "en",
-      data: {
-        title: enContent.title,
-        content: {
-          root: {
-            type: "root",
-            children: [
-              {
-                type: "paragraph",
-                children: [{ text: enContent.content, type: "text", version: 1 }],
+        // Update the article with English content
+        await payload.update({
+          collection: "articles",
+          id: article.id,
+          locale: "en",
+          data: {
+            title: enContent.title,
+            content: {
+              root: {
+                type: "root",
+                children: [
+                  {
+                    type: "paragraph",
+                    children: [{ text: enContent.content, type: "text", version: 1 }],
+                    direction: "ltr",
+                    format: "",
+                    indent: 0,
+                    version: 1,
+                  },
+                ],
                 direction: "ltr",
                 format: "",
                 indent: 0,
                 version: 1,
               },
-            ],
-            direction: "ltr",
-            format: "",
-            indent: 0,
-            version: 1,
+            },
+            slug: `article-${i + 1}`,
           },
-        },
-        slug: `article-${i + 1}`,
-      },
-    });
+        });
+      } catch (err) {
+        console.error(`Error creating/updating article ${i + 1}:`, err);
+        console.log("Continuing with next article...");
+      }
+    }
+  } catch (err) {
+    console.error("Error in articles creation process:", err);
+    console.log("Continuing with the rest of the seeding process...");
   }
 
   payload.logger.info("— Creating front page...");

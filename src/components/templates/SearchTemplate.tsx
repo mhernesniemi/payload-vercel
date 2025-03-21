@@ -7,7 +7,7 @@ import SearchPagination from "@/components/SearchPagination";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import {
@@ -148,9 +148,15 @@ function SearchComponents() {
 }
 
 export default function SearchTemplate() {
+  const locale = useLocale();
+
   return (
     <main id="main-content" className="mx-auto max-w-screen-md py-16">
-      <InstantSearch searchClient={searchClient} indexName={ELASTIC_INDEX_NAME} routing>
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={`${ELASTIC_INDEX_NAME}_${locale}`}
+        routing
+      >
         <Configure hitsPerPage={20} />
         <SearchComponents />
       </InstantSearch>
