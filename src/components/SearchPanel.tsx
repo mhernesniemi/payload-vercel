@@ -83,16 +83,18 @@ function CustomHits() {
   }
 
   return (
-    <ol className="flex flex-col gap-2">
+    <ol>
       {items.map((hit: Hit) => (
         <li key={hit.slug}>
           <Link
             href={`/articles/${hit.slug}`}
-            className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
+            className="search-panel-hit group block border border-transparent outline-none focus-visible:border-amber-500"
           >
             <div className="flex items-center justify-between gap-1 rounded-lg p-4 hover:bg-stone-700">
-              <h2 className="text-lg font-bold">{hit.title}</h2>
-              <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
+              <h2 className="font-medium">{hit.title}</h2>
+              <div className="text-xs uppercase text-stone-400 group-hover:text-stone-300">
+                {hit.collection}
+              </div>
             </div>
           </Link>
         </li>
