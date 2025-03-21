@@ -83,20 +83,21 @@ function CustomHits() {
   }
 
   return (
-    <div className="search-results">
+    <ol className="flex flex-col gap-2">
       {items.map((hit: Hit) => (
-        <Link
-          key={hit.slug}
-          href={`/articles/${hit.slug}`}
-          className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
-        >
-          <div className="mb-4 flex items-center justify-between gap-1 rounded-lg p-4 hover:bg-stone-700">
-            <h2 className="text-lg font-bold">{hit.title}</h2>
-            <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
-          </div>
-        </Link>
+        <li key={hit.slug}>
+          <Link
+            href={`/articles/${hit.slug}`}
+            className="search-panel-hit block border border-transparent outline-none focus-visible:border-amber-500"
+          >
+            <div className="flex items-center justify-between gap-1 rounded-lg p-4 hover:bg-stone-700">
+              <h2 className="text-lg font-bold">{hit.title}</h2>
+              <div className="text-xs uppercase text-stone-400">{hit.collection} </div>
+            </div>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
