@@ -17,7 +17,6 @@ export const largeFeaturedPostBlock: Block = {
       name: "image",
       type: "upload",
       relationTo: "media",
-      required: true,
     },
     {
       name: "link",

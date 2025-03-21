@@ -1,7 +1,6 @@
 import { VideoEmbedBlock as VideoEmbedBlockType } from "@/payload-types";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import { useTranslations } from "next-intl";
-import Heading from "../Heading";
 
 type Props = {
   block: VideoEmbedBlockType;
@@ -11,11 +10,6 @@ export function VideoEmbedBlock({ block }: Props) {
   const t = useTranslations("blocks.videoEmbed");
   return (
     <div className="my-24">
-      {block.blockName && (
-        <Heading size="md" level="h2">
-          {block.blockName}
-        </Heading>
-      )}
       <figure className="mx-auto max-w-[720px]">
         <div className="relative aspect-video w-full">
           <YouTubeEmbed

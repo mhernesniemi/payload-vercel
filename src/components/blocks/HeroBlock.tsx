@@ -10,11 +10,10 @@ type HeroProps = {
 
 export function HeroBlock({ block }: HeroProps) {
   const { title, description, image, link } = block;
-
   const { linkUrl, linkLabel } = parseLink(link);
 
   return (
-    <div className="relative mt-12 flex w-full items-center justify-center overflow-hidden rounded-2xl py-24">
+    <div className="relative mt-12 flex w-full items-center justify-center overflow-hidden rounded-2xl py-32">
       <div className="absolute inset-0">
         {typeof image === "object" && image.url && (
           <div className="relative h-full w-full">

@@ -23,6 +23,16 @@ export const dynamicListBlock: Block = {
       ],
     },
     {
+      name: "language",
+      type: "select",
+      required: true,
+      defaultValue: "fi",
+      options: [
+        { label: "Finnish", value: "fi" },
+        { label: "English", value: "en" },
+      ],
+    },
+    {
       name: "sortBy",
       type: "select",
       required: true,
@@ -91,6 +101,7 @@ export const dynamicListBlock: Block = {
                       ? `-${siblingData.sortBy}`
                       : siblingData.sortBy,
                   depth: 0,
+                  locale: siblingData.language,
                   draft: false,
                 });
 
@@ -117,11 +128,14 @@ export const dynamicListBlock: Block = {
                       : siblingData.sortBy,
                   limit: siblingData.limit,
                   depth: 0,
+                  locale: siblingData.language,
                   draft: false,
                 });
 
+                // Combine sticky and non-sticky items
                 const allDocs = [...stickyResponse.docs, ...nonStickyResponse.docs];
 
+                // Map the docs to the reference objects
                 return allDocs.map((doc) => ({
                   reference: {
                     relationTo: collection,
