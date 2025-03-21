@@ -90,6 +90,68 @@ function Hit({ hit }: { hit: Hit }) {
   );
 }
 
+function CustomHits() {
+  const firstHitRef = useRef<HTMLDivElement>(null);
+  const { nbHits } = useStats();
+
+  useEffect(() => {
+    // Focus the first hit when results are available
+    if (nbHits > 0 && firstHitRef.current) {
+      const firstHitElement = firstHitRef.current.querySelector(".search-panel-hit") as HTMLElement;
+      if (firstHitElement) {
+        firstHitElement.focus();
+      }
+    }
+  }, [nbHits]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+
+      const activeElement = document.activeElement;
+      if (!activeElement || !firstHitRef.current) return;
+
+      const hitElements = firstHitRef.current.querySelectorAll(".search-panel-hit");
+      if (!hitElements.length) return;
+
+      // Find the index of the currently focused hit
+      let currentIndex = -1;
+      hitElements.forEach((el, index) => {
+        if (el === activeElement) currentIndex = index;
+      });
+
+      let nextIndex;
+      if (e.key === "ArrowDown") {
+        // Move to the next hit or wrap around to the first
+        nextIndex = currentIndex < hitElements.length - 1 ? currentIndex + 1 : 0;
+      } else {
+        // Move to the previous hit or wrap around to the last
+        nextIndex = currentIndex > 0 ? currentIndex - 1 : hitElements.length - 1;
+      }
+
+      // Prevent default behavior to avoid page scrolling
+      e.preventDefault();
+
+      // Focus the next/previous hit
+      (hitElements[nextIndex] as HTMLElement).focus();
+    };
+
+    // Add event listener
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Clean up
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <div ref={firstHitRef}>
+      <Hits hitComponent={Hit} />
+    </div>
+  );
+}
+
 function CustomSearchBox({ inSidePanel = false }: { inSidePanel?: boolean }) {
   const { query, refine } = useSearchBox();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -175,7 +237,7 @@ export default function SearchSidePanel() {
               <CustomSearchBox inSidePanel={true} />
             </div>
             <SearchStats />
-            <Hits hitComponent={Hit} />
+            <CustomHits />
           </InstantSearch>
         </div>
       </SidePanel>
