@@ -103,17 +103,17 @@ function SearchResults() {
     <ol className="space-y-4">
       {items.map((item) => (
         <li key={item.objectID} className="group relative mb-4 block rounded-lg bg-stone-800 p-4">
-          <Link href={`/${item.collection}/${item.slug}`}>
+          <Link href={`/${item.collection}/${item.slug}`} className="inline-block">
             <Heading
               level="h2"
               size="sm"
-              className="font-bold transition-colors group-hover:text-amber-500"
+              className="mb-0 transition-colors group-hover:text-amber-500"
             >
               {item.title}
             </Heading>
             <span className="absolute inset-x-0 inset-y-0 z-10"></span>
           </Link>
-          <div className="mt-4 text-xs uppercase text-stone-400">{item.collection}</div>
+          <div className="mt-6 text-xs uppercase text-stone-400">{item.collection}</div>
         </li>
       ))}
     </ol>

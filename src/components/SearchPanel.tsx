@@ -87,10 +87,7 @@ function CustomHits() {
       {items.map((hit: Hit) => (
         <li key={hit.slug}>
           <div className="group relative flex items-center justify-between gap-3 rounded-lg p-4 hover:bg-stone-700">
-            <Link
-              href={`/${hit.collection}/${hit.slug}`}
-              className="block border border-transparent outline-none focus-visible:border-amber-500"
-            >
+            <Link href={`/${hit.collection}/${hit.slug}`} className="block">
               <h2 className="font-medium">{hit.title}</h2>
               <span className="absolute inset-x-0 inset-y-0 z-10"></span>
             </Link>
