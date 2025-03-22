@@ -156,7 +156,43 @@ export default function SearchTemplate() {
       <InstantSearch
         searchClient={searchClient}
         indexName={`${ELASTIC_INDEX_NAME}_${locale}`}
-        routing
+        routing={{
+          stateMapping: {
+            // Convert UI state to URL route state
+            stateToRoute(uiState) {
+              const indexUiState = uiState[`${ELASTIC_INDEX_NAME}_${locale}`] || {};
+              const categories = indexUiState?.refinementList?.categories || [];
+              const collection = indexUiState?.refinementList?.collection || [];
+
+              return {
+                q: indexUiState?.query || undefined,
+                categories: categories.length ? categories.join("-") : undefined,
+                collection: collection.length ? collection.join("-") : undefined,
+                page: indexUiState?.page || undefined,
+              };
+            },
+            // Convert URL route state to UI state
+            routeToState(routeState) {
+              const categories = routeState.categories
+                ? String(routeState.categories).split("-")
+                : [];
+              const collection = routeState.collection
+                ? String(routeState.collection).split("-")
+                : [];
+
+              return {
+                [`${ELASTIC_INDEX_NAME}_${locale}`]: {
+                  query: routeState.q,
+                  refinementList: {
+                    categories: categories,
+                    collection: collection,
+                  },
+                  page: routeState.page,
+                },
+              };
+            },
+          },
+        }}
       >
         <Configure hitsPerPage={20} />
         <SearchComponents />
