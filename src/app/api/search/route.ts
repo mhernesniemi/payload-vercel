@@ -28,6 +28,28 @@ const apiConfig = {
         type: "string" as "string" | "numeric" | "date",
       },
     ],
+    sorting: {
+      default: {
+        field: "_score",
+        order: "desc" as const,
+      },
+      _title_asc: {
+        field: "title",
+        order: "asc" as const,
+      },
+      _title_desc: {
+        field: "title",
+        order: "desc" as const,
+      },
+      _date_asc: {
+        field: "date",
+        order: "asc" as const,
+      },
+      _date_desc: {
+        field: "date",
+        order: "desc" as const,
+      },
+    },
   },
 };
 

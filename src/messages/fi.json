@@ -54,7 +54,13 @@
     "no_options": "Ei valintoja saatavilla",
     "pagination": "Sivutus",
     "previousPage": "Edellinen sivu",
-    "nextPage": "Seuraava sivu"
+    "nextPage": "Seuraava sivu",
+    "relevance": "Osuvuus",
+    "newest": "Uusin ensin",
+    "oldest": "Vanhin ensin",
+    "titleAZ": "Otsikko A-Ö",
+    "titleZA": "Otsikko Ö-A",
+    "sortBy": "Järjestä"
   },
   "auth": {
     "user": "Käyttäjä",

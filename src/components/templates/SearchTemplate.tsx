@@ -14,6 +14,7 @@ import {
   useCurrentRefinements,
   useHits,
   useSearchBox,
+  useSortBy,
   useStats,
 } from "react-instantsearch";
 
@@ -63,6 +64,43 @@ function SearchStats() {
   return (
     <div className="text-stone-400" role="status" aria-live="polite" aria-atomic="true">
       {nbHits} {nbHits === 1 ? t("result") : t("results")}
+    </div>
+  );
+}
+
+function CustomSortBy() {
+  const { options, currentRefinement, refine } = useSortBy({
+    items: [
+      { label: "relevance", value: `${ELASTIC_INDEX_NAME}_${useLocale()}` },
+      { label: "titleAZ", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_title_asc` },
+      { label: "titleZA", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_title_desc` },
+    ],
+  });
+  const t = useTranslations("search");
+
+  return (
+    <div className="relative">
+      <select
+        className="appearance-none rounded-lg border border-stone-700 bg-stone-900 px-4 py-2 pr-8 text-sm text-white"
+        value={currentRefinement}
+        onChange={(e) => refine(e.target.value)}
+        aria-label={t("sortBy")}
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {t(option.label)}
+          </option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-stone-400">
+        <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </div>
     </div>
   );
 }
@@ -137,7 +175,10 @@ function SearchComponents() {
         <CurrentRefinements />
 
         <div className="space-y-4">
-          <SearchStats />
+          <div className="flex items-center justify-between">
+            <SearchStats />
+            <CustomSortBy />
+          </div>
           <div className="space-y-12">
             <SearchResults />
             <SearchPagination />

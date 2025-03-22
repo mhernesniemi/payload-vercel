@@ -54,7 +54,13 @@
     "no_options": "No options available",
     "pagination": "Pagination",
     "previousPage": "Previous page",
-    "nextPage": "Next page"
+    "nextPage": "Next page",
+    "relevance": "Relevance",
+    "newest": "Newest first",
+    "oldest": "Oldest first",
+    "titleAZ": "Title A-Z",
+    "titleZA": "Title Z-A",
+    "sortBy": "Sort by"
   },
   "auth": {
     "user": "User",
