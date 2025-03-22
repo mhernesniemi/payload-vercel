@@ -2,8 +2,8 @@
 
 import Heading from "@/components/Heading";
 import SearchFilter from "@/components/SearchFilter";
-import SearchHit from "@/components/SearchHit";
 import SearchPagination from "@/components/SearchPagination";
+import { Link } from "@/i18n/routing";
 import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
@@ -12,13 +12,20 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import {
   Configure,
-  Hits,
   InstantSearch,
   useCurrentRefinements,
+  useHits,
   useRefinementList,
   useSearchBox,
   useStats,
 } from "react-instantsearch";
+
+interface Hit {
+  objectID: string;
+  title: string;
+  slug: string;
+  collection?: string;
+}
 
 const searchClient = createClient({
   url: "/api/search",
@@ -100,6 +107,25 @@ function CurrentRefinements() {
   );
 }
 
+function SearchResults() {
+  const { items } = useHits<Hit>();
+
+  return (
+    <div className="space-y-4">
+      {items.map((item) => (
+        <Link href={`/articles/${item.slug}`} className="mb-4 block" key={item.objectID}>
+          <div className="rounded-lg bg-stone-800 p-4">
+            <Heading level="h2" size="sm" className="font-bold">
+              {item.title}
+            </Heading>
+            <div className="mt-4 text-sm">Slug: {item.slug}</div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function SearchComponents() {
   const t = useTranslations("search");
   const { query } = useSearchBox();
@@ -137,7 +163,7 @@ function SearchComponents() {
           <div className="space-y-4">
             <SearchStats />
             <div className="space-y-12">
-              <Hits hitComponent={SearchHit} />
+              <SearchResults />
               <SearchPagination />
             </div>
           </div>
