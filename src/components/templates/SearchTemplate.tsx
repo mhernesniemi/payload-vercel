@@ -8,14 +8,11 @@ import { ELASTIC_INDEX_NAME } from "@/lib/constants";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import createClient from "@searchkit/instantsearch-client";
 import { useLocale, useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import {
   Configure,
   InstantSearch,
   useCurrentRefinements,
   useHits,
-  useRefinementList,
   useSearchBox,
   useStats,
 } from "react-instantsearch";
@@ -33,15 +30,7 @@ const searchClient = createClient({
 
 function SearchBox() {
   const { query, refine } = useSearchBox();
-  const searchParams = useSearchParams();
   const t = useTranslations("search");
-
-  useEffect(() => {
-    const defaultQuery = searchParams.get("q");
-    if (defaultQuery && !query) {
-      refine(defaultQuery);
-    }
-  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="relative">
@@ -128,24 +117,6 @@ function SearchResults() {
 
 function SearchComponents() {
   const t = useTranslations("search");
-  const { query } = useSearchBox();
-  const refinementStates = {
-    categories: useRefinementList({
-      attribute: "categories",
-      operator: "or",
-    }),
-    collection: useRefinementList({
-      attribute: "collection",
-      operator: "or",
-    }),
-  };
-
-  // Check if there are any selections in the refinement lists
-  const hasActiveRefinements = Object.values(refinementStates).some(({ items }) =>
-    items.some((item) => item.isRefined),
-  );
-
-  const shouldShowResults = Boolean(query) || hasActiveRefinements;
 
   return (
     <div>
@@ -159,15 +130,14 @@ function SearchComponents() {
           <SearchFilter attribute="collection" title={t("collections")} operator="or" />
         </div>
         <CurrentRefinements />
-        {shouldShowResults && (
-          <div className="space-y-4">
-            <SearchStats />
-            <div className="space-y-12">
-              <SearchResults />
-              <SearchPagination />
-            </div>
+
+        <div className="space-y-4">
+          <SearchStats />
+          <div className="space-y-12">
+            <SearchResults />
+            <SearchPagination />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -183,7 +153,7 @@ export default function SearchTemplate() {
         indexName={`${ELASTIC_INDEX_NAME}_${locale}`}
         routing
       >
-        <Configure hitsPerPage={20} />
+        <Configure hitsPerPage={40} />
         <SearchComponents />
       </InstantSearch>
     </main>
