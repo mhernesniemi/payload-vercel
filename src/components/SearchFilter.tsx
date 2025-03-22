@@ -67,7 +67,7 @@ export default function SearchFilter({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <ListboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border border-stone-700 bg-stone-900 py-1 text-base shadow-lg focus:outline-none">
+            <ListboxOptions className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border border-stone-700 bg-stone-900 py-1 text-base shadow-lg focus:outline-none">
               {sortedItems.length === 0 ? (
                 <div className="px-4 py-2 text-stone-400">{t("no_options")}</div>
               ) : (

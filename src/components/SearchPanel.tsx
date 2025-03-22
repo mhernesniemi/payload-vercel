@@ -86,17 +86,18 @@ function CustomHits() {
     <ol>
       {items.map((hit: Hit) => (
         <li key={hit.slug}>
-          <Link
-            href={`/articles/${hit.slug}`}
-            className="search-panel-hit group block border border-transparent outline-none focus-visible:border-amber-500"
-          >
-            <div className="flex items-center justify-between gap-3 rounded-lg p-4 hover:bg-stone-700">
+          <div className="group relative flex items-center justify-between gap-3 rounded-lg p-4 hover:bg-stone-700">
+            <Link
+              href={`/${hit.collection}/${hit.slug}`}
+              className="block border border-transparent outline-none focus-visible:border-amber-500"
+            >
               <h2 className="font-medium">{hit.title}</h2>
-              <div className="text-xs uppercase text-stone-400 group-hover:text-stone-300">
-                {hit.collection}
-              </div>
+              <span className="absolute inset-x-0 inset-y-0 z-10"></span>
+            </Link>
+            <div className="text-xs uppercase text-stone-400 group-hover:text-stone-300">
+              {hit.collection}
             </div>
-          </Link>
+          </div>
         </li>
       ))}
     </ol>

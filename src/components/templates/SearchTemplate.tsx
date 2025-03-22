@@ -100,18 +100,23 @@ function SearchResults() {
   const { items } = useHits<Hit>();
 
   return (
-    <div className="space-y-4">
+    <ol className="space-y-4">
       {items.map((item) => (
-        <Link href={`/articles/${item.slug}`} className="mb-4 block" key={item.objectID}>
-          <div className="rounded-lg bg-stone-800 p-4">
-            <Heading level="h2" size="sm" className="font-bold">
+        <li key={item.objectID} className="group relative mb-4 block rounded-lg bg-stone-800 p-4">
+          <Link href={`/${item.collection}/${item.slug}`}>
+            <Heading
+              level="h2"
+              size="sm"
+              className="font-bold transition-colors group-hover:text-amber-500"
+            >
               {item.title}
             </Heading>
-            <div className="mt-4 text-sm">Slug: {item.slug}</div>
-          </div>
-        </Link>
+            <span className="absolute inset-x-0 inset-y-0 z-10"></span>
+          </Link>
+          <div className="mt-4 text-xs uppercase text-stone-400">{item.collection}</div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
@@ -147,13 +152,13 @@ export default function SearchTemplate() {
   const locale = useLocale();
 
   return (
-    <main id="main-content" className="mx-auto max-w-screen-md py-16">
+    <main id="main-content" className="mx-auto mb-40 max-w-screen-md py-16">
       <InstantSearch
         searchClient={searchClient}
         indexName={`${ELASTIC_INDEX_NAME}_${locale}`}
         routing
       >
-        <Configure hitsPerPage={40} />
+        <Configure hitsPerPage={20} />
         <SearchComponents />
       </InstantSearch>
     </main>
