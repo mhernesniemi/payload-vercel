@@ -18,7 +18,12 @@ export const createIndexWithMappings = async (indexName: string = ELASTIC_INDEX_
         body: {
           mappings: {
             properties: {
-              title: { type: "text" },
+              title: {
+                type: "text",
+                fields: {
+                  keyword: { type: "keyword" },
+                },
+              },
               content: { type: "text" },
               slug: { type: "keyword" },
               publishedDate: { type: "date" },
@@ -34,7 +39,27 @@ export const createIndexWithMappings = async (indexName: string = ELASTIC_INDEX_
           },
         },
       });
-      console.log(`Index ${indexName} created`);
+
+      // Create alias indices for sorting
+      await elasticClient.indices.putAlias({
+        index: indexName,
+        name: `${indexName}_title_asc`,
+        body: {
+          routing: "title",
+          is_write_index: false,
+        },
+      });
+
+      await elasticClient.indices.putAlias({
+        index: indexName,
+        name: `${indexName}_title_desc`,
+        body: {
+          routing: "title",
+          is_write_index: false,
+        },
+      });
+
+      console.log(`Index ${indexName} created with sorting aliases`);
       return true;
     }
     return true;

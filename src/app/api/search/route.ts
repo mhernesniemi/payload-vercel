@@ -34,11 +34,11 @@ const apiConfig = {
         order: "desc" as const,
       },
       _title_asc: {
-        field: "title",
+        field: "title.keyword",
         order: "asc" as const,
       },
       _title_desc: {
-        field: "title",
+        field: "title.keyword",
         order: "desc" as const,
       },
       _date_asc: {
