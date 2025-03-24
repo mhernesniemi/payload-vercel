@@ -175,9 +175,12 @@ function SearchComponents() {
         <CurrentRefinements />
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between text-sm">
             <SearchStats />
-            <CustomSortBy />
+            <span className="flex items-center gap-2">
+              <span className="text-stone-400">{t("sortBy")}:</span>
+              <CustomSortBy />
+            </span>
           </div>
           <div className="space-y-12">
             <SearchResults />
