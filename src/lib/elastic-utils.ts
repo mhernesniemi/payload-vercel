@@ -2,6 +2,15 @@ import { Client } from "@elastic/elasticsearch/index";
 import { Payload } from "payload";
 import { ELASTIC_INDEX_NAME } from "./constants";
 
+export interface IndexableDocument {
+  id: string | number;
+  title: string;
+  content?: RichTextContent | null;
+  slug: string;
+  publishedDate?: string | Date | null;
+  createdAt?: string | Date;
+  [key: string]: unknown;
+}
 interface RichTextChild {
   text?: string;
   [key: string]: unknown;
@@ -81,6 +90,37 @@ export const createIndexWithMappings = async (indexName: string = ELASTIC_INDEX_
     return true;
   } catch (error) {
     console.error(`Error creating index ${indexName}:`, error);
+    return false;
+  }
+};
+
+export const indexDocumentToElastic = async (
+  doc: IndexableDocument,
+  indexName: string,
+  collection: { slug: string },
+  locale: string,
+  validCategoryLabels: string[] = [],
+) => {
+  try {
+    await elasticClient.index({
+      index: indexName,
+      id: doc.id.toString(),
+      body: {
+        id: doc.id,
+        title: doc.title,
+        content: doc.content ? richTextToPlainText(doc.content) : null,
+        slug: doc.slug,
+        publishedDate: doc.publishedDate,
+        createdAt: doc.createdAt,
+        categories: validCategoryLabels,
+        collection: collection.slug,
+        locale: locale,
+      },
+      refresh: true,
+    });
+    return true;
+  } catch (error) {
+    console.error(`Error indexing document ${doc.id} to ${indexName}:`, error);
     return false;
   }
 };

@@ -3,7 +3,7 @@ import {
   elasticClient,
   fetchCategoryLabels,
   getLanguageIndexName,
-  richTextToPlainText,
+  indexDocumentToElastic,
 } from "@/lib/elastic-utils";
 import config from "@payload-config";
 import { CollectionAfterChangeHook, CollectionAfterDeleteHook, getPayload } from "payload";
@@ -32,23 +32,16 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
         : [];
 
       // Index document to language-specific index
-      await elasticClient.index({
-        index: indexName,
-        id: doc.id,
-        body: {
-          id: doc.id,
-          title: doc.title,
-          content: doc.content ? richTextToPlainText(doc.content) : null,
-          slug: doc.slug,
-          publishedDate: doc.publishedDate,
-          createdAt: doc.createdAt,
-          categories: validCategoryLabels,
-          collection: collection.slug,
-          locale: locale,
-        },
-        refresh: true,
-      });
-      payload.logger.info(`Document ${doc.id} indexed in ${indexName}`);
+      const success = await indexDocumentToElastic(
+        doc,
+        indexName,
+        collection,
+        locale,
+        validCategoryLabels,
+      );
+      if (success) {
+        payload.logger.info(`Document ${doc.id} indexed in ${indexName}`);
+      }
     }
   } catch (error) {
     console.error(`Error in indexToElasticHook for ${doc.id}:`, error);
@@ -66,7 +59,7 @@ export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc }) 
     if (exists) {
       await elasticClient.delete({
         index: indexName,
-        id: doc.id,
+        id: doc.id.toString(),
         refresh: true,
       });
       payload.logger.info(`Document ${doc.id} deleted from ${indexName}`);

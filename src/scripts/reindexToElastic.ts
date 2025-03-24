@@ -3,7 +3,7 @@ import {
   elasticClient,
   fetchCategoryLabels,
   getLanguageIndexName,
-  richTextToPlainText,
+  indexDocumentToElastic,
 } from "@/lib/elastic-utils";
 import config from "@/payload.config";
 import { getPayload } from "payload";
@@ -74,26 +74,19 @@ const reindexToElastic = async () => {
               : [];
 
           // Index document to language-specific index
-          await elasticClient.index({
-            index: indexName,
-            id: doc.id.toString(),
-            body: {
-              id: doc.id,
-              title: doc.title,
-              content: doc.content ? richTextToPlainText(doc.content) : null,
-              slug: doc.slug,
-              publishedDate: "publishedDate" in doc ? doc.publishedDate : null,
-              createdAt: doc.createdAt,
-              categories: validCategoryLabels,
-              collection: collectionSlug,
-              locale: locale,
-            },
-            refresh: true,
-          });
-
-          payload.logger.info(
-            `Indexed document ${doc.id} from ${collectionSlug} in index ${indexName}`,
+          const success = await indexDocumentToElastic(
+            { ...doc },
+            indexName,
+            { slug: collectionSlug },
+            locale,
+            validCategoryLabels,
           );
+
+          if (success) {
+            payload.logger.info(
+              `Indexed document ${doc.id} from ${collectionSlug} in index ${indexName}`,
+            );
+          }
         }
       }
     }
