@@ -1,5 +1,5 @@
+import { elasticMappings } from "@/lib/elastic-mappings";
 import {
-  createIndexWithMappings,
   elasticClient,
   fetchCategoryLabels,
   getLanguageIndexName,
@@ -29,8 +29,6 @@ const reindexToElastic = async () => {
           payload.logger.info(`Deleting existing index ${indexName}...`);
           await elasticClient.indices.delete({ index: indexName });
           payload.logger.info(`Successfully deleted index ${indexName}`);
-        } else {
-          payload.logger.info(`Index ${indexName} does not exist, no need to delete.`);
         }
       } catch (_error) {
         payload.logger.info(
@@ -38,9 +36,20 @@ const reindexToElastic = async () => {
         );
       }
 
-      // Create new language-specific index with mappings
-      await createIndexWithMappings(indexName);
-      payload.logger.info(`Created new index ${indexName}`);
+      // Create new index with explicit settings and mappings
+      try {
+        await elasticClient.indices.create({
+          index: indexName,
+          body: elasticMappings,
+        });
+
+        // Log the settings to verify they were applied
+        const settings = await elasticClient.indices.getSettings({ index: indexName });
+        payload.logger.info(`Index ${indexName} settings:`, JSON.stringify(settings, null, 2));
+      } catch (error) {
+        payload.logger.error(`Error creating index ${indexName}:`, error);
+        continue;
+      }
 
       // Get all collections that should be indexed
       const collections = ["articles", "collection-pages", "news"] as const;
@@ -50,7 +59,7 @@ const reindexToElastic = async () => {
 
         const docs = await payload.find({
           collection: collectionSlug,
-          limit: 1000, // Adjust based on your needs
+          limit: 1000,
           locale: locale,
           fallbackLocale: false,
           draft: false,
@@ -67,13 +76,11 @@ const reindexToElastic = async () => {
         );
 
         for (const doc of docs.docs as IndexableDocument[]) {
-          // Fetch category labels
           const validCategoryLabels =
             "categories" in doc && doc.categories
               ? await fetchCategoryLabels(doc.categories, payload)
               : [];
 
-          // Index document to language-specific index
           const success = await indexDocumentToElastic(
             { ...doc },
             indexName,

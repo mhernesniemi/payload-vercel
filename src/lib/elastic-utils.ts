@@ -33,67 +33,6 @@ export const elasticClient = new Client({
   },
 });
 
-export const createIndexWithMappings = async (indexName: string = ELASTIC_INDEX_NAME) => {
-  try {
-    const exists = await elasticClient.indices.exists({ index: indexName });
-    if (!exists) {
-      await elasticClient.indices.create({
-        index: indexName,
-        body: {
-          mappings: {
-            properties: {
-              title: {
-                type: "text",
-                fields: {
-                  keyword: { type: "keyword" },
-                },
-              },
-              content: { type: "text" },
-              slug: { type: "keyword" },
-              publishedDate: { type: "date" },
-              createdAt: { type: "date" },
-              categories: {
-                type: "keyword",
-                fields: {
-                  keyword: { type: "keyword" },
-                },
-              },
-              collection: { type: "keyword" },
-              locale: { type: "keyword" },
-            },
-          },
-        },
-      });
-
-      // Create alias indices for sorting
-      await elasticClient.indices.putAlias({
-        index: indexName,
-        name: `${indexName}_title_asc`,
-        body: {
-          routing: "title",
-          is_write_index: false,
-        },
-      });
-
-      await elasticClient.indices.putAlias({
-        index: indexName,
-        name: `${indexName}_title_desc`,
-        body: {
-          routing: "title",
-          is_write_index: false,
-        },
-      });
-
-      console.log(`Index ${indexName} created with sorting aliases`);
-      return true;
-    }
-    return true;
-  } catch (error) {
-    console.error(`Error creating index ${indexName}:`, error);
-    return false;
-  }
-};
-
 export const indexDocumentToElastic = async (
   doc: IndexableDocument,
   indexName: string,
