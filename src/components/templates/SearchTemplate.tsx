@@ -240,7 +240,7 @@ export default function SearchTemplate() {
           },
         }}
       >
-        <Configure hitsPerPage={40} />
+        <Configure hitsPerPage={20} />
         <SearchComponents />
       </InstantSearch>
     </main>

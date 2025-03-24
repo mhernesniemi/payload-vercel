@@ -8,6 +8,13 @@ export default function SearchPagination() {
     usePagination();
   const t = useTranslations("search");
 
+  const handlePageChange = (page: number) => {
+    refine(page);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
+  };
+
   if (nbPages <= 1) return null;
 
   return (
@@ -15,7 +22,7 @@ export default function SearchPagination() {
       <button
         onClick={(event) => {
           event.preventDefault();
-          refine(currentRefinement - 1);
+          handlePageChange(currentRefinement - 1);
         }}
         disabled={isFirstPage}
         className="flex h-10 w-10 items-center justify-center rounded-lg border border-stone-700 hover:border-amber-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-stone-700"
@@ -34,7 +41,7 @@ export default function SearchPagination() {
                 href={createURL(page)}
                 onClick={(event) => {
                   event.preventDefault();
-                  refine(page);
+                  handlePageChange(page);
                 }}
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-lg border text-white",
@@ -55,7 +62,7 @@ export default function SearchPagination() {
       <button
         onClick={(event) => {
           event.preventDefault();
-          refine(currentRefinement + 1);
+          handlePageChange(currentRefinement + 1);
         }}
         disabled={isLastPage}
         className="flex h-10 w-10 items-center justify-center rounded-lg border border-stone-700 hover:border-amber-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-stone-700"
