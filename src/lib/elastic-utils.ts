@@ -41,6 +41,17 @@ export const createElasticMappings = (language: "finnish" | "english") =>
           default: {
             type: language,
           },
+          sort_analyzer: {
+            tokenizer: "keyword",
+            filter: ["lowercase", "trim"],
+          },
+        },
+        normalizer: {
+          sort_normalizer: {
+            type: "custom",
+            char_filter: [],
+            filter: ["lowercase", "trim"],
+          },
         },
       },
     },
@@ -50,7 +61,15 @@ export const createElasticMappings = (language: "finnish" | "english") =>
           type: "text",
           analyzer: language,
           fields: {
-            keyword: { type: "keyword" },
+            keyword: {
+              type: "keyword",
+              normalizer: "sort_normalizer",
+            },
+            sort: {
+              type: "text",
+              analyzer: "sort_analyzer",
+              fielddata: true,
+            },
           },
         },
         content: {
