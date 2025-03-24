@@ -1,5 +1,5 @@
-import { elasticMappings } from "@/lib/elastic-mappings";
 import {
+  createElasticMappings,
   elasticClient,
   fetchCategoryLabels,
   getLanguageIndexName,
@@ -26,7 +26,7 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
         try {
           await elasticClient.indices.create({
             index: indexName,
-            body: elasticMappings,
+            body: createElasticMappings(locale === "fi" ? "finnish" : "english"),
           });
         } catch (error) {
           console.error(`Error creating index ${indexName}:`, error);

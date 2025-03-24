@@ -33,6 +33,45 @@ export const elasticClient = new Client({
   },
 });
 
+export const createElasticMappings = (language: "finnish" | "english") =>
+  ({
+    settings: {
+      analysis: {
+        analyzer: {
+          default: {
+            type: language,
+          },
+        },
+      },
+    },
+    mappings: {
+      properties: {
+        title: {
+          type: "text",
+          analyzer: language,
+          fields: {
+            keyword: { type: "keyword" },
+          },
+        },
+        content: {
+          type: "text",
+          analyzer: language,
+        },
+        slug: { type: "keyword" },
+        publishedDate: { type: "date" },
+        createdAt: { type: "date" },
+        categories: {
+          type: "keyword",
+          fields: {
+            keyword: { type: "keyword" },
+          },
+        },
+        collection: { type: "keyword" },
+        locale: { type: "keyword" },
+      },
+    },
+  }) as const;
+
 export const indexDocumentToElastic = async (
   doc: IndexableDocument,
   indexName: string,

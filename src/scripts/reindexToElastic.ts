@@ -1,5 +1,5 @@
-import { elasticMappings } from "@/lib/elastic-mappings";
 import {
+  createElasticMappings,
   elasticClient,
   fetchCategoryLabels,
   getLanguageIndexName,
@@ -40,7 +40,7 @@ const reindexToElastic = async () => {
       try {
         await elasticClient.indices.create({
           index: indexName,
-          body: elasticMappings,
+          body: createElasticMappings(locale === "fi" ? "finnish" : "english"),
         });
 
         // Log the settings to verify they were applied
