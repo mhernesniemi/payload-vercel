@@ -1,6 +1,7 @@
 import {
   createIndexWithMappings,
   elasticClient,
+  fetchCategoryLabels,
   getLanguageIndexName,
   richTextToPlainText,
 } from "@/lib/elastic-utils";
@@ -25,27 +26,27 @@ const reindexToElastic = async () => {
       try {
         const indexExists = await elasticClient.indices.exists({ index: indexName });
         if (indexExists) {
-          console.log(`Deleting existing index ${indexName}...`);
+          payload.logger.info(`Deleting existing index ${indexName}...`);
           await elasticClient.indices.delete({ index: indexName });
-          console.log(`Successfully deleted index ${indexName}`);
+          payload.logger.info(`Successfully deleted index ${indexName}`);
         } else {
-          console.log(`Index ${indexName} does not exist, no need to delete.`);
+          payload.logger.info(`Index ${indexName} does not exist, no need to delete.`);
         }
       } catch (_error) {
-        console.log(
+        payload.logger.info(
           `Warning: Failed to delete index ${indexName}, it may not exist. Continuing with creation.`,
         );
       }
 
       // Create new language-specific index with mappings
       await createIndexWithMappings(indexName);
-      console.log(`Created new index ${indexName}`);
+      payload.logger.info(`Created new index ${indexName}`);
 
       // Get all collections that should be indexed
       const collections = ["articles", "collection-pages", "news"] as const;
 
       for (const collectionSlug of collections) {
-        console.log(`Processing collection: ${collectionSlug} for locale: ${locale}`);
+        payload.logger.info(`Processing collection: ${collectionSlug} for locale: ${locale}`);
 
         const docs = await payload.find({
           collection: collectionSlug,
@@ -61,37 +62,16 @@ const reindexToElastic = async () => {
           },
         });
 
-        console.log(
+        payload.logger.info(
           `Found ${docs.docs.length} documents in ${collectionSlug} for locale ${locale}`,
         );
 
         for (const doc of docs.docs as IndexableDocument[]) {
-          // Fetch category labels if the document has categories
-          const categoryLabels = await Promise.all(
-            "categories" in doc && doc.categories && Array.isArray(doc.categories)
-              ? doc.categories.map(async (categoryId: number | { id: number }) => {
-                  // Ensure categoryId is a number or can be converted to number
-                  const id =
-                    typeof categoryId === "object" && categoryId !== null
-                      ? categoryId.id
-                      : Number(categoryId);
-
-                  try {
-                    const category = await payload.findByID({
-                      collection: "categories",
-                      id,
-                    });
-                    return category?.label || null;
-                  } catch (error) {
-                    console.error(`Error fetching category ${id}:`, error);
-                    return null;
-                  }
-                })
-              : [],
-          );
-
-          // Filter out null values from categoryLabels
-          const validCategoryLabels = categoryLabels.filter((label) => label !== null);
+          // Fetch category labels
+          const validCategoryLabels =
+            "categories" in doc && doc.categories
+              ? await fetchCategoryLabels(doc.categories, payload)
+              : [];
 
           // Index document to language-specific index
           await elasticClient.index({
@@ -103,6 +83,7 @@ const reindexToElastic = async () => {
               content: doc.content ? richTextToPlainText(doc.content) : null,
               slug: doc.slug,
               publishedDate: "publishedDate" in doc ? doc.publishedDate : null,
+              createdAt: doc.createdAt,
               categories: validCategoryLabels,
               collection: collectionSlug,
               locale: locale,
@@ -110,12 +91,14 @@ const reindexToElastic = async () => {
             refresh: true,
           });
 
-          console.log(`Indexed document ${doc.id} from ${collectionSlug} in index ${indexName}`);
+          payload.logger.info(
+            `Indexed document ${doc.id} from ${collectionSlug} in index ${indexName}`,
+          );
         }
       }
     }
 
-    console.log("Reindexing completed successfully!");
+    payload.logger.info("Reindexing completed successfully!");
     process.exit(0);
   } catch (error) {
     console.error("Error during reindexing:", error);

@@ -1,6 +1,7 @@
 import {
   createIndexWithMappings,
   elasticClient,
+  fetchCategoryLabels,
   getLanguageIndexName,
   richTextToPlainText,
 } from "@/lib/elastic-utils";
@@ -26,32 +27,11 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
       const payload = await getPayload({ config });
 
       // Fetch category labels
-      const categoryLabels = await Promise.all(
-        doc.categories && Array.isArray(doc.categories)
-          ? doc.categories.map(async (categoryId: number | { id: number }) => {
-              // Ensure categoryId is a number or can be converted to number
-              const id =
-                typeof categoryId === "object" && categoryId !== null
-                  ? categoryId.id
-                  : Number(categoryId);
+      const validCategoryLabels = doc.categories
+        ? await fetchCategoryLabels(doc.categories, payload)
+        : [];
 
-              try {
-                const category = await payload.findByID({
-                  collection: "categories",
-                  id,
-                });
-                return category?.label || null;
-              } catch (error) {
-                console.error(`Error fetching category ${id}:`, error);
-                return null;
-              }
-            })
-          : [],
-      );
-
-      // Filter out null values from categoryLabels
-      const validCategoryLabels = categoryLabels.filter((label) => label !== null);
-
+      // Index document to language-specific index
       await elasticClient.index({
         index: indexName,
         id: doc.id,
@@ -61,13 +41,14 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
           content: doc.content ? richTextToPlainText(doc.content) : null,
           slug: doc.slug,
           publishedDate: doc.publishedDate,
+          createdAt: doc.createdAt,
           categories: validCategoryLabels,
           collection: collection.slug,
           locale: locale,
         },
         refresh: true,
       });
-      console.log(`Document ${doc.id} indexed in ${indexName}`);
+      payload.logger.info(`Document ${doc.id} indexed in ${indexName}`);
     }
   } catch (error) {
     console.error(`Error in indexToElasticHook for ${doc.id}:`, error);
@@ -76,6 +57,7 @@ export const indexToElasticHook: CollectionAfterChangeHook = async ({
 };
 
 export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc }) => {
+  const payload = await getPayload({ config });
   try {
     const locale = doc.locale || "fi";
     const indexName = getLanguageIndexName(locale);
@@ -87,7 +69,7 @@ export const removeFromElasticHook: CollectionAfterDeleteHook = async ({ doc }) 
         id: doc.id,
         refresh: true,
       });
-      console.log(`Document ${doc.id} deleted from ${indexName}`);
+      payload.logger.info(`Document ${doc.id} deleted from ${indexName}`);
     }
   } catch (error) {
     console.error(`Error in removeFromElasticHook for ${doc.id}:`, error);
