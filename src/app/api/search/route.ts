@@ -19,12 +19,12 @@ const apiConfig = {
     facet_attributes: [
       {
         attribute: "categories",
-        field: "categories.keyword",
+        field: "categories",
         type: "string" as "string" | "numeric" | "date",
       },
       {
         attribute: "collection",
-        field: "collection.keyword",
+        field: "collection",
         type: "string" as "string" | "numeric" | "date",
       },
     ],
