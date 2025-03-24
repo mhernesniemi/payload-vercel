@@ -41,12 +41,12 @@ const apiConfig = {
         field: "title.sort",
         order: "desc" as const,
       },
-      _date_asc: {
-        field: "date",
+      _created_asc: {
+        field: "createdAt",
         order: "asc" as const,
       },
-      _date_desc: {
-        field: "date",
+      _created_desc: {
+        field: "createdAt",
         order: "desc" as const,
       },
     },

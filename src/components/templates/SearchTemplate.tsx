@@ -68,12 +68,14 @@ function SearchStats() {
   );
 }
 
-function CustomSortBy() {
+function SortBy() {
   const { options, currentRefinement, refine } = useSortBy({
     items: [
       { label: "relevance", value: `${ELASTIC_INDEX_NAME}_${useLocale()}` },
       { label: "titleAZ", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_title_asc` },
       { label: "titleZA", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_title_desc` },
+      { label: "newest", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_created_desc` },
+      { label: "oldest", value: `${ELASTIC_INDEX_NAME}_${useLocale()}_created_asc` },
     ],
   });
   const t = useTranslations("search");
@@ -179,7 +181,7 @@ function SearchComponents() {
             <SearchStats />
             <span className="flex items-center gap-2">
               <span className="text-stone-400">{t("sortBy")}:</span>
-              <CustomSortBy />
+              <SortBy />
             </span>
           </div>
           <div className="space-y-12">

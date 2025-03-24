@@ -78,7 +78,14 @@ export const createElasticMappings = (language: "finnish" | "english") =>
         },
         slug: { type: "keyword" },
         publishedDate: { type: "date" },
-        createdAt: { type: "date" },
+        createdAt: {
+          type: "date",
+          fields: {
+            sort: {
+              type: "date",
+            },
+          },
+        },
         categories: {
           type: "keyword",
           fields: {
