@@ -17,6 +17,7 @@
     "prepare": "husky",
     "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToElastic.ts",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/seed.ts",
+    "resize": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/resizeImages.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
     "load-test": "artillery run load-test.yml"
   },
