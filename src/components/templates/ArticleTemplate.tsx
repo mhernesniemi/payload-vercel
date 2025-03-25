@@ -4,9 +4,11 @@ import Image from "next/image";
 
 interface ArticleTemplateProps {
   article: Article;
+  placeholderUrl: string;
 }
 
-export default function ArticleTemplate({ article }: ArticleTemplateProps) {
+export default function ArticleTemplate({ article, placeholderUrl }: ArticleTemplateProps) {
+  console.log("placeholderUrl", placeholderUrl);
   return (
     <main id="main-content" className="py-16">
       {typeof article.image === "object" && article.image?.url && (
@@ -17,7 +19,7 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"
           placeholder="blur"
-          blurDataURL={article.image.sizes?.tiny?.url || ""}
+          blurDataURL={placeholderUrl}
           priority
         />
       )}
