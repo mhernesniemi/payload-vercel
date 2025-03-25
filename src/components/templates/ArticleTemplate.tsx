@@ -7,7 +7,14 @@ interface ArticleTemplateProps {
 }
 
 export default function ArticleTemplate({ article }: ArticleTemplateProps) {
-  const image = article.image as { url: string; alt: string };
+  const image = article.image as {
+    url: string;
+    alt: string;
+    thumbnailURL: string;
+  };
+
+  console.log(image);
+
   return (
     <main id="main-content" className="py-16">
       {image?.url && (
@@ -18,7 +25,7 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"
           placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+          blurDataURL={image.thumbnailURL}
           priority
         />
       )}

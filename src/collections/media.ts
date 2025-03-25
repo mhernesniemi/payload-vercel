@@ -1,4 +1,4 @@
-import { generateImageAltText } from "@/components/admin-ui/AltTextGenerator/actions";
+// import { generateImageAltText } from "@/components/admin-ui/AltTextGenerator/actions";
 import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
@@ -8,27 +8,26 @@ export const Media: CollectionConfig = {
   },
   hooks: {
     afterOperation: [
-      async ({ operation, result, req }) => {
-        if (operation === "create") {
-          try {
-            const locale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en";
-            const altText = await generateImageAltText(result.id, locale);
-
-            if (altText) {
-              await req.payload.update({
-                collection: "media",
-                id: result.id,
-                data: {
-                  alt: altText,
-                },
-              });
-            }
-          } catch (error) {
-            console.error("Error generating alt text:", error);
-          }
-        }
-        return result;
-      },
+      // async ({ operation, result, req }) => {
+      //   if (operation === "create") {
+      //     try {
+      //       const locale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en";
+      //       const altText = await generateImageAltText(result.id, locale);
+      //       if (altText) {
+      //         await req.payload.update({
+      //           collection: "media",
+      //           id: result.id,
+      //           data: {
+      //             alt: altText,
+      //           },
+      //         });
+      //       }
+      //     } catch (error) {
+      //       console.error("Error generating alt text:", error);
+      //     }
+      //   }
+      //   return result;
+      // },
     ],
   },
   admin: {
@@ -58,5 +57,13 @@ export const Media: CollectionConfig = {
       },
     },
   ],
-  upload: true,
+  upload: {
+    adminThumbnail: "thumbnail",
+    imageSizes: [
+      {
+        name: "thumbnail",
+        width: 100,
+      },
+    ],
+  },
 };
