@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import ArticleTemplate from "@/components/templates/ArticleTemplate";
 import ErrorTemplate from "@/components/templates/ErrorTemplate";
 import { SITE_NAME } from "@/lib/constants";
-import { getBase64, prepareOpenGraphImages } from "@/lib/utils";
+import { prepareOpenGraphImages } from "@/lib/utils";
 import configPromise from "@payload-config";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -34,23 +34,15 @@ async function getArticleBySlug({ params }: Props) {
       draft: isDraftMode,
     });
 
-    const article = result.docs[0];
-
-    // Generate base64 placeholder for image if available
-    let placeholderUrl = "";
-    if (article?.image && typeof article.image === "object" && article.image.sizes?.tiny?.url) {
-      placeholderUrl = await getBase64(article.image.sizes.tiny.url);
-    }
-
-    return { article, placeholderUrl, error: null };
+    return { article: result.docs[0], error: null };
   } catch (error) {
     console.error("Error fetching article:", error);
-    return { article: null, placeholderUrl: null, error: error as Error };
+    return { article: null, error: error as Error };
   }
 }
 
 export default async function ArticlePage(props: Props) {
-  const { article, placeholderUrl, error } = await getArticleBySlug(props);
+  const { article, error } = await getArticleBySlug(props);
 
   if (error) {
     console.error("Error fetching article:", error);
@@ -64,7 +56,7 @@ export default async function ArticlePage(props: Props) {
   return (
     <Container>
       <Header />
-      <ArticleTemplate article={article} placeholderUrl={placeholderUrl} />
+      <ArticleTemplate article={article} />
     </Container>
   );
 }
