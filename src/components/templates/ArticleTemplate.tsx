@@ -7,25 +7,17 @@ interface ArticleTemplateProps {
 }
 
 export default function ArticleTemplate({ article }: ArticleTemplateProps) {
-  const image = article.image as {
-    url: string;
-    alt: string;
-    thumbnailURL: string;
-  };
-
-  console.log(image);
-
   return (
     <main id="main-content" className="py-16">
-      {image?.url && (
+      {typeof article.image === "object" && article.image?.url && (
         <Image
-          src={image.url}
-          alt={image.alt || ""}
+          src={article.image.sizes?.large?.url || article.image.url}
+          alt={article.image.alt || ""}
           width={1920}
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"
           placeholder="blur"
-          blurDataURL={image.thumbnailURL}
+          blurDataURL={article.image.sizes?.tiny?.url || ""}
           priority
         />
       )}
