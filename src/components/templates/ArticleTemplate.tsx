@@ -16,8 +16,6 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
           width={1920}
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"
-          placeholder="blur"
-          blurDataURL={article.image.sizes?.tiny?.url || ""}
           priority
         />
       )}
