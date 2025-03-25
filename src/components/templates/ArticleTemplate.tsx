@@ -17,6 +17,9 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
           width={1920}
           height={1080}
           className="mb-8 h-[400px] w-full rounded-lg object-cover"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+          priority
         />
       )}
       <h1 className="mb-4 text-4xl font-bold">{article.title}</h1>
