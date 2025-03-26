@@ -16,7 +16,7 @@ export function formatDateLong(date: string, locale: string) {
 export function formatDateShort(date: string, locale: string) {
   return new Date(date).toLocaleDateString(locale, {
     year: "numeric",
-    month: "short",
+    month: "numeric",
     day: "numeric",
   });
 }
