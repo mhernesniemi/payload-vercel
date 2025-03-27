@@ -75,6 +75,14 @@
       "loginError": "An error occurred during login"
     }
   },
+  "share": {
+    "title": "Share",
+    "facebook": "Share on Facebook",
+    "twitter": "Share on X",
+    "linkedin": "Share on LinkedIn",
+    "copyLink": "Copy link",
+    "copied": "Link copied!"
+  },
   "mainMenu": {
     "mainMenu": "Main Menu",
     "back": "Back",

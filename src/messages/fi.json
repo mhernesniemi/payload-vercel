@@ -75,6 +75,14 @@
       "loginError": "Kirjautumisessa tapahtui virhe"
     }
   },
+  "share": {
+    "title": "Jaa",
+    "facebook": "Jaa Facebookissa",
+    "twitter": "Jaa X:ssä",
+    "linkedin": "Jaa LinkedInissä",
+    "copyLink": "Kopioi linkki",
+    "copied": "Linkki kopioitu!"
+  },
   "footer": {
     "phone": "Puhelin",
     "menuLabel": "Footer-valikko"

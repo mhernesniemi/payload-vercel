@@ -4,6 +4,7 @@ import { Article } from "@/payload-types";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import Heading from "../Heading";
+import ShareButtons from "../ShareButtons";
 
 interface ArticleTemplateProps {
   article: Article;
@@ -39,6 +40,9 @@ export default function ArticleTemplate({ article }: ArticleTemplateProps) {
       </div>
       <div className="mx-auto max-w-screen-lg">
         <BlockRenderer nodes={article.content?.root?.children as NodeTypes[]} />
+        <div className="mt-10">
+          <ShareButtons />
+        </div>
       </div>
     </main>
   );

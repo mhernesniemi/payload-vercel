@@ -40,17 +40,17 @@ export function ListingTemplate({
             key={article.id}
             className="group relative rounded-lg bg-stone-800 p-6 transition-all hover:ring-1 hover:ring-amber-500"
           >
-            <Link href={`/articles/${article.slug}`} className="block">
+            <Link href={`/articles/${article.slug}`} className="inline-block">
               <span className="absolute inset-x-0 inset-y-0"></span>
               <h2 className="text-xl font-semibold text-stone-100 group-hover:text-amber-500">
                 {article.title}
               </h2>
-              {article.publishedDate && (
-                <p className="mt-2 text-sm text-stone-400">
-                  {formatDateLong(article.publishedDate, locale)}
-                </p>
-              )}
             </Link>
+            {article.publishedDate && (
+              <p className="mt-2 text-sm text-stone-400">
+                {formatDateLong(article.publishedDate, locale)}
+              </p>
+            )}
           </div>
         ))}
 
