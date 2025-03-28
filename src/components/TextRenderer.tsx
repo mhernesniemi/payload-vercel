@@ -110,9 +110,18 @@ export function TextRenderer({ node, index }: NodeRendererProps) {
         ?.map((child) => (child as SerializedTextNode).text)
         .join("");
       return (
-        <Heading level={headingNode.tag} size="lg">
-          {headingText}
-        </Heading>
+        <div className="mx-auto mt-8 max-w-prose">
+          {headingNode.tag === "h2" && (
+            <Heading level={headingNode.tag} size="md">
+              {headingText}
+            </Heading>
+          )}
+          {headingNode.tag === "h3" && (
+            <Heading level={headingNode.tag} size="sm">
+              {headingText}
+            </Heading>
+          )}
+        </div>
       );
     }
     case "list": {
