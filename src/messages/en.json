@@ -95,5 +95,10 @@
   },
   "header": {
     "skipToContent": "Skip to content"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for could not be found.",
+    "backHome": "Back to Home"
   }
 }

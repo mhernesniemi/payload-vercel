@@ -94,5 +94,10 @@
     "mainMenu": "Päävalikko",
     "back": "Takaisin",
     "backAccessibility": "Takaisin edelliselle valikkotasolle"
+  },
+  "notFound": {
+    "title": "Sivua ei löytynyt",
+    "description": "Valitettavasti etsimääsi sivua ei löytynyt.",
+    "backHome": "Takaisin etusivulle"
   }
 }
