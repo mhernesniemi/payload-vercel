@@ -11,7 +11,7 @@ export default async function UserAuthNav() {
         className="group flex items-center gap-2 text-xs font-medium uppercase"
       >
         <UserIcon className="h-5 w-5 group-hover:text-amber-500" />
-        <span className="hidden xl:block">{t("user")}</span>
+        <div className="sr-only xl:not-sr-only">{t("user")}</div>
       </Link>
     </div>
   );

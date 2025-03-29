@@ -24,7 +24,9 @@ export default function LanguageSwitcher() {
         aria-label={t("switchLanguage")}
       >
         <LanguageIcon className="h-5 w-5 group-hover:text-amber-500" aria-hidden="true" />
-        <span className="hidden text-xs font-medium xl:block">{locale.toUpperCase()}</span>
+        <div className="sr-only text-xs font-medium uppercase xl:not-sr-only">
+          {locale.toUpperCase()}
+        </div>
       </MenuButton>
       <Transition
         as={Fragment}
