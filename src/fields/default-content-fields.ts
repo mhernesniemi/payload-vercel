@@ -8,7 +8,6 @@ import {
   smallFeaturedPostsWrapperBlock,
   videoEmbedBlock,
 } from "@/blocks";
-import { AIRichTextFeature } from "@/features/lexical/ai-richtext-feature";
 import { BlocksFeature, HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { Field } from "payload";
 import { slugField } from "./slug";
@@ -21,37 +20,9 @@ export const defaultContentFields: Field[] = [
     localized: true,
   },
   {
-    name: "titleAIAssistant",
-    type: "ui",
-    admin: {
-      components: {
-        Field: {
-          path: "@/components/admin-ui/AIAssistant",
-          clientProps: {
-            appliedTo: "title",
-          },
-        },
-      },
-    },
-  },
-  {
     name: "description",
     type: "textarea",
     localized: true,
-  },
-  {
-    name: "descriptionAIAssistant",
-    type: "ui",
-    admin: {
-      components: {
-        Field: {
-          path: "@/components/admin-ui/AIAssistant",
-          clientProps: {
-            appliedTo: "description",
-          },
-        },
-      },
-    },
   },
   {
     name: "image",
@@ -70,7 +41,6 @@ export const defaultContentFields: Field[] = [
           HeadingFeature({
             enabledHeadingSizes: ["h2", "h3"],
           }),
-          AIRichTextFeature(),
           BlocksFeature({
             blocks: [
               mediaBlock,

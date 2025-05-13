@@ -15,7 +15,6 @@ import { Contacts } from "./collections/contacts";
 import { Media } from "./collections/media";
 import { News } from "./collections/news";
 import { Users } from "./collections/users";
-import { AIRichTextFeature } from "./features/lexical/ai-richtext-feature/feature.server";
 import { seoConfig } from "./fields/seo";
 import { Footer } from "./globals/Footer";
 import { FooterMenu } from "./globals/FooterMenu";
@@ -37,7 +36,7 @@ export default buildConfig({
   collections: [Users, Media, Articles, CollectionPage, News, Categories, Contacts],
   globals: [FrontPage, MainMenu, FooterMenu, Footer],
   editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [...defaultFeatures, AIRichTextFeature()],
+    features: ({ defaultFeatures }) => [...defaultFeatures],
   }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

@@ -7,7 +7,6 @@ import { getPayload } from "payload";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { MainMenu, MobileMenu } from "./MainMenu";
 import SearchSidePanel from "./SearchPanel";
-import UserAuthNav from "./auth/UserAuthNav";
 
 export default async function Header() {
   const t = await getTranslations("header");
@@ -43,9 +42,6 @@ export default async function Header() {
           <MainMenu items={mainMenu.items as MenuItem[]} />
         </div>
         <ul className="flex items-center justify-end gap-8 lg:w-[300px]">
-          <li>
-            <UserAuthNav />
-          </li>
           <li>
             <SearchSidePanel />
           </li>
