@@ -1,10 +1,10 @@
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import path from "path";
 import { buildConfig } from "payload";
-import sharp from "sharp";
 import { fileURLToPath } from "url";
 
 import { Articles } from "./collections/articles";
@@ -45,22 +45,26 @@ export default buildConfig({
     locales: ["fi", "en"],
     defaultLocale: "fi",
   },
-  db: postgresAdapter({
+  db: vercelPostgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: process.env.POSTGRES_URL || process.env.DATABASE_URI,
     },
-    push: process.env.ENABLE_DATABASE_PUSH === "false" ? false : true,
   }),
   graphQL: {
     disable: true,
   },
-  sharp,
   plugins: [
     payloadCloudPlugin(),
     seoConfig,
     nestedDocsPlugin({
       collections: ["categories"],
       generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
+    }),
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || "",
     }),
   ],
 });
