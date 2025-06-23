@@ -51,6 +51,9 @@ export default buildConfig({
     },
     push: process.env.ENABLE_DATABASE_PUSH === "false" ? false : true,
   }),
+  graphQL: {
+    disablePlaygroundInProduction: true,
+  },
   sharp,
   plugins: [
     payloadCloudPlugin(),
