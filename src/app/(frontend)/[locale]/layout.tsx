@@ -2,6 +2,8 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/Toaster";
 import { routing } from "@/i18n/routing";
 import { SITE_NAME } from "@/lib/constants";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -46,6 +48,8 @@ export default async function RootLayout({ children, params }: Props) {
             <Toaster />
           </ViewTransition>
         </NextIntlClientProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

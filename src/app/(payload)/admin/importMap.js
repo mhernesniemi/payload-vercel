@@ -34,6 +34,7 @@ import {
   RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
 } from "@payloadcms/richtext-lexical/rsc";
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from "@payloadcms/storage-vercel-blob/client";
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell":
@@ -95,4 +96,6 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent":
     PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@/components/admin-ui/MainMenuRow#MainMenuRow": MainMenuRow_a55203dbf9179d3f8680e1cb587218dc,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler":
+    VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
 };
