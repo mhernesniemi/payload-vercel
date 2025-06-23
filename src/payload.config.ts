@@ -1,5 +1,4 @@
-// storage-adapter-import-placeholder
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -46,10 +45,9 @@ export default buildConfig({
     locales: ["fi", "en"],
     defaultLocale: "fi",
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || "",
-      authToken: process.env.DATABASE_AUTH_TOKEN || "",
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI,
     },
     push: process.env.ENABLE_DATABASE_PUSH === "false" ? false : true,
   }),
