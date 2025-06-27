@@ -18,8 +18,9 @@ export default withSentryConfig(withNextIntl(withPayload(nextConfig)), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: "exove-2p",
-  project: "javascript-nextjs",
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -44,7 +45,4 @@ export default withSentryConfig(withNextIntl(withPayload(nextConfig)), {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-
-  // Disable automatic server function instrumentation to prevent serverless issues
-  autoInstrumentServerFunctions: false,
 });
