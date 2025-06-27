@@ -43,3 +43,6 @@ next-env.d.ts
 *.db
 
 /media
+
+# Sentry Config File
+.env.sentry-build-plugin
