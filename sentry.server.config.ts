@@ -12,4 +12,7 @@ Sentry.init({
 
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
+
+  // Skip OpenTelemetry setup to prevent require-in-the-middle errors in serverless environments
+  skipOpenTelemetrySetup: true,
 });

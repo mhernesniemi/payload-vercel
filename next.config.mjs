@@ -44,4 +44,7 @@ export default withSentryConfig(withNextIntl(withPayload(nextConfig)), {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
+
+  // Disable automatic server function instrumentation to prevent serverless issues
+  autoInstrumentServerFunctions: false,
 });
