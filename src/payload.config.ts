@@ -1,8 +1,10 @@
 import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
+import { sentryPlugin } from "@payloadcms/plugin-sentry";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import * as Sentry from "@sentry/nextjs";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -56,6 +58,22 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     seoConfig,
+    sentryPlugin({
+      Sentry,
+      options: {
+        captureErrors: [400, 403, 404, 500],
+        context: ({ defaultContext, req }) => {
+          return {
+            ...defaultContext,
+            tags: {
+              locale: req.locale || "fi",
+              userAgent: req.headers.get("user-agent") || "unknown",
+            },
+          };
+        },
+        debug: process.env.NODE_ENV === "development",
+      },
+    }),
     nestedDocsPlugin({
       collections: ["categories"],
       generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
