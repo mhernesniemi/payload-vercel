@@ -44,14 +44,15 @@ export const indexDocumentToAlgolia = async (
     const client = getAlgoliaClient();
     const indexName = getAlgoliaIndexName(language);
 
-    // Convert rich text content to searchable text
     let searchableContent = "";
     if (document.content) {
       searchableContent = extractTextFromRichText(document.content);
     }
 
+    const uniqueObjectID = `${document.collection}-${document.objectID}`;
+
     const algoliaDocument = {
-      objectID: document.objectID,
+      objectID: uniqueObjectID,
       title: document.title,
       content: searchableContent,
       slug: document.slug,
@@ -64,7 +65,7 @@ export const indexDocumentToAlgolia = async (
 
     await client.saveObjects({ indexName, objects: [algoliaDocument] });
 
-    console.log(`Document ${document.objectID} indexed to Algolia`);
+    console.log(`Document ${uniqueObjectID} indexed to Algolia`);
     return true;
   } catch (error) {
     console.error("Error indexing document to Algolia:", error);
@@ -74,15 +75,18 @@ export const indexDocumentToAlgolia = async (
 
 export const removeDocumentFromAlgolia = async (
   documentId: string | number,
+  collection: string,
   language: "fi" | "en" = "fi",
 ): Promise<boolean> => {
   try {
     const client = getAlgoliaClient();
     const indexName = getAlgoliaIndexName(language);
 
-    await client.deleteObjects({ indexName, objectIDs: [String(documentId)] });
+    const uniqueObjectID = `${collection}-${documentId}`;
 
-    console.log(`Document ${documentId} removed from Algolia`);
+    await client.deleteObjects({ indexName, objectIDs: [uniqueObjectID] });
+
+    console.log(`Document ${uniqueObjectID} removed from Algolia`);
     return true;
   } catch (error) {
     console.error("Error removing document from Algolia:", error);
@@ -94,7 +98,6 @@ export const getAlgoliaIndexName = (lang: "fi" | "en"): string => {
   return `${ALGOLIA_INDEX_NAME}_${lang}`;
 };
 
-// Helper function to extract text from rich text content
 const extractTextFromRichText = (content: RichTextContent): string => {
   const extractText = (node: unknown): string => {
     if (typeof node === "string") {

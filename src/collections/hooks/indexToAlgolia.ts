@@ -14,6 +14,12 @@ export const indexToAlgoliaHook: CollectionAfterChangeHook = async ({
 }) => {
   try {
     if (operation === "create" || operation === "update") {
+      // Skip indexing if title is empty
+      if (!doc.title || doc.title.trim() === "") {
+        console.log(`Skipping indexing for document ${doc.id}: title is empty`);
+        return doc;
+      }
+
       // Determine document language (assuming there's a locale field in the document)
       const locale = req.locale || "fi";
       const payload = await getPayload({ config });
@@ -55,12 +61,16 @@ export const indexToAlgoliaHook: CollectionAfterChangeHook = async ({
   return doc;
 };
 
-export const removeFromAlgoliaHook: CollectionAfterDeleteHook = async ({ doc }) => {
+export const removeFromAlgoliaHook: CollectionAfterDeleteHook = async ({ doc, collection }) => {
   const payload = await getPayload({ config });
   try {
     const locale = doc.locale || "fi";
 
-    const success = await removeDocumentFromAlgolia(doc.id, locale === "fi" ? "fi" : "en");
+    const success = await removeDocumentFromAlgolia(
+      doc.id,
+      collection?.slug || "",
+      locale === "fi" ? "fi" : "en",
+    );
 
     if (success) {
       payload.logger.info(`Document ${doc.id} removed from Algolia`);

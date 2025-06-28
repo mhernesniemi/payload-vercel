@@ -12,7 +12,7 @@ const reindexToAlgolia = async () => {
 
   console.log("Starting Algolia reindex...");
 
-  const collections = ["articles", "news", "collection-page"];
+  const collections = ["articles", "news", "collection-pages"];
   const locales = ["fi", "en"];
 
   try {
@@ -36,19 +36,49 @@ const reindexToAlgolia = async () => {
 
         try {
           const docs = await payload.find({
-            collection: collectionSlug as "articles" | "news" | "collection-page",
+            collection: collectionSlug as "articles" | "news" | "collection-pages",
             locale: locale as "fi" | "en",
             limit: 1000,
-            where: {
-              _status: {
-                equals: "published",
-              },
-            },
+            /* Filter out drafts and documents that don't have a title or are empty */
+            where:
+              collectionSlug === "articles"
+                ? {
+                    and: [
+                      {
+                        _status: {
+                          equals: "published",
+                        },
+                      },
+                      {
+                        title: {
+                          exists: true,
+                        },
+                      },
+                      {
+                        title: {
+                          not_equals: "",
+                        },
+                      },
+                    ],
+                  }
+                : {
+                    and: [
+                      {
+                        title: {
+                          exists: true,
+                        },
+                      },
+                      {
+                        title: {
+                          not_equals: "",
+                        },
+                      },
+                    ],
+                  },
           });
 
           console.log(`Found ${docs.docs.length} documents in ${collectionSlug} (${locale})`);
 
-          // Fetch category labels for each document
           for (const doc of docs.docs) {
             const categoryLabels = doc.categories
               ? await fetchCategoryLabels(doc.categories, payload)
