@@ -16,14 +16,14 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "prepare": "husky",
-    "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToElastic.ts",
+    "reindex": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/reindexToAlgolia.ts",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/seed.ts",
     "resize": "cross-env NODE_OPTIONS=--no-deprecation dotenv -e .env tsx ./src/scripts/resizeImages.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
     "load-test": "artillery run load-test.yml"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.17.0",
+    "algoliasearch": "^5.17.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@libsql/client": "^0.14.0",
@@ -38,8 +38,6 @@
     "@payloadcms/richtext-lexical": "^3.43.0",
     "@payloadcms/storage-vercel-blob": "^3.43.0",
     "@payloadcms/ui": "^3.43.0",
-    "@searchkit/api": "^4.13.0",
-    "@searchkit/instantsearch-client": "^4.14.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "cross-env": "^7.0.3",
@@ -56,7 +54,6 @@
     "react": "^19",
     "react-dom": "^19",
     "react-instantsearch": "^7.7.0",
-    "searchkit": "^4.13.2",
     "sharp": "^0.32.6",
     "sonner": "^2.0.1",
     "tsx": "^4.19.3"

@@ -8,7 +8,7 @@ This is a starter template for building web applications with Payload CMS and SQ
 - **CMS**: Payload CMS v3
 - **Runtime**: Node.js (^18.20.2 || >=20.9.0)
 - **Framework**: Next.js 15 with Turbopack
-- **Search**: Elasticsearch integration with Searchkit
+- **Search**: Algolia integration with InstantSearch
 - **UI**:
   - Tailwind CSS
   - Headless UI components
@@ -22,45 +22,27 @@ This is a starter template for building web applications with Payload CMS and SQ
 
 ## 🛠️ Installation
 
-1. Clone the repository
+1. Clone this repository
 
-2. Start Elasticsearch container:
-
-```bash
-docker compose up -d elasticsearch
-```
-
-This will start Elasticsearch on port 9200. You can verify it's running with:
-
-```bash
-curl http://localhost:9200
-```
-
-3. Copy the `.env.example` file as `.env` and fill in the required variables
+2. Copy the `.env.example` file as `.env` and fill in the required variables
 
 ```bash
 cp .env.example .env
 ```
 
-4. Install dependencies:
+3. Install dependencies:
 
 ```bash
 pnpm i
 ```
 
-5. Run migrations:
-
-```bash
-pnpm payload migrate:fresh
-```
-
-6. Start the development environment:
+4. Start the development environment:
 
 ```bash
 pnpm dev
 ```
 
-6. Open the admin UI at http://localhost:3000/admin or the website at http://localhost:3000
+5. Open the admin UI at http://localhost:3000/admin or the website at http://localhost:3000
 
 ## 📜 Available Scripts
 
@@ -70,7 +52,7 @@ pnpm dev
 - `pnpm start` - Start production server
 - `pnpm generate:types` - Generate Payload CMS types
 - `pnpm generate:importmap` - Generate import map
-- `pnpm reindex` - Reindex data to Elasticsearch
+- `pnpm reindex` - Reindex data to Algolia
 - `pnpm seed` - Run database seeding script
 - `pnpm format` - Format all files with Prettier
 
@@ -108,12 +90,12 @@ The project uses several development tools:
 - Husky for Git hooks
 - lint-staged for pre-commit checks
 
-## 🐳 Docker Services
+## 🔍 Search
 
-### Elasticsearch
+### Algolia
 
-- Version: 7.17.18
-- Port: 9200
-- Memory: 512MB (min) - 512MB (max)
-- Security: Disabled for development
-- Data persistence: Volume mounted at `/usr/share/elasticsearch/data`
+The project uses Algolia for search functionality:
+
+- **Index naming**: `global_fi` and `global_en` for different languages
+- **Auto-indexing**: Documents are automatically indexed when created/updated via Payload hooks
+- **Configuration**: Set up your Algolia credentials in environment variables (don't use production credentials in development)
