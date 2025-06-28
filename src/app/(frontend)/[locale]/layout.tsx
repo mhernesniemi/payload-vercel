@@ -1,5 +1,6 @@
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/Toaster";
+import { WebVitalsReporter } from "@/components/WebVitalsReporter";
 import { routing } from "@/i18n/routing";
 import { SITE_NAME } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
@@ -50,6 +51,7 @@ export default async function RootLayout({ children, params }: Props) {
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />
+        <WebVitalsReporter />
       </body>
     </html>
   );
