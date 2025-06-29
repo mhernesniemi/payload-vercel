@@ -4,15 +4,27 @@ import {
   IndexableDocument,
   indexDocumentToAlgolia,
 } from "@/lib/algolia-utils";
+import { INDEXABLE_COLLECTIONS, IndexableCollectionSlug } from "@/lib/constants";
+import { Article, CollectionPage, News } from "@/payload-types";
 import { getPayload } from "payload";
 import config from "../payload.config";
+
+// Type for rich text content
+type RichTextContent = {
+  [k: string]: unknown;
+}[];
+
+// Type guard to check if document is an Article
+const isArticle = (doc: Article | News | CollectionPage): doc is Article => {
+  return "categories" in doc && "publishedDate" in doc;
+};
 
 const reindexToAlgolia = async () => {
   const payload = await getPayload({ config });
 
-  console.log("Starting Algolia reindex...");
+  payload.logger.info("Starting Algolia reindex...");
 
-  const collections = ["articles", "news", "collection-pages"];
+  const collections = INDEXABLE_COLLECTIONS;
   const locales = ["fi", "en"];
 
   try {
@@ -20,23 +32,23 @@ const reindexToAlgolia = async () => {
 
     for (const locale of locales) {
       const indexName = getAlgoliaIndexName(locale as "fi" | "en");
-      console.log(`Processing index: ${indexName}`);
+      payload.logger.info(`Processing index: ${indexName}`);
 
       // Clear existing index
       try {
         await client.clearObjects({ indexName });
-        console.log(`Cleared existing data from ${indexName}`);
+        payload.logger.info(`Cleared existing data from ${indexName}`);
       } catch (_error) {
-        console.log(`Index ${indexName} doesn't exist yet, creating new one`);
+        payload.logger.info(`Index ${indexName} doesn't exist yet, creating new one`);
       }
 
       // Reindex all collections for this locale
       for (const collectionSlug of collections) {
-        console.log(`Reindexing ${collectionSlug} in ${locale}...`);
+        payload.logger.info(`Reindexing ${collectionSlug} in ${locale}...`);
 
         try {
           const docs = await payload.find({
-            collection: collectionSlug as "articles" | "news" | "collection-pages",
+            collection: collectionSlug as IndexableCollectionSlug,
             locale: locale as "fi" | "en",
             limit: 1000,
             /* Filter out drafts and documents that don't have a title or are empty */
@@ -77,19 +89,32 @@ const reindexToAlgolia = async () => {
                   },
           });
 
-          console.log(`Found ${docs.docs.length} documents in ${collectionSlug} (${locale})`);
+          payload.logger.info(
+            `Found ${docs.docs.length} documents in ${collectionSlug} (${locale})`,
+          );
 
           for (const doc of docs.docs) {
-            const categoryLabels = doc.categories
-              ? await fetchCategoryLabels(doc.categories, payload)
-              : [];
+            // Type-safe access to categories and publishedDate
+            const categoryLabels =
+              isArticle(doc) && doc.categories
+                ? await fetchCategoryLabels(doc.categories, payload)
+                : [];
+
+            // Convert rich text content to the expected format
+            const richTextContent =
+              doc.content &&
+              typeof doc.content === "object" &&
+              doc.content !== null &&
+              "root" in doc.content
+                ? ([doc.content] as RichTextContent)
+                : null;
 
             const indexableDoc: IndexableDocument = {
               objectID: doc.id,
               title: doc.title || "",
-              content: doc.content,
+              content: richTextContent,
               slug: doc.slug || "",
-              publishedDate: doc.publishedDate,
+              publishedDate: isArticle(doc) ? doc.publishedDate : undefined,
               createdAt: doc.createdAt,
               categories: categoryLabels,
               collection: collectionSlug,
@@ -102,44 +127,47 @@ const reindexToAlgolia = async () => {
               locale as "fi" | "en",
             );
 
-            if (success) {
-              console.log(`✓ Document ${doc.id} indexed`);
-            } else {
-              console.error(`✗ Failed to index document ${doc.id}`);
+            if (!success) {
+              payload.logger.error(`✗ Failed to index document ${doc.id}`);
             }
           }
         } catch (error) {
-          console.error(`Error processing collection ${collectionSlug} in ${locale}:`, error);
+          payload.logger.error(
+            `Error processing collection ${collectionSlug} in ${locale}:`,
+            error,
+          );
         }
       }
 
-      console.log(`Completed reindexing for locale: ${locale}`);
+      payload.logger.info(`Completed reindexing for locale: ${locale}`);
     }
 
-    console.log("✅ Algolia reindex completed successfully!");
+    payload.logger.info("✅ Algolia reindex completed successfully!");
   } catch (error) {
-    console.error("❌ Error during Algolia reindex:", error);
+    payload.logger.error("❌ Error during Algolia reindex:", error);
     process.exit(1);
   }
 };
 
 // Helper function to fetch category labels
 const fetchCategoryLabels = async (
-  categories: string[] | { id: string }[],
+  categories: (
+    | number
+    | { id: string | number }
+    | { id: string | number; label?: string; title?: string }
+  )[],
   payload: Awaited<ReturnType<typeof getPayload>>,
 ): Promise<string[]> => {
   if (!categories || categories.length === 0) return [];
 
   try {
-    // If categories are already strings, return them
-    if (typeof categories[0] === "string") {
-      return categories as string[];
-    }
-
-    // If categories are objects with IDs, fetch the actual category data
-    const categoryIds = categories.map((cat: unknown) =>
-      typeof cat === "string" ? cat : (cat as { id: string }).id,
-    );
+    // Extract category IDs
+    const categoryIds = categories.map((cat: unknown) => {
+      if (typeof cat === "string" || typeof cat === "number") {
+        return cat;
+      }
+      return (cat as { id: string | number }).id;
+    });
 
     const categoryData = await payload.find({
       collection: "categories",
@@ -152,8 +180,8 @@ const fetchCategoryLabels = async (
 
     return categoryData.docs
       .map((cat: unknown) => {
-        const category = cat as { title?: string; name?: string };
-        return category.title || category.name || "";
+        const category = cat as { title?: string; name?: string; label?: string };
+        return category.title || category.name || category.label || "";
       })
       .filter(Boolean);
   } catch (error) {

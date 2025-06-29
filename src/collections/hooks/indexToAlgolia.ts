@@ -49,9 +49,7 @@ export const indexToAlgoliaHook: CollectionAfterChangeHook = async ({
         locale === "fi" ? "fi" : "en",
       );
 
-      if (success) {
-        payload.logger.info(`Document ${doc.id} indexed to Algolia`);
-      } else {
+      if (!success) {
         payload.logger.error(`Failed to index document ${doc.id} to Algolia`);
       }
     }

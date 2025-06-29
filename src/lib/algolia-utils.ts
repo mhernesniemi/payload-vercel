@@ -65,10 +65,10 @@ export const indexDocumentToAlgolia = async (
 
     await client.saveObjects({ indexName, objects: [algoliaDocument] });
 
-    console.log(`Document ${uniqueObjectID} indexed to Algolia`);
+    payload.logger.info(`Document ${uniqueObjectID} indexed to Algolia`);
     return true;
   } catch (error) {
-    console.error("Error indexing document to Algolia:", error);
+    payload.logger.error("Error indexing document to Algolia:", error);
     return false;
   }
 };
